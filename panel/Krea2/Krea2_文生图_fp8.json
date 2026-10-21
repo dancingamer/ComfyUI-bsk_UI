@@ -1,0 +1,1527 @@
+{
+  "workflow": {
+    "1": {
+      "inputs": {
+        "text": "# 해시 태그 주석이 녹색으로 변하면 프롬프트가 작동하지 않습니다,\n# 중국어 또는 영어 프롬프트로 생성할 내용을 자세히 설명할 수 있습니다\n\n# --스타일 및 렌즈 설명\n애니메이션 스타일, 초광각 풀 뷰 아이리스 렌즈，\n# 이 사진은 밝고 스타일이 있는“강렬（High-key）”부드러운 조명 효과의 코스프레(Cosplay) 인물 사진 촬영。",
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "긍정 프롬프트"
+      }
+    },
+    "2": {
+      "inputs": {
+        "conditioning": [
+          "11",
+          0
+        ]
+      },
+      "class_type": "ConditioningZeroOut",
+      "_meta": {
+        "title": "조건 0화"
+      }
+    },
+    "4": {
+      "inputs": {
+        "conditioning": [
+          "11",
+          0
+        ],
+        "preset": "detail",
+        "per_layer_weights": "0.8, 0.8, 0.9, 0.9, 1.0, 1.0, 1.2, 3.0, 6.0, 1.5, 5.0, 1.2",
+        "multiplier": 2,
+        "renormalize": true
+      },
+      "class_type": "ConditioningKrea2Rebalance",
+      "_meta": {
+        "title": "ConditioningKrea2Rebalance"
+      }
+    },
+    "5": {
+      "inputs": {
+        "clip_name": "qwen3vl_4b_heretic_fp8.safetensors",
+        "type": "krea2",
+        "device": "default"
+      },
+      "class_type": "CLIPLoader",
+      "_meta": {
+        "title": "ロードCLIP"
+      }
+    },
+    "6": {
+      "inputs": {
+        "vae_name": "qwen_image_vae.safetensors"
+      },
+      "class_type": "VAELoader",
+      "_meta": {
+        "title": "ロードVAE"
+      }
+    },
+    "8": {
+      "inputs": {
+        "unet_name": "Krea2-Turbo-fp8_v10.safetensors",
+        "weight_dtype": "default"
+      },
+      "class_type": "UNETLoader",
+      "_meta": {
+        "title": "UNetロード기기"
+      }
+    },
+    "11": {
+      "inputs": {
+        "text": [
+          "12",
+          0
+        ],
+        "clip": [
+          "5",
+          0
+        ]
+      },
+      "class_type": "CLIPTextEncode",
+      "_meta": {
+        "title": "CLIP텍스트 인코딩"
+      }
+    },
+    "12": {
+      "inputs": {
+        "input1": [
+          "1",
+          0
+        ],
+        "switch1": true,
+        "input2": [
+          "25",
+          0
+        ],
+        "switch2": false,
+        "input3": [
+          "22",
+          0
+        ],
+        "switch3": false,
+        "input4": "",
+        "switch4": false,
+        "merge_order": "1,2,3,4",
+        "preserve_newlines": false,
+        "input5": "",
+        "switch5": true,
+        "input6": "",
+        "switch6": true,
+        "input7": "",
+        "switch7": true,
+        "input8": "",
+        "switch8": true,
+        "input9": "",
+        "switch9": true,
+        "input10": "",
+        "switch10": true
+      },
+      "class_type": "bsk_StringMergeWithSwitch",
+      "_meta": {
+        "title": "bsk_String Merge (Switch)"
+      }
+    },
+    "14": {
+      "inputs": {
+        "samples": [
+          "38",
+          0
+        ],
+        "vae": [
+          "6",
+          0
+        ]
+      },
+      "class_type": "VAEDecode",
+      "_meta": {
+        "title": "VAE디코딩"
+      }
+    },
+    "15": {
+      "inputs": {
+        "image": "example.png",
+        "crop_params": "0,0,0,0,0,896,1536",
+        "vae": [
+          "6",
+          0
+        ],
+        "output_empty_latent": [
+          "23",
+          0
+        ],
+        "redraw_mode": false,
+        "divisible_by_32": false
+      },
+      "class_type": "BSK_LoadImage",
+      "_meta": {
+        "title": "색상"
+      }
+    },
+    "17": {
+      "inputs": {
+        "source": [
+          "12",
+          0
+        ]
+      },
+      "class_type": "PreviewAny",
+      "_meta": {
+        "title": "최종 합성 프롬프트"
+      }
+    },
+    "18": {
+      "inputs": {
+        "source": [
+          "25",
+          0
+        ]
+      },
+      "class_type": "PreviewAny",
+      "_meta": {
+        "title": "전경 역추적"
+      }
+    },
+    "20": {
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "filename_prefix": "ComfyUI",
+        "save_as_jpg": false,
+        "jpg_quality": 95,
+        "embed_workflow_in_png": true,
+        "save_workflow": false,
+        "save_txt": false,
+        "other_text": [
+          "12",
+          0
+        ],
+        "denoise_bilateral": false,
+        "denoise_diameter": 9,
+        "denoise_sigma_color": 75,
+        "denoise_sigma_space": 75
+      },
+      "class_type": "BSK_SaveImage",
+      "_meta": {
+        "title": "BSK 이미지 저장"
+      }
+    },
+    "21": {
+      "inputs": {
+        "seed_str": "8112277260527222630",
+        "trigger": 3,
+        "auto_generate": true
+      },
+      "class_type": "RandomSeedNode",
+      "_meta": {
+        "title": "bsk_Random Seed"
+      }
+    },
+    "22": {
+      "inputs": {
+        "pos_x": -0.14079662485280497,
+        "pos_y": 0.0038222095406720835,
+        "pos_z": -0.13199999999999978,
+        "roll": 0,
+        "config": "{\"weight_min\":0.1,\"weight_max\":10,\"azimuth\":{\"enabled\":true,\"weight\":10,\"deadzone_ratio\":0.9,\"directions\":{\"front\":{\"tag\":\"from front, \",\"enabled\":true},\"back\":{\"tag\":\"from behind,\",\"enabled\":true},\"left\":{\"tag\":\"facing right, \",\"enabled\":true},\"right\":{\"tag\":\"facing left, \",\"enabled\":true}}},\"elevation\":{\"enabled\":true,\"extra\":10,\"categories\":{\"bird\":{\"tag\":\"directly above, from above, aerial view\",\"enabled\":true},\"high\":{\"tag\":\"high angle, from above,  \",\"enabled\":true},\"eye\":{\"tag\":\"eye-level\",\"enabled\":true},\"low\":{\"tag\":\"low angle, from below, \",\"enabled\":true},\"worm\":{\"tag\":\"directly below\",\"enabled\":true}},\"eye_peak\":3},\"distance\":{\"enabled\":true,\"extra\":0,\"categories\":{\"ecu\":{\"tag\":\"extreme close-up\",\"enabled\":true},\"cu\":{\"tag\":\"close-up\",\"enabled\":true},\"medium\":{\"tag\":\"medium shot\",\"enabled\":true},\"full\":{\"tag\":\"full body\",\"enabled\":true},\"wide\":{\"tag\":\"wide shot\",\"enabled\":true}}},\"tilt\":{\"enabled\":true,\"deadzone\":0.15,\"extra\":0,\"dutch_tag\":\"dutch angle\"},\"extra_master\":1,\"extras\":{\"lens\":{\"enabled\":false,\"value\":\"85mm lens\"},\"dof\":{\"enabled\":false,\"value\":\"shallow depth of field\",\"weight\":1.3},\"movement\":{\"enabled\":false,\"value\":\"handheld camera\"},\"composition\":{\"enabled\":false,\"value\":\"rule of thirds\"},\"style\":{\"enabled\":false,\"value\":\"cinematic\"}},\"no_weight\":true,\"no_weight_threshold\":0.38,\"wheel_step\":0.0003,\"drag_step\":0.004}"
+      },
+      "class_type": "CameraControlNode",
+      "_meta": {
+        "title": "BSK_카메라 제어"
+      }
+    },
+    "23": {
+      "inputs": {
+        "title1": "생성 이미지↔이미지 생성",
+        "value1": "true",
+        "type1": "BOOLEAN",
+        "title2": "편집 모드",
+        "value2": "false",
+        "type2": "BOOLEAN",
+        "title3": "단계",
+        "value3": "8",
+        "type3": "INT",
+        "title4": "유사도",
+        "value4": "0.72",
+        "type4": "FLOAT",
+        "title5": "역추적TAG(wd14)↔자연어(qvl)  ",
+        "value5": "false",
+        "type5": "BOOLEAN"
+      },
+      "class_type": "BSK_ParamSet",
+      "_meta": {
+        "title": "BSK 파라미터 세트"
+      }
+    },
+    "24": {
+      "inputs": {
+        "master_switch": true,
+        "switch_1": true,
+        "lora_name_1": "MysticXXX_KREA2_v3.safetensors",
+        "strength_model_1": 1,
+        "strength_clip_1": 1,
+        "switch_2": [
+          "23",
+          1
+        ],
+        "lora_name_2": "Anime2real - Krea2.safetensors",
+        "strength_model_2": 1,
+        "strength_clip_2": 1,
+        "switch_3": false,
+        "lora_name_3": "None",
+        "strength_model_3": 1,
+        "strength_clip_3": 1,
+        "switch_4": false,
+        "lora_name_4": "None",
+        "strength_model_4": 1,
+        "strength_clip_4": 1,
+        "switch_5": false,
+        "lora_name_5": "None",
+        "strength_model_5": 1,
+        "strength_clip_5": 1,
+        "switch_6": false,
+        "lora_name_6": "None",
+        "strength_model_6": 1,
+        "strength_clip_6": 1,
+        "switch_7": false,
+        "lora_name_7": "None",
+        "strength_model_7": 1,
+        "strength_clip_7": 1,
+        "model": [
+          "49",
+          0
+        ],
+        "batch_test_1": false,
+        "batch_test_min_1": -2,
+        "batch_test_max_1": 1,
+        "batch_test_mode_1": "둘 다 동시에",
+        "batch_test_steps_1": 10,
+        "batch_test_2": false,
+        "batch_test_min_2": -2,
+        "batch_test_max_2": 1,
+        "batch_test_mode_2": "둘 다 동시에",
+        "batch_test_steps_2": 10,
+        "batch_test_3": false,
+        "batch_test_min_3": -2,
+        "batch_test_max_3": 1,
+        "batch_test_mode_3": "둘 다 동시에",
+        "batch_test_steps_3": 10,
+        "batch_test_4": false,
+        "batch_test_min_4": -2,
+        "batch_test_max_4": 1,
+        "batch_test_mode_4": "둘 다 동시에",
+        "batch_test_steps_4": 10,
+        "batch_test_5": false,
+        "batch_test_min_5": -2,
+        "batch_test_max_5": 1,
+        "batch_test_mode_5": "둘 다 동시에",
+        "batch_test_steps_5": 10,
+        "batch_test_6": false,
+        "batch_test_min_6": -2,
+        "batch_test_max_6": 1,
+        "batch_test_mode_6": "둘 다 동시에",
+        "batch_test_steps_6": 10,
+        "batch_test_7": false,
+        "batch_test_min_7": -2,
+        "batch_test_max_7": 1,
+        "batch_test_mode_7": "둘 다 동시에",
+        "batch_test_steps_7": 10,
+        "lora_text": "master=on\nMysticXXX_KREA2_v3.safetensors:1,1,on\nAnime2real - Krea2.safetensors:1,1,off"
+      },
+      "class_type": "bsk_MultiLoraLoaderWithPath",
+      "_meta": {
+        "title": "bsk_MultiLoraLoaderWithPath"
+      }
+    },
+    "25": {
+      "inputs": {
+        "switch": [
+          "23",
+          4
+        ],
+        "on_false": [
+          "30",
+          0
+        ],
+        "on_true": [
+          "27",
+          0
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "역추적"
+      }
+    },
+    "27": {
+      "inputs": {
+        "clip": [
+          "5",
+          0
+        ],
+        "prompt": [
+          "31",
+          0
+        ],
+        "max_length": 1024,
+        "sampling_mode": "on",
+        "image": [
+          "37",
+          0
+        ],
+        "thinking": true,
+        "use_default_template": true,
+        "temperature": 0.7,
+        "top_k": 64,
+        "top_p": 0.95,
+        "min_p": 0.05,
+        "repetition_penalty": 1.05,
+        "seed": 666,
+        "presence_penalty": 0
+      },
+      "class_type": "BSK_TextGenerate",
+      "_meta": {
+        "title": "BSK 역방향 프롬프트(TextGenerate)"
+      }
+    },
+    "30": {
+      "inputs": {
+        "image": [
+          "56",
+          0
+        ],
+        "tagger_type": "wd14",
+        "wd14_model": "wd-vit-tagger-v3",
+        "general_threshold": 0.35,
+        "character_threshold": 0.85,
+        "sort_mode": "default",
+        "exclude_meta": true,
+        "exclude_rating": true,
+        "exclude_quality": true,
+        "replace_underscore": false,
+        "trailing_comma": false,
+        "exclude_tags": "",
+        "max_resolution": 1280,
+        "trigger_word": "",
+        "batch_dir": "",
+        "enabled": true
+      },
+      "class_type": "BSK_Tagger",
+      "_meta": {
+        "title": "TAG역추적"
+      }
+    },
+    "31": {
+      "inputs": {
+        "text": "# 역추출 규칙\n# --중국어 설명\n이 이미지에 대해 중국어로 설명하고, 이미지가 2D 이세계 스타일임을 강조하며, 조명, 캐릭터 및 장면을 자세히 묘사합니다.，\n# 현실적인 스타일\n# 사용 금지: 2D 설명,\n\n# --영어 설명\n# 이 이미지를 영어로 설명,\n\n# 다른 규칙, 카메라 제어 시작으로 아래 규칙 활성화\n카메라 각도 설명 안 함, # 만약... 어떻게...,\n\n",
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "역추출 규칙"
+      }
+    },
+    "32": {
+      "inputs": {
+        "clip": [
+          "5",
+          0
+        ],
+        "prompt": [
+          "12",
+          0
+        ],
+        "vae": [
+          "6",
+          0
+        ],
+        "image1": [
+          "56",
+          0
+        ]
+      },
+      "class_type": "TextEncodeKrea2OstrisEdit",
+      "_meta": {
+        "title": "TextEncodeKrea2OstrisEdit"
+      }
+    },
+    "33": {
+      "inputs": {
+        "clip": [
+          "5",
+          0
+        ],
+        "prompt": "",
+        "vae": [
+          "6",
+          0
+        ]
+      },
+      "class_type": "TextEncodeKrea2OstrisEdit",
+      "_meta": {
+        "title": "TextEncodeKrea2OstrisEdit"
+      }
+    },
+    "34": {
+      "inputs": {
+        "switch": [
+          "23",
+          1
+        ],
+        "on_false": [
+          "4",
+          0
+        ],
+        "on_true": [
+          "32",
+          0
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "If/Else Switch"
+      }
+    },
+    "35": {
+      "inputs": {
+        "switch": [
+          "23",
+          1
+        ],
+        "on_false": [
+          "2",
+          0
+        ],
+        "on_true": [
+          "33",
+          0
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "If/Else Switch"
+      }
+    },
+    "37": {
+      "inputs": {
+        "images": [
+          "56",
+          0
+        ],
+        "longer_edge": 1024
+      },
+      "class_type": "ResizeImagesByLongerEdge",
+      "_meta": {
+        "title": "Resize Images by Longer Edge (DEPRECATED)"
+      }
+    },
+    "38": {
+      "inputs": {
+        "model": [
+          "44",
+          0
+        ],
+        "add_noise": "enable",
+        "noise_seed": [
+          "21",
+          0
+        ],
+        "steps": [
+          "23",
+          2
+        ],
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "positive": [
+          "34",
+          0
+        ],
+        "negative": [
+          "35",
+          0
+        ],
+        "latent_image": [
+          "15",
+          2
+        ],
+        "start_at_step": [
+          "39",
+          0
+        ],
+        "end_at_step": 10000,
+        "return_with_leftover_noise": "disable"
+      },
+      "class_type": "KSamplerAdvanced",
+      "_meta": {
+        "title": "KSampler (Advanced)"
+      }
+    },
+    "39": {
+      "inputs": {
+        "value": "(1-a)*b",
+        "a": [
+          "45",
+          0
+        ],
+        "b": [
+          "23",
+          2
+        ],
+        "c": 0,
+        "d": 0
+      },
+      "class_type": "bsk_Math",
+      "_meta": {
+        "title": "bsk_Math"
+      }
+    },
+    "42": {
+      "inputs": {
+        "panel_config": "{\"tabs\":[{\"id\":\"main\",\"name\":\"일반\",\"nodeIds\":[\"20\",\"21\",\"12\",\"23\",\"56\",\"15\",\"22\",\"30\",\"27\",\"18\",\"17\",\"53\"]},{\"id\":\"prompt\",\"name\":\"프롬프트\",\"nodeIds\":[\"1\",\"11\",\"31\"]},{\"id\":\"model\",\"name\":\"모델\",\"nodeIds\":[\"5\",\"6\",\"8\",\"24\",\"49\"]},{\"id\":\"sampler\",\"name\":\"샘플러\",\"nodeIds\":[\"38\"]},{\"id\":\"other\",\"name\":\"기타\",\"nodeIds\":[\"2\",\"4\",\"14\",\"17\",\"18\",\"20\",\"21\",\"25\",\"27\",\"32\",\"33\",\"34\",\"35\",\"37\",\"39\",\"43\",\"44\",\"45\",\"46\",\"48\",\"50\",\"52\",\"53\",\"55\",\"58\",\"59\"]}],\"currentTab\":\"model\",\"tabNodes\":{\"main\":[\"20\",\"21\",\"12\",\"23\",\"56\",\"15\",\"22\",\"30\",\"27\",\"18\",\"17\",\"53\"],\"prompt\":[\"1\",\"11\",\"31\"],\"model\":[\"5\",\"6\",\"8\",\"24\",\"49\"],\"sampler\":[\"38\"],\"other\":[\"2\",\"4\",\"14\",\"17\",\"18\",\"20\",\"21\",\"25\",\"27\",\"32\",\"33\",\"34\",\"35\",\"37\",\"39\",\"43\",\"44\",\"45\",\"46\",\"48\",\"50\",\"52\",\"53\",\"55\",\"58\",\"59\"]},\"cardValues\":{\"1.text\":\"# 해시 태그 주석이 녹색으로 변하면 프롬프트가 작동하지 않습니다,\\n# 중국어 또는 영어 프롬프트로 생성할 내용을 자세히 설명할 수 있습니다\\n\\n# --스타일 및 렌즈 설명\\n애니메이션 스타일, 초광각 풀 뷰 아이리스 렌즈，\\n# 이 사진은 밝고 스타일이 있는“강렬（High-key）”부드러운 조명 효과의 코스프레(Cosplay) 인물 사진 촬영。\",\"1.separator\":\" \",\"4.preset\":\"detail\",\"4.per_layer_weights\":\"0.8, 0.8, 0.9, 0.9, 1.0, 1.0, 1.2, 3.0, 6.0, 1.5, 5.0, 1.2\",\"4.multiplier\":2,\"4.renormalize\":true,\"5.clip_name\":\"qwen3vl_4b_heretic_fp8.safetensors\",\"5.type\":\"krea2\",\"5.device\":\"default\",\"6.vae_name\":\"qwen_image_vae.safetensors\",\"8.unet_name\":\"Krea2-Turbo-fp8_v10.safetensors\",\"8.weight_dtype\":\"default\",\"12.switch1\":true,\"12.switch2\":false,\"12.switch3\":false,\"12.input4\":\"\",\"12.switch4\":false,\"12.merge_order\":\"1,2,3,4\",\"12.preserve_newlines\":false,\"12.input5\":\"\",\"12.switch5\":true,\"12.input6\":\"\",\"12.switch6\":true,\"12.input7\":\"\",\"12.switch7\":true,\"12.input8\":\"\",\"12.switch8\":true,\"12.input9\":\"\",\"12.switch9\":true,\"12.input10\":\"\",\"12.switch10\":true,\"15.image\":\"example.png\",\"15.crop_params\":\"0,0,0,0,0,896,1536\",\"15.redraw_mode\":false,\"15.divisible_by_32\":false,\"15.image_cropX\":0,\"15.image_cropY\":0,\"15.image_cropW\":0,\"15.image_cropH\":0,\"15.output_empty_latent\":[\"23\",0],\"20.filename_prefix\":\"ComfyUI\",\"20.save_as_jpg\":false,\"20.jpg_quality\":95,\"20.embed_workflow_in_png\":true,\"20.save_workflow\":false,\"20.save_txt\":false,\"20.denoise_bilateral\":false,\"20.denoise_diameter\":9,\"20.denoise_sigma_color\":75,\"20.denoise_sigma_space\":75,\"21.seed_str\":\"8112277260527222630\",\"21.trigger\":3,\"21.auto_generate\":true,\"22.pos_x\":-0.14079662485280497,\"22.pos_y\":0.0038222095406720835,\"22.pos_z\":-0.13199999999999978,\"22.roll\":0,\"22.config\":\"{\\\"weight_min\\\":0.1,\\\"weight_max\\\":10,\\\"azimuth\\\":{\\\"enabled\\\":true,\\\"weight\\\":10,\\\"deadzone_ratio\\\":0.9,\\\"directions\\\":{\\\"front\\\":{\\\"tag\\\":\\\"from front, \\\",\\\"enabled\\\":true},\\\"back\\\":{\\\"tag\\\":\\\"from behind,\\\",\\\"enabled\\\":true},\\\"left\\\":{\\\"tag\\\":\\\"facing right, \\\",\\\"enabled\\\":true},\\\"right\\\":{\\\"tag\\\":\\\"facing left, \\\",\\\"enabled\\\":true}}},\\\"elevation\\\":{\\\"enabled\\\":true,\\\"extra\\\":10,\\\"categories\\\":{\\\"bird\\\":{\\\"tag\\\":\\\"directly above, from above, aerial view\\\",\\\"enabled\\\":true},\\\"high\\\":{\\\"tag\\\":\\\"high angle, from above,  \\\",\\\"enabled\\\":true},\\\"eye\\\":{\\\"tag\\\":\\\"eye-level\\\",\\\"enabled\\\":true},\\\"low\\\":{\\\"tag\\\":\\\"low angle, from below, \\\",\\\"enabled\\\":true},\\\"worm\\\":{\\\"tag\\\":\\\"directly below\\\",\\\"enabled\\\":true}},\\\"eye_peak\\\":3},\\\"distance\\\":{\\\"enabled\\\":true,\\\"extra\\\":0,\\\"categories\\\":{\\\"ecu\\\":{\\\"tag\\\":\\\"extreme close-up\\\",\\\"enabled\\\":true},\\\"cu\\\":{\\\"tag\\\":\\\"close-up\\\",\\\"enabled\\\":true},\\\"medium\\\":{\\\"tag\\\":\\\"medium shot\\\",\\\"enabled\\\":true},\\\"full\\\":{\\\"tag\\\":\\\"full body\\\",\\\"enabled\\\":true},\\\"wide\\\":{\\\"tag\\\":\\\"wide shot\\\",\\\"enabled\\\":true}}},\\\"tilt\\\":{\\\"enabled\\\":true,\\\"deadzone\\\":0.15,\\\"extra\\\":0,\\\"dutch_tag\\\":\\\"dutch angle\\\"},\\\"extra_master\\\":1,\\\"extras\\\":{\\\"lens\\\":{\\\"enabled\\\":false,\\\"value\\\":\\\"85mm lens\\\"},\\\"dof\\\":{\\\"enabled\\\":false,\\\"value\\\":\\\"shallow depth of field\\\",\\\"weight\\\":1.3},\\\"movement\\\":{\\\"enabled\\\":false,\\\"value\\\":\\\"handheld camera\\\"},\\\"composition\\\":{\\\"enabled\\\":false,\\\"value\\\":\\\"rule of thirds\\\"},\\\"style\\\":{\\\"enabled\\\":false,\\\"value\\\":\\\"cinematic\\\"}},\\\"no_weight\\\":true,\\\"no_weight_threshold\\\":0.38,\\\"wheel_step\\\":0.0003,\\\"drag_step\\\":0.004}\",\"23.title1\":\"생성 이미지↔이미지 생성\",\"23.value1\":\"true\",\"23.type1\":\"BOOLEAN\",\"23.title2\":\"편집 모드\",\"23.value2\":\"false\",\"23.type2\":\"BOOLEAN\",\"23.title3\":\"단계\",\"23.value3\":\"8\",\"23.type3\":\"INT\",\"23.title4\":\"유사도\",\"23.value4\":\"0.72\",\"23.type4\":\"FLOAT\",\"23.title5\":\"역추적TAG(wd14)↔자연어(qvl)  \",\"23.value5\":\"false\",\"23.type5\":\"BOOLEAN\",\"24.master_switch\":true,\"24.switch_1\":true,\"24.lora_name_1\":\"MysticXXX_KREA2_v3.safetensors\",\"24.strength_model_1\":1,\"24.strength_clip_1\":1,\"24.lora_name_2\":\"Anime2real - Krea2.safetensors\",\"24.strength_model_2\":1,\"24.strength_clip_2\":1,\"24.switch_3\":false,\"24.lora_name_3\":\"None\",\"24.strength_model_3\":1,\"24.strength_clip_3\":1,\"24.switch_4\":false,\"24.lora_name_4\":\"None\",\"24.strength_model_4\":1,\"24.strength_clip_4\":1,\"24.switch_5\":false,\"24.lora_name_5\":\"None\",\"24.strength_model_5\":1,\"24.strength_clip_5\":1,\"24.switch_6\":false,\"24.lora_name_6\":\"None\",\"24.strength_model_6\":1,\"24.strength_clip_6\":1,\"24.switch_7\":false,\"24.lora_name_7\":\"None\",\"24.strength_model_7\":1,\"24.strength_clip_7\":1,\"24.batch_test_1\":false,\"24.batch_test_min_1\":-2,\"24.batch_test_max_1\":1,\"24.batch_test_mode_1\":\"둘 다 동시에\",\"24.batch_test_steps_1\":10,\"24.batch_test_2\":false,\"24.batch_test_min_2\":-2,\"24.batch_test_max_2\":1,\"24.batch_test_mode_2\":\"둘 다 동시에\",\"24.batch_test_steps_2\":10,\"24.batch_test_3\":false,\"24.batch_test_min_3\":-2,\"24.batch_test_max_3\":1,\"24.batch_test_mode_3\":\"둘 다 동시에\",\"24.batch_test_steps_3\":10,\"24.batch_test_4\":false,\"24.batch_test_min_4\":-2,\"24.batch_test_max_4\":1,\"24.batch_test_mode_4\":\"둘 다 동시에\",\"24.batch_test_steps_4\":10,\"24.batch_test_5\":false,\"24.batch_test_min_5\":-2,\"24.batch_test_max_5\":1,\"24.batch_test_mode_5\":\"둘 다 동시에\",\"24.batch_test_steps_5\":10,\"24.batch_test_6\":false,\"24.batch_test_min_6\":-2,\"24.batch_test_max_6\":1,\"24.batch_test_mode_6\":\"둘 다 동시에\",\"24.batch_test_steps_6\":10,\"24.batch_test_7\":false,\"24.batch_test_min_7\":-2,\"24.batch_test_max_7\":1,\"24.batch_test_mode_7\":\"둘 다 동시에\",\"24.batch_test_steps_7\":10,\"24.lora_text\":\"master=on\\nMysticXXX_KREA2_v3.safetensors:1,1,on\\nAnime2real - Krea2.safetensors:1,1,off\",\"27.max_length\":1024,\"27.sampling_mode\":\"on\",\"27.thinking\":true,\"27.use_default_template\":true,\"27.temperature\":0.7,\"27.top_k\":64,\"27.top_p\":0.95,\"27.min_p\":0.05,\"27.repetition_penalty\":1.05,\"27.seed\":666,\"27.presence_penalty\":0,\"30.tagger_type\":\"wd14\",\"30.wd14_model\":\"wd-vit-tagger-v3\",\"30.general_threshold\":0.35,\"30.character_threshold\":0.85,\"30.sort_mode\":\"default\",\"30.exclude_meta\":true,\"30.exclude_rating\":true,\"30.exclude_quality\":true,\"30.replace_underscore\":false,\"30.trailing_comma\":false,\"30.exclude_tags\":\"\",\"30.max_resolution\":1280,\"30.trigger_word\":\"\",\"30.batch_dir\":\"\",\"30.enabled\":true,\"31.text\":\"# 역추출 규칙\\n# --중국어 설명\\n이 이미지에 대해 중국어로 설명하고, 이미지가 2D 이세계 스타일임을 강조하며, 조명, 캐릭터 및 장면을 자세히 묘사합니다.，\\n# 현실적인 스타일\\n# 사용 금지: 2D 설명,\\n\\n# --영어 설명\\n# 이 이미지를 영어로 설명,\\n\\n# 다른 규칙, 카메라 제어 시작으로 아래 규칙 활성화\\n카메라 각도 설명 안 함, # 만약... 어떻게...,\\n\\n\",\"31.separator\":\" \",\"33.prompt\":\"\",\"37.longer_edge\":1024,\"38.add_noise\":\"enable\",\"38.cfg\":1,\"38.sampler_name\":\"euler\",\"38.scheduler\":\"simple\",\"38.end_at_step\":10000,\"38.return_with_leftover_noise\":\"disable\",\"39.value\":\"(1-a)*b\",\"39.c\":0,\"39.d\":0,\"43.kv_cache\":false,\"46.value\":1,\"48.shift\":3.0000000000000004,\"49.lora_name\":\"Krea2/depth-control-lora.safetensors\",\"49.strength\":1,\"52.resize\":\"match_latent_size\",\"52.upscale_method\":\"lanczos\",\"52.crop\":\"center\",\"52.channel_mode\":\"rgb\",\"52.normalize\":\"none\",\"52.invert\":false,\"52.batch_mode\":\"independent_images\",\"55.preprocessor\":\"DepthAnythingV2Preprocessor\",\"55.resolution\":512,\"56.image\":\"example.png\",\"56.crop_params\":\"0,0,0,0,0,896,1536\",\"56.output_empty_latent\":true,\"56.redraw_mode\":false,\"56.divisible_by_32\":false,\"56.image_cropX\":0,\"56.image_cropY\":0,\"56.image_cropW\":0,\"56.image_cropH\":0,\"59.batch_size\":1,\"12.__input_order\":[1,2,3,4],\"24.switch_2\":false,\"cardOrder\":[\"20\",\"21\",\"12\",\"23\",\"56\",\"15\",\"22\",\"30\",\"27\",\"18\",\"17\",\"55\",\"53\"],\"15.image_source\":\"example.png\",\"56.image_source\":\"example.png\"},\"globalCropSize\":{\"width\":896,\"height\":1536},\"linkCropSize\":true,\"cropSizeLocked\":false,\"autoDetectOrientation\":true,\"autoAdaptResolution\":false,\"noCropMode\":false,\"textareaHeights\":{\"57.text\":\"\",\"59.text\":\"\",\"69.rules\":\"\",\"79.rules\":\"\",\"67.strings_to_remove\":\"\",\"70.rules\":\"\",\"73.text\":\"398px\",\"75.rules\":\"\",\"76.text\":\"\",\"78.text_b\":\"\",\"78.text_c\":\"\",\"86.text\":\"\",\"87.text\":\"\",\"88.rules\":\"\",\"15.text\":\"452px\",\"20.text\":\"\",\"21.rules\":\"\",\"17.rules\":\"356px\",\"16.text\":\"\",\"29.text\":\"\",\"31.text\":\"\",\"44.text\":\"\",\"24.strings_to_remove\":\"\",\"30.rules\":\"\",\"17.text\":\"\",\"18.text\":\"\",\"36.text\":\"\",\"37.text\":\"\",\"38.strings_to_remove\":\"\",\"39.rules\":\"\",\"40.rules\":\"287px\",\"35.text\":\"\",\"10.text\":\"305px\",\"11.text\":\"271px\",\"5.text\":\"380px\",\"762.text\":\"\",\"586.text\":\"\",\"587.text\":\"\",\"646.text\":\"\",\"1.param_0\":\"\",\"4.value\":\"\",\"1.text\":\"\",\"198.prompt\":\"\",\"476.text_a\":\"\",\"476.text_c\":\"\",\"478.text\":\"\",\"53.text\":\"\",\"55.text\":\"\",\"56.text\":\"\",\"48.rules\":\"\",\"61.text\":\"\",\"65.text\":\"\",\"78.text\":\"\",\"6.text\":\"\",\"7.text\":\"\",\"12.text\":\"\",\"85.save_prompt_txt\":\"\",\"85.custom_prompt\":\"\",\"86.dedup_prompt\":\"\",\"87.dedup_prompt\":\"\",\"95.dedup_prompt\":\"\",\"96.dedup_prompt\":\"\",\"85.other_text\":\"\",\"3.text\":\"\",\"4.text\":\"\",\"506.text\":\"\",\"507.text\":\"\",\"8.text\":\"\",\"9.text\":\"\",\"12.rules\":\"\",\"72.text\":\"\",\"21.text\":\"\",\"21.strings_to_remove\":\"\",\"132.text\":\"\",\"147.text\":\"\",\"153.text\":\"\",\"155.text\":\"\",\"156.text\":\"\",\"163.text\":\"\",\"165.text\":\"\",\"172.text\":\"\",\"226.text\":\"\",\"228.text\":\"\",\"227.text\":\"\",\"229.text\":\"\",\"230.text\":\"\",\"248.rules\":\"\",\"249.rules\":\"\",\"250.strings_to_remove\":\"\",\"251.text\":\"\",\"252.rules\":\"\",\"254.text\":\"\",\"14.text\":\"\",\"37.other_text\":\"\",\"66.text\":\"\",\"98.text\":\"\",\"168.value\":\"\",\"121.text\":\"\",\"136.prompt\":\"\",\"146.text\":\"\",\"117.text\":\"\",\"119.param_0\":\"\",\"143.param_0\":\"\",\"144.param_0\":\"\",\"139.LanPaint_PromptMode\":\"\",\"145.LanPaint_PromptMode\":\"\",\"209.text\":\"\",\"295.text\":\"\",\"20.other_text\":\"\",\"26.prompt\":\"\",\"27.prompt\":\"\",\"160.text\":\"\",\"131.local_prompts\":\"\",\"131.global_prompt\":\"\",\"152.text\":\"\",\"133.prompt\":\"\",\"164.text\":\"\",\"133.global_prompt\":\"\",\"142.local_prompts\":\"\",\"142.global_prompt\":\"\",\"13.text\":\"\",\"151.text\":\"\",\"157.text\":\"\",\"158.text\":\"\",\"159.text\":\"\",\"161.text\":\"\",\"162.text\":\"\",\"166.text\":\"\",\"168.text\":\"\",\"33.prompt\":\"\",\"32.prompt\":\"\"},\"theme\":{\"primaryGradient\":\"linear-gradient(135deg, #667eea 0%, #764ba2 100%)\",\"backgroundColor\":\"linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)\",\"cardBackground\":\"rgba(255, 255, 255, 0.04)\",\"borderStyle\":\"rgba(255, 255, 255, 0.08)\",\"accentColor\":\"#667eea\",\"textColor\":\"white\",\"placeholderColor\":\"rgba(255, 255, 255, 0.6)\"},\"promptLibraryDarkMode\":true,\"highlightColorA\":\"#6496c8\",\"highlightColorB\":\"#c89664\",\"editorBgColorDark\":\"#2a2a2f\",\"editorBgColorLight\":\"#ffffff\",\"inputLinkSettings\":{},\"cardLinkToggleState\":{},\"cardAutoCollapse\":{\"15\":false,\"20\":true,\"56\":false},\"cardGridMode\":false,\"allAutoCollapse\":false,\"inputDefaultConfig\":{},\"inputDisabledValues\":{},\"localOutputConfigs\":{},\"workflowInfo\":{\"title\":\"Krea2 controlnet\",\"subtitle\":\"너의 여정에 변할래중의일점미세한 빛\",\"subtitles\":[\"너의 여정에 변할래중의일점미세한 빛\",\"매번 생성할 때마다 혼돈에 대한 심문。\"],\"author\":\"\",\"authorAvatar\":\"\",\"authors\":[{\"name\":\"灰暗x\",\"avatar\":\"https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif\",\"links\":[{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"}]}],\"description\":\"<h1>모델 및 자료 준비 (필수)）</h1>\\n비디오 튜토리얼： https://www.bilibili.com/video/BV1dCN16MEqL\\nQ군: 439870282\\n<h2><p><strong>모델이 누락된 경우：</strong>이것 클릭[모델 다운로드] 모델 다운로드 기능 열기\\n이미지-텍스트 생성 방법: 매개변수를 집중적으로 켜고 이미지-텍스트 생성\\n\\n역추론 방법 끄기: 태그 역추론, 프롬프트 합성에 역추론 끄기\\n\\nstage1 필드와 함께 추가，\\n\\n모델 다운로드는 자신의 GPU 메모리에 따라 fp8 또는 fp16 모델을 선택하고, 메인 패널 모델 태그에서 올바른 모델을 선택한 다음, 'g'를 눌러 생성합니다. 작동하면 'q'를 누르고 오른쪽 상단에서 저장합니다. 저장된 설정을 다시 로드합니다.。\\n\\nb를 눌러 프롬프트 편집, 긍정 프롬프트는 자유롭게 수정, 역추론 규칙은 원하는 AI가 참조 이미지 설명 규칙。\\n\\n자연어 역추론은 시간이 오래 걸릴 수 있습니다. 시간을 절약하려면 다른 AI로 프롬프트를 작성하여 프롬프트에 붙여넣고 역추론TAG(wd14)↔자유 설치, 본 소프트웨어로 개인 창작。\\n\\n편집 모드 필요 로 적절한 편집 클래스 로드lora。\\n</h2>\\n\\n\",\"usage\":\"<h1>모델 및 자료 준비 (필수)）</h1>\\n비디오 튜토리얼： https://www.bilibili.com/video/BV1dCN16MEqL\\nQ군: 439870282\\n<h2><p><strong>모델이 누락된 경우：</strong>이것 클릭[모델 다운로드] 모델 다운로드 기능 열기\\n이미지-텍스트 생성 방법: 매개변수를 집중적으로 켜고 이미지-텍스트 생성\\n\\n역추론 방법 끄기: 태그 역추론, 프롬프트 합성에 역추론 끄기\\n\\nstage1 필드와 함께 추가，\\n\\n모델 다운로드는 자신의 GPU 메모리에 따라 fp8 또는 fp16 모델을 선택하고, 메인 패널 모델 태그에서 올바른 모델을 선택한 다음, 'g'를 눌러 생성합니다. 작동하면 'q'를 누르고 오른쪽 상단에서 저장합니다. 저장된 설정을 다시 로드합니다.。\\n\\nb를 눌러 프롬프트 편집, 긍정 프롬프트는 자유롭게 수정, 역추론 규칙은 원하는 AI가 참조 이미지 설명 규칙。\\n\\n자연어 역추론은 시간이 오래 걸릴 수 있습니다. 시간을 절약하려면 다른 AI로 프롬프트를 작성하여 프롬프트에 붙여넣고 역추론TAG(wd14)↔자유 설치, 본 소프트웨어로 개인 창작。\\n\\n편집 모드 필요 로 적절한 편집 클래스 로드lora。\\n</h2>\\n\\n\",\"links\":[{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"},{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"}],\"background\":{\"image\":\"https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\",\"opacity\":0.62,\"useEmbeddedImage\":false},\"styles\":{\"titleColor\":\"#ff0000\",\"titleSize\":\"22px\",\"textColor\":\"#ff0000\",\"textSize\":\"14px\",\"panelBgColor\":\"#0a0807\",\"panelOpacity\":1,\"blurStrength\":0,\"bgOverlayOpacity\":0.15}},\"pluginDeps\":{},\"modelDownloads\":[{\"model_type\":\"loras\",\"subdir\":\"\",\"url\":\"https://hf-mirror.com/Kutches/Kr3a/resolve/main/MysticXXX_KREA2_v3.safetensors\",\"releasePageUrl\":\"https://civitai.red/models/2728644/krea-2-mystic-xxx?modelVersionId=3116175\",\"filename\":\"MysticXXX_KREA2_v3.safetensors\",\"actual_filename\":\"MysticXXX_KREA2_v3.safetensors\",\"actual_model_type\":\"loras\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"diffusion_models\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16/resolve/20260709091622/Krea2-Turbo-fp8_v10.safetensors\",\"releasePageUrl\":\"https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16\",\"filename\":\"Krea2-Turbo-fp8_v10.safetensors\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"junlebao\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"diffusion_models\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16/resolve/20260729202717/Krae2-Turbo-bf16%E5%AE%98%E6%96%B9.safetensors\",\"releasePageUrl\":\"https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16\",\"filename\":\"Krae2-Turbo-bf16.safetensors\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"junlebao\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"vae\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/ksaSuper/qwen_image_vae/resolve/master/qwen_image_vae.safetensors\",\"releasePageUrl\":\"https://modelscope.cn/models/ksaSuper/qwen_image_vae\",\"filename\":\"qwen_image_vae.safetensors\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"ksaSuper\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"text_encoders\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/tuanlai/Qwen3VL-4b-heretic/resolve/master/qwen3vl_4b_heretic_fp8.safetensors\",\"releasePageUrl\":\"https://modelscope.cn/models/tuanlai/Qwen3VL-4b-heretic/summary\",\"filename\":\"qwen3vl_4b_heretic_fp8.safetensors\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"tuanlai\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"diffusion_models\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16/resolve/master/Krea2-Turbo_fp16%E6%BB%A1%E8%A1%80%E7%89%88.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"junlebao\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"loras\",\"subdir\":\"\",\"url\":\"https://hf-mirror.com/zz2200/Krea2_actions/resolve/main/Anime2real%20-%20Krea2.safetensors\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"zz2200\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"custom_nodes/comfyui_controlnet_aux/ckpts/depth-anything/Depth-Anything-V2-Large\",\"subdir\":\"\",\"url\":\"https://hf-mirror.com/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"text_encoders\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/tuanlai/Qwen3VL-4b-heretic/resolve/master/qwen3vl_4b_heretic_bf16.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"tuanlai\",\"authorLinks\":[],\"authorDesc\":\"\"}],\"samplerPreviewMethod\":\"latent2rgb\",\"nodeTrackingEnabled\":false,\"autoSwitchTab\":false}"
+      },
+      "class_type": "bsk_PanelConfigSaver",
+      "_meta": {
+        "title": "패널 설정 정보"
+      }
+    },
+    "43": {
+      "inputs": {
+        "model": [
+          "24",
+          0
+        ],
+        "kv_cache": false
+      },
+      "class_type": "Krea2OstrisEditModelPatch",
+      "_meta": {
+        "title": "Krea2OstrisEditModelPatch"
+      }
+    },
+    "44": {
+      "inputs": {
+        "switch": [
+          "23",
+          1
+        ],
+        "on_false": [
+          "50",
+          0
+        ],
+        "on_true": [
+          "43",
+          0
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "If/Else Switch"
+      }
+    },
+    "45": {
+      "inputs": {
+        "switch": [
+          "23",
+          0
+        ],
+        "on_false": [
+          "23",
+          3
+        ],
+        "on_true": [
+          "46",
+          0
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "If/Else Switch"
+      }
+    },
+    "46": {
+      "inputs": {
+        "value": 1
+      },
+      "class_type": "PrimitiveFloat",
+      "_meta": {
+        "title": "Float"
+      }
+    },
+    "48": {
+      "inputs": {
+        "model": [
+          "8",
+          0
+        ],
+        "shift": 3.0000000000000004
+      },
+      "class_type": "ModelSamplingAuraFlow",
+      "_meta": {
+        "title": "ModelSamplingAuraFlow"
+      }
+    },
+    "49": {
+      "inputs": {
+        "model": [
+          "48",
+          0
+        ],
+        "lora_name": "Krea2/depth-control-lora.safetensors",
+        "strength": 1
+      },
+      "class_type": "Krea2ControlLoRALoader",
+      "_meta": {
+        "title": "Krea2ControlLoRALoader"
+      }
+    },
+    "50": {
+      "inputs": {
+        "model": [
+          "24",
+          0
+        ],
+        "control_latent": [
+          "52",
+          0
+        ]
+      },
+      "class_type": "Krea2ControlApply",
+      "_meta": {
+        "title": "Krea2ControlApply"
+      }
+    },
+    "52": {
+      "inputs": {
+        "control_image": [
+          "55",
+          0
+        ],
+        "vae": [
+          "6",
+          0
+        ],
+        "resize": "match_latent_size",
+        "upscale_method": "lanczos",
+        "crop": "center",
+        "channel_mode": "rgb",
+        "normalize": "none",
+        "invert": false,
+        "batch_mode": "independent_images",
+        "latent": [
+          "59",
+          0
+        ]
+      },
+      "class_type": "Krea2ControlImageEncode",
+      "_meta": {
+        "title": "Krea2ControlImageEncode"
+      }
+    },
+    "53": {
+      "inputs": {
+        "images": [
+          "52",
+          1
+        ]
+      },
+      "class_type": "PreviewImage",
+      "_meta": {
+        "title": "PreviewImage"
+      }
+    },
+    "55": {
+      "inputs": {
+        "image": [
+          "56",
+          0
+        ],
+        "preprocessor": "DepthAnythingV2Preprocessor",
+        "resolution": 512
+      },
+      "class_type": "AIO_Preprocessor",
+      "_meta": {
+        "title": "AIO Aux Preprocessor"
+      }
+    },
+    "56": {
+      "inputs": {
+        "image": "example.png",
+        "crop_params": "0,0,0,0,0,896,1536",
+        "output_empty_latent": true,
+        "redraw_mode": false,
+        "divisible_by_32": false
+      },
+      "class_type": "BSK_LoadImage",
+      "_meta": {
+        "title": "제어"
+      }
+    },
+    "58": {
+      "inputs": {
+        "image": [
+          "56",
+          0
+        ]
+      },
+      "class_type": "GetImageSize",
+      "_meta": {
+        "title": "Get Image Size"
+      }
+    },
+    "59": {
+      "inputs": {
+        "width": [
+          "58",
+          0
+        ],
+        "height": [
+          "58",
+          1
+        ],
+        "batch_size": 1
+      },
+      "class_type": "EmptyLatentImage",
+      "_meta": {
+        "title": "Empty Latent Image"
+      }
+    }
+  },
+  "tabs": [
+    {
+      "id": "main",
+      "name": "일반",
+      "nodeIds": [
+        "20",
+        "21",
+        "12",
+        "23",
+        "56",
+        "15",
+        "22",
+        "30",
+        "27",
+        "18",
+        "17",
+        "53"
+      ]
+    },
+    {
+      "id": "prompt",
+      "name": "프롬프트",
+      "nodeIds": [
+        "1",
+        "11",
+        "31"
+      ]
+    },
+    {
+      "id": "model",
+      "name": "모델",
+      "nodeIds": [
+        "5",
+        "6",
+        "8",
+        "24",
+        "49"
+      ]
+    },
+    {
+      "id": "sampler",
+      "name": "샘플러",
+      "nodeIds": [
+        "38"
+      ]
+    },
+    {
+      "id": "other",
+      "name": "기타",
+      "nodeIds": [
+        "2",
+        "4",
+        "14",
+        "17",
+        "18",
+        "20",
+        "21",
+        "25",
+        "27",
+        "32",
+        "33",
+        "34",
+        "35",
+        "37",
+        "39",
+        "43",
+        "44",
+        "45",
+        "46",
+        "48",
+        "50",
+        "52",
+        "53",
+        "55",
+        "58",
+        "59"
+      ]
+    }
+  ],
+  "currentTab": "model",
+  "tabNodes": {
+    "main": [
+      "20",
+      "21",
+      "12",
+      "23",
+      "56",
+      "15",
+      "22",
+      "30",
+      "27",
+      "18",
+      "17",
+      "53"
+    ],
+    "prompt": [
+      "1",
+      "11",
+      "31"
+    ],
+    "model": [
+      "5",
+      "6",
+      "8",
+      "24",
+      "49"
+    ],
+    "sampler": [
+      "38"
+    ],
+    "other": [
+      "2",
+      "4",
+      "14",
+      "17",
+      "18",
+      "20",
+      "21",
+      "25",
+      "27",
+      "32",
+      "33",
+      "34",
+      "35",
+      "37",
+      "39",
+      "43",
+      "44",
+      "45",
+      "46",
+      "48",
+      "50",
+      "52",
+      "53",
+      "55",
+      "58",
+      "59"
+    ]
+  },
+  "cardValues": {
+    "1.text": "# 해시 태그 주석이 녹색으로 변하면 프롬프트가 작동하지 않습니다,\n# 중국어 또는 영어 프롬프트로 생성할 내용을 자세히 설명할 수 있습니다\n\n# --스타일 및 렌즈 설명\n애니메이션 스타일, 초광각 풀 뷰 아이리스 렌즈，\n# 이 사진은 밝고 스타일이 있는“강렬（High-key）”부드러운 조명 효과의 코스프레(Cosplay) 인물 사진 촬영。",
+    "1.separator": " ",
+    "4.preset": "detail",
+    "4.per_layer_weights": "0.8, 0.8, 0.9, 0.9, 1.0, 1.0, 1.2, 3.0, 6.0, 1.5, 5.0, 1.2",
+    "4.multiplier": 2,
+    "4.renormalize": true,
+    "5.clip_name": "qwen3vl_4b_heretic_fp8.safetensors",
+    "5.type": "krea2",
+    "5.device": "default",
+    "6.vae_name": "qwen_image_vae.safetensors",
+    "8.unet_name": "Krea2-Turbo-fp8_v10.safetensors",
+    "8.weight_dtype": "default",
+    "12.switch1": true,
+    "12.switch2": false,
+    "12.switch3": false,
+    "12.input4": "",
+    "12.switch4": false,
+    "12.merge_order": "1,2,3,4",
+    "12.preserve_newlines": false,
+    "12.input5": "",
+    "12.switch5": true,
+    "12.input6": "",
+    "12.switch6": true,
+    "12.input7": "",
+    "12.switch7": true,
+    "12.input8": "",
+    "12.switch8": true,
+    "12.input9": "",
+    "12.switch9": true,
+    "12.input10": "",
+    "12.switch10": true,
+    "15.image": "example.png",
+    "15.crop_params": "0,0,0,0,0,896,1536",
+    "15.redraw_mode": false,
+    "15.divisible_by_32": false,
+    "15.image_cropX": 0,
+    "15.image_cropY": 0,
+    "15.image_cropW": 0,
+    "15.image_cropH": 0,
+    "15.output_empty_latent": [
+      "23",
+      0
+    ],
+    "20.filename_prefix": "ComfyUI",
+    "20.save_as_jpg": false,
+    "20.jpg_quality": 95,
+    "20.embed_workflow_in_png": true,
+    "20.save_workflow": false,
+    "20.save_txt": false,
+    "20.denoise_bilateral": false,
+    "20.denoise_diameter": 9,
+    "20.denoise_sigma_color": 75,
+    "20.denoise_sigma_space": 75,
+    "21.seed_str": "8112277260527222630",
+    "21.trigger": 3,
+    "21.auto_generate": true,
+    "22.pos_x": -0.14079662485280497,
+    "22.pos_y": 0.0038222095406720835,
+    "22.pos_z": -0.13199999999999978,
+    "22.roll": 0,
+    "22.config": "{\"weight_min\":0.1,\"weight_max\":10,\"azimuth\":{\"enabled\":true,\"weight\":10,\"deadzone_ratio\":0.9,\"directions\":{\"front\":{\"tag\":\"from front, \",\"enabled\":true},\"back\":{\"tag\":\"from behind,\",\"enabled\":true},\"left\":{\"tag\":\"facing right, \",\"enabled\":true},\"right\":{\"tag\":\"facing left, \",\"enabled\":true}}},\"elevation\":{\"enabled\":true,\"extra\":10,\"categories\":{\"bird\":{\"tag\":\"directly above, from above, aerial view\",\"enabled\":true},\"high\":{\"tag\":\"high angle, from above,  \",\"enabled\":true},\"eye\":{\"tag\":\"eye-level\",\"enabled\":true},\"low\":{\"tag\":\"low angle, from below, \",\"enabled\":true},\"worm\":{\"tag\":\"directly below\",\"enabled\":true}},\"eye_peak\":3},\"distance\":{\"enabled\":true,\"extra\":0,\"categories\":{\"ecu\":{\"tag\":\"extreme close-up\",\"enabled\":true},\"cu\":{\"tag\":\"close-up\",\"enabled\":true},\"medium\":{\"tag\":\"medium shot\",\"enabled\":true},\"full\":{\"tag\":\"full body\",\"enabled\":true},\"wide\":{\"tag\":\"wide shot\",\"enabled\":true}}},\"tilt\":{\"enabled\":true,\"deadzone\":0.15,\"extra\":0,\"dutch_tag\":\"dutch angle\"},\"extra_master\":1,\"extras\":{\"lens\":{\"enabled\":false,\"value\":\"85mm lens\"},\"dof\":{\"enabled\":false,\"value\":\"shallow depth of field\",\"weight\":1.3},\"movement\":{\"enabled\":false,\"value\":\"handheld camera\"},\"composition\":{\"enabled\":false,\"value\":\"rule of thirds\"},\"style\":{\"enabled\":false,\"value\":\"cinematic\"}},\"no_weight\":true,\"no_weight_threshold\":0.38,\"wheel_step\":0.0003,\"drag_step\":0.004}",
+    "23.title1": "생성 이미지↔이미지 생성",
+    "23.value1": "true",
+    "23.type1": "BOOLEAN",
+    "23.title2": "편집 모드",
+    "23.value2": "false",
+    "23.type2": "BOOLEAN",
+    "23.title3": "단계",
+    "23.value3": "8",
+    "23.type3": "INT",
+    "23.title4": "유사도",
+    "23.value4": "0.72",
+    "23.type4": "FLOAT",
+    "23.title5": "역추적TAG(wd14)↔자연어(qvl)  ",
+    "23.value5": "false",
+    "23.type5": "BOOLEAN",
+    "24.master_switch": true,
+    "24.switch_1": true,
+    "24.lora_name_1": "MysticXXX_KREA2_v3.safetensors",
+    "24.strength_model_1": 1,
+    "24.strength_clip_1": 1,
+    "24.lora_name_2": "Anime2real - Krea2.safetensors",
+    "24.strength_model_2": 1,
+    "24.strength_clip_2": 1,
+    "24.switch_3": false,
+    "24.lora_name_3": "None",
+    "24.strength_model_3": 1,
+    "24.strength_clip_3": 1,
+    "24.switch_4": false,
+    "24.lora_name_4": "None",
+    "24.strength_model_4": 1,
+    "24.strength_clip_4": 1,
+    "24.switch_5": false,
+    "24.lora_name_5": "None",
+    "24.strength_model_5": 1,
+    "24.strength_clip_5": 1,
+    "24.switch_6": false,
+    "24.lora_name_6": "None",
+    "24.strength_model_6": 1,
+    "24.strength_clip_6": 1,
+    "24.switch_7": false,
+    "24.lora_name_7": "None",
+    "24.strength_model_7": 1,
+    "24.strength_clip_7": 1,
+    "24.batch_test_1": false,
+    "24.batch_test_min_1": -2,
+    "24.batch_test_max_1": 1,
+    "24.batch_test_mode_1": "둘 다 동시에",
+    "24.batch_test_steps_1": 10,
+    "24.batch_test_2": false,
+    "24.batch_test_min_2": -2,
+    "24.batch_test_max_2": 1,
+    "24.batch_test_mode_2": "둘 다 동시에",
+    "24.batch_test_steps_2": 10,
+    "24.batch_test_3": false,
+    "24.batch_test_min_3": -2,
+    "24.batch_test_max_3": 1,
+    "24.batch_test_mode_3": "둘 다 동시에",
+    "24.batch_test_steps_3": 10,
+    "24.batch_test_4": false,
+    "24.batch_test_min_4": -2,
+    "24.batch_test_max_4": 1,
+    "24.batch_test_mode_4": "둘 다 동시에",
+    "24.batch_test_steps_4": 10,
+    "24.batch_test_5": false,
+    "24.batch_test_min_5": -2,
+    "24.batch_test_max_5": 1,
+    "24.batch_test_mode_5": "둘 다 동시에",
+    "24.batch_test_steps_5": 10,
+    "24.batch_test_6": false,
+    "24.batch_test_min_6": -2,
+    "24.batch_test_max_6": 1,
+    "24.batch_test_mode_6": "둘 다 동시에",
+    "24.batch_test_steps_6": 10,
+    "24.batch_test_7": false,
+    "24.batch_test_min_7": -2,
+    "24.batch_test_max_7": 1,
+    "24.batch_test_mode_7": "둘 다 동시에",
+    "24.batch_test_steps_7": 10,
+    "24.lora_text": "master=on\nMysticXXX_KREA2_v3.safetensors:1,1,on\nAnime2real - Krea2.safetensors:1,1,off",
+    "27.max_length": 1024,
+    "27.sampling_mode": "on",
+    "27.thinking": true,
+    "27.use_default_template": true,
+    "27.temperature": 0.7,
+    "27.top_k": 64,
+    "27.top_p": 0.95,
+    "27.min_p": 0.05,
+    "27.repetition_penalty": 1.05,
+    "27.seed": 666,
+    "27.presence_penalty": 0,
+    "30.tagger_type": "wd14",
+    "30.wd14_model": "wd-vit-tagger-v3",
+    "30.general_threshold": 0.35,
+    "30.character_threshold": 0.85,
+    "30.sort_mode": "default",
+    "30.exclude_meta": true,
+    "30.exclude_rating": true,
+    "30.exclude_quality": true,
+    "30.replace_underscore": false,
+    "30.trailing_comma": false,
+    "30.exclude_tags": "",
+    "30.max_resolution": 1280,
+    "30.trigger_word": "",
+    "30.batch_dir": "",
+    "30.enabled": true,
+    "31.text": "# 역추출 규칙\n# --중국어 설명\n이 이미지에 대해 중국어로 설명하고, 이미지가 2D 이세계 스타일임을 강조하며, 조명, 캐릭터 및 장면을 자세히 묘사합니다.，\n# 현실적인 스타일\n# 사용 금지: 2D 설명,\n\n# --영어 설명\n# 이 이미지를 영어로 설명,\n\n# 다른 규칙, 카메라 제어 시작으로 아래 규칙 활성화\n카메라 각도 설명 안 함, # 만약... 어떻게...,\n\n",
+    "31.separator": " ",
+    "33.prompt": "",
+    "37.longer_edge": 1024,
+    "38.add_noise": "enable",
+    "38.cfg": 1,
+    "38.sampler_name": "euler",
+    "38.scheduler": "simple",
+    "38.end_at_step": 10000,
+    "38.return_with_leftover_noise": "disable",
+    "39.value": "(1-a)*b",
+    "39.c": 0,
+    "39.d": 0,
+    "43.kv_cache": false,
+    "46.value": 1,
+    "48.shift": 3.0000000000000004,
+    "49.lora_name": "Krea2/depth-control-lora.safetensors",
+    "49.strength": 1,
+    "52.resize": "match_latent_size",
+    "52.upscale_method": "lanczos",
+    "52.crop": "center",
+    "52.channel_mode": "rgb",
+    "52.normalize": "none",
+    "52.invert": false,
+    "52.batch_mode": "independent_images",
+    "55.preprocessor": "DepthAnythingV2Preprocessor",
+    "55.resolution": 512,
+    "56.image": "example.png",
+    "56.crop_params": "0,0,0,0,0,896,1536",
+    "56.output_empty_latent": true,
+    "56.redraw_mode": false,
+    "56.divisible_by_32": false,
+    "56.image_cropX": 0,
+    "56.image_cropY": 0,
+    "56.image_cropW": 0,
+    "56.image_cropH": 0,
+    "59.batch_size": 1,
+    "12.__input_order": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "24.switch_2": false,
+    "cardOrder": [
+      "20",
+      "21",
+      "12",
+      "23",
+      "56",
+      "15",
+      "22",
+      "30",
+      "27",
+      "18",
+      "17",
+      "55",
+      "53"
+    ],
+    "15.image_source": "example.png",
+    "56.image_source": "example.png"
+  },
+  "globalCropSize": {
+    "width": 896,
+    "height": 1536
+  },
+  "linkCropSize": true,
+  "cropSizeLocked": false,
+  "autoDetectOrientation": true,
+  "autoAdaptResolution": false,
+  "noCropMode": false,
+  "textareaHeights": {
+    "57.text": "",
+    "59.text": "",
+    "69.rules": "",
+    "79.rules": "",
+    "67.strings_to_remove": "",
+    "70.rules": "",
+    "73.text": "398px",
+    "75.rules": "",
+    "76.text": "",
+    "78.text_b": "",
+    "78.text_c": "",
+    "86.text": "",
+    "87.text": "",
+    "88.rules": "",
+    "15.text": "452px",
+    "20.text": "",
+    "21.rules": "",
+    "17.rules": "356px",
+    "16.text": "",
+    "29.text": "",
+    "31.text": "",
+    "44.text": "",
+    "24.strings_to_remove": "",
+    "30.rules": "",
+    "17.text": "",
+    "18.text": "",
+    "36.text": "",
+    "37.text": "",
+    "38.strings_to_remove": "",
+    "39.rules": "",
+    "40.rules": "287px",
+    "35.text": "",
+    "10.text": "305px",
+    "11.text": "271px",
+    "5.text": "380px",
+    "762.text": "",
+    "586.text": "",
+    "587.text": "",
+    "646.text": "",
+    "1.param_0": "",
+    "4.value": "",
+    "1.text": "",
+    "198.prompt": "",
+    "476.text_a": "",
+    "476.text_c": "",
+    "478.text": "",
+    "53.text": "",
+    "55.text": "",
+    "56.text": "",
+    "48.rules": "",
+    "61.text": "",
+    "65.text": "",
+    "78.text": "",
+    "6.text": "",
+    "7.text": "",
+    "12.text": "",
+    "85.save_prompt_txt": "",
+    "85.custom_prompt": "",
+    "86.dedup_prompt": "",
+    "87.dedup_prompt": "",
+    "95.dedup_prompt": "",
+    "96.dedup_prompt": "",
+    "85.other_text": "",
+    "3.text": "",
+    "4.text": "",
+    "506.text": "",
+    "507.text": "",
+    "8.text": "",
+    "9.text": "",
+    "12.rules": "",
+    "72.text": "",
+    "21.text": "",
+    "21.strings_to_remove": "",
+    "132.text": "",
+    "147.text": "",
+    "153.text": "",
+    "155.text": "",
+    "156.text": "",
+    "163.text": "",
+    "165.text": "",
+    "172.text": "",
+    "226.text": "",
+    "228.text": "",
+    "227.text": "",
+    "229.text": "",
+    "230.text": "",
+    "248.rules": "",
+    "249.rules": "",
+    "250.strings_to_remove": "",
+    "251.text": "",
+    "252.rules": "",
+    "254.text": "",
+    "14.text": "",
+    "37.other_text": "",
+    "66.text": "",
+    "98.text": "",
+    "168.value": "",
+    "121.text": "",
+    "136.prompt": "",
+    "146.text": "",
+    "117.text": "",
+    "119.param_0": "",
+    "143.param_0": "",
+    "144.param_0": "",
+    "139.LanPaint_PromptMode": "",
+    "145.LanPaint_PromptMode": "",
+    "209.text": "",
+    "295.text": "",
+    "20.other_text": "",
+    "26.prompt": "",
+    "27.prompt": "",
+    "160.text": "",
+    "131.local_prompts": "",
+    "131.global_prompt": "",
+    "152.text": "",
+    "133.prompt": "",
+    "164.text": "",
+    "133.global_prompt": "",
+    "142.local_prompts": "",
+    "142.global_prompt": "",
+    "13.text": "",
+    "151.text": "",
+    "157.text": "",
+    "158.text": "",
+    "159.text": "",
+    "161.text": "",
+    "162.text": "",
+    "166.text": "",
+    "168.text": "",
+    "33.prompt": "",
+    "32.prompt": ""
+  },
+  "theme": {
+    "primaryGradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "backgroundColor": "linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)",
+    "cardBackground": "rgba(255, 255, 255, 0.04)",
+    "borderStyle": "rgba(255, 255, 255, 0.08)",
+    "accentColor": "#667eea",
+    "textColor": "white",
+    "placeholderColor": "rgba(255, 255, 255, 0.6)"
+  },
+  "promptLibraryDarkMode": true,
+  "highlightColorA": "#6496c8",
+  "highlightColorB": "#c89664",
+  "editorBgColorDark": "#2a2a2f",
+  "editorBgColorLight": "#ffffff",
+  "inputLinkSettings": {},
+  "cardLinkToggleState": {},
+  "cardAutoCollapse": {
+    "15": false,
+    "20": true,
+    "56": false
+  },
+  "cardGridMode": false,
+  "allAutoCollapse": false,
+  "inputDefaultConfig": {},
+  "inputDisabledValues": {},
+  "localOutputConfigs": {},
+  "workflowInfo": {
+    "title": "Krea2 controlnet",
+    "subtitle": "너의 여정에 변할래중의일점미세한 빛",
+    "subtitles": [
+      "너의 여정에 변할래중의일점미세한 빛",
+      "매번 생성할 때마다 혼돈에 대한 심문。"
+    ],
+    "author": "",
+    "authorAvatar": "",
+    "authors": [
+      {
+        "name": "灰暗x",
+        "avatar": "https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif",
+        "links": [
+          {
+            "name": "Bilibili",
+            "url": "https://space.bilibili.com/26779709"
+          }
+        ]
+      }
+    ],
+    "description": "<h1>모델 및 자료 준비 (필수)）</h1>\n비디오 튜토리얼： https://www.bilibili.com/video/BV1dCN16MEqL\nQ군: 439870282\n<h2><p><strong>모델이 누락된 경우：</strong>이것 클릭[모델 다운로드] 모델 다운로드 기능 열기\n이미지-텍스트 생성 방법: 매개변수를 집중적으로 켜고 이미지-텍스트 생성\n\n역추론 방법 끄기: 태그 역추론, 프롬프트 합성에 역추론 끄기\n\nstage1 필드와 함께 추가，\n\n모델 다운로드는 자신의 GPU 메모리에 따라 fp8 또는 fp16 모델을 선택하고, 메인 패널 모델 태그에서 올바른 모델을 선택한 다음, 'g'를 눌러 생성합니다. 작동하면 'q'를 누르고 오른쪽 상단에서 저장합니다. 저장된 설정을 다시 로드합니다.。\n\nb를 눌러 프롬프트 편집, 긍정 프롬프트는 자유롭게 수정, 역추론 규칙은 원하는 AI가 참조 이미지 설명 규칙。\n\n자연어 역추론은 시간이 오래 걸릴 수 있습니다. 시간을 절약하려면 다른 AI로 프롬프트를 작성하여 프롬프트에 붙여넣고 역추론TAG(wd14)↔자유 설치, 본 소프트웨어로 개인 창작。\n\n편집 모드 필요 로 적절한 편집 클래스 로드lora。\n</h2>\n\n",
+    "usage": "<h1>모델 및 자료 준비 (필수)）</h1>\n비디오 튜토리얼： https://www.bilibili.com/video/BV1dCN16MEqL\nQ군: 439870282\n<h2><p><strong>모델이 누락된 경우：</strong>이것 클릭[모델 다운로드] 모델 다운로드 기능 열기\n이미지-텍스트 생성 방법: 매개변수를 집중적으로 켜고 이미지-텍스트 생성\n\n역추론 방법 끄기: 태그 역추론, 프롬프트 합성에 역추론 끄기\n\nstage1 필드와 함께 추가，\n\n모델 다운로드는 자신의 GPU 메모리에 따라 fp8 또는 fp16 모델을 선택하고, 메인 패널 모델 태그에서 올바른 모델을 선택한 다음, 'g'를 눌러 생성합니다. 작동하면 'q'를 누르고 오른쪽 상단에서 저장합니다. 저장된 설정을 다시 로드합니다.。\n\nb를 눌러 프롬프트 편집, 긍정 프롬프트는 자유롭게 수정, 역추론 규칙은 원하는 AI가 참조 이미지 설명 규칙。\n\n자연어 역추론은 시간이 오래 걸릴 수 있습니다. 시간을 절약하려면 다른 AI로 프롬프트를 작성하여 프롬프트에 붙여넣고 역추론TAG(wd14)↔자유 설치, 본 소프트웨어로 개인 창작。\n\n편집 모드 필요 로 적절한 편집 클래스 로드lora。\n</h2>\n\n",
+    "links": [
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      },
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      }
+    ],
+    "background": {
+      "image": "https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "opacity": 0.62,
+      "useEmbeddedImage": false
+    },
+    "styles": {
+      "titleColor": "#ff0000",
+      "titleSize": "22px",
+      "textColor": "#ff0000",
+      "textSize": "14px",
+      "panelBgColor": "#0a0807",
+      "panelOpacity": 1,
+      "blurStrength": 0,
+      "bgOverlayOpacity": 0.15
+    }
+  },
+  "pluginDeps": {},
+  "modelDownloads": [
+    {
+      "model_type": "loras",
+      "subdir": "",
+      "url": "https://hf-mirror.com/Kutches/Kr3a/resolve/main/MysticXXX_KREA2_v3.safetensors",
+      "releasePageUrl": "https://civitai.red/models/2728644/krea-2-mystic-xxx?modelVersionId=3116175",
+      "filename": "MysticXXX_KREA2_v3.safetensors",
+      "actual_filename": "MysticXXX_KREA2_v3.safetensors",
+      "actual_model_type": "loras",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "diffusion_models",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16/resolve/20260709091622/Krea2-Turbo-fp8_v10.safetensors",
+      "releasePageUrl": "https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16",
+      "filename": "Krea2-Turbo-fp8_v10.safetensors",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "junlebao",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "diffusion_models",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16/resolve/20260729202717/Krae2-Turbo-bf16%E5%AE%98%E6%96%B9.safetensors",
+      "releasePageUrl": "https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16",
+      "filename": "Krae2-Turbo-bf16.safetensors",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "junlebao",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "vae",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/ksaSuper/qwen_image_vae/resolve/master/qwen_image_vae.safetensors",
+      "releasePageUrl": "https://modelscope.cn/models/ksaSuper/qwen_image_vae",
+      "filename": "qwen_image_vae.safetensors",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "ksaSuper",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "text_encoders",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/tuanlai/Qwen3VL-4b-heretic/resolve/master/qwen3vl_4b_heretic_fp8.safetensors",
+      "releasePageUrl": "https://modelscope.cn/models/tuanlai/Qwen3VL-4b-heretic/summary",
+      "filename": "qwen3vl_4b_heretic_fp8.safetensors",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "tuanlai",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "diffusion_models",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/junlebao/Krea2-Turbo-fp16/resolve/master/Krea2-Turbo_fp16%E6%BB%A1%E8%A1%80%E7%89%88.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "junlebao",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "loras",
+      "subdir": "",
+      "url": "https://hf-mirror.com/zz2200/Krea2_actions/resolve/main/Anime2real%20-%20Krea2.safetensors",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "zz2200",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "custom_nodes/comfyui_controlnet_aux/ckpts/depth-anything/Depth-Anything-V2-Large",
+      "subdir": "",
+      "url": "https://hf-mirror.com/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "text_encoders",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/tuanlai/Qwen3VL-4b-heretic/resolve/master/qwen3vl_4b_heretic_bf16.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "tuanlai",
+      "authorLinks": [],
+      "authorDesc": ""
+    }
+  ],
+  "samplerPreviewMethod": "latent2rgb",
+  "nodeTrackingEnabled": false,
+  "autoSwitchTab": false
+}

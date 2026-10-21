@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试 - 明确包含斜体变体</title>
+    
+    <!-- 方式1: 参考网页的写法 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+SC:wght@200;300;400;700&display=swap" rel="stylesheet" id="font-ref">
+    
+    <!-- 方式2: 明确包含斜体变体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet" id="font-italic">
+    
+    <style>
+        body {
+            background: #0a0807;
+            color: #f2ece5;
+            padding: 40px;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #151515;
+            border-radius: 8px;
+        }
+        
+        .label {
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        
+        /* 参考网页的样式 */
+        .title-ref {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4rem;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+        }
+        .title-ref .accent {
+            display: block;
+            color: #c8956c;
+            font-style: italic;
+        }
+        
+        /* 对比组 - 无斜体 */
+        .title-no-italic {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4rem;
+            color: #c8956c;
+        }
+        
+        /* 对比组 - 普通serif斜体 */
+        .title-serif {
+            font-family: serif;
+            font-weight: 900;
+            font-size: 4rem;
+            font-style: italic;
+            color: #c8956c;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="color: #888; font-size: 14px; font-weight: normal;">Playfair Display 字体对比测试</h2>
+    
+    <div class="test-section">
+        <div class="label">1. 参考网页写法 (font-style: italic)</div>
+        <div class="title-ref">
+            <span class="accent">ComfyUI 工作流</span>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <div class="label">2. 同样的字体，但无斜体</div>
+        <div class="title-no-italic">ComfyUI 工作流</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="label">3. 普通衬线字体斜体 (对照组)</div>
+        <div class="title-serif">ComfyUI 工作流</div>
+    </div>
+    
+    <hr style="border-color: #333; margin: 40px 0;">
+    
+    <p style="color: #555; font-size: 12px;">
+        按 F12 打开开发者工具 -> Network -> 刷新页面<br>
+        查看 Playfair 相关的请求，确认是否加载了 italic 版本的字体文件
+    </p>
+</body>
+</html>

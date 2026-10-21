@@ -1,0 +1,2 @@
+复制文件ComfyUI/custom_nodes/ComfyUI_bsk_UI/wd14/wd14tagger.py 到 ComfyUI/custom_nodes/ComfyUI-WD14-Tagger 替换文件,
+主要作用是给wd14反推插件增加了一个开关方便前端使用.

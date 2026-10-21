@@ -1,0 +1,69 @@
+﻿플러그인에 워크플로우가 이미 통합되어 있으며, 오른쪽 상단에서 설정 버튼을 찾아 열린 패널에서 서버 구성 로드 버튼을 클릭합니다.
+플러그인 설치를 확인하세요https://github.com/pythongosssss/ComfyUI-WD14-Tagger
+ComfyUI-bsk_UI/wd14 디렉토리 내 파일을 당신의 comfyui 설치 디렉토리 custom_nodes 폴더 내 ComfyUI-WD14-Tagger 플러그인 디렉토리 내 대체 파일로 복사하십시오.
+If the workflow doesn't run, drag the image file into the ComfyUI native interface to load the workflow, check which plugins and models are missing, install the corresponding plugins and models, and the workflow can run correctly in the plugin frontend after running.
+
+또한 워크플로우 이미지 또는 워크플로우 자체를 이 플러그인 인터페이스의 왼쪽 프리뷰 영역에 드래그하여 로드,
+하지만 이 플러그인은 ComfyUI API를 호출하여 워크플로우를 실행하는 방식이므로, 일반 워크플로우를 API 워크플로우로 자동 변환할 수 있습니다.,
+하지만 워크플로우에 특수 프론트엔드 노드를 사용하면 워크플로우가 작동하지 않을 수 있습니다..
+당신의 워크플로우는 내보내기 가능한 실행 가능한 API 워크플로우를 보장하거나 이 플러그인 워크플로우 편집기에서 워크플로우를 편집하는 것이 좋습니다..
+
+랜덤 숫자 생성 노드는 반드시 RandomSeedNode로 대체해야 프론트엔드에서 정확하게 랜덤 숫자를 생성할 수 있습니다. 샘플러에 내장된 랜덤 숫자 생성기는 효과가 없으며, 반드시 이 노드를 샘플러의 랜덤 숫자 포트에 연결해야 합니다..
+주요 이유는 랜덤 숫자가 프론트엔드로 전송되기 전에 생성되어야 하며, 이 플러그인은 comfyui 프론트엔드에서 분리되어 있으므로 이 플러그인에만 적합한 프론트엔드 랜덤 숫자 노드를 사용해야 합니다..
+
+ComfyUI-bsk_UI플러그인 자체 노드:
+bsk_StringMergeWithSwitch : bsk_String Merge (Switch)
+PromptStringProcessor : bsk_문자열 대체 및 삭제
+LoraLoaderWithPath : bsk_LoraLoaderWithPath
+bsk_MultiLoraLoaderWithPath : bsk_MultiLoraLoaderWithPath
+StringRuleProcessor : bsk_StringRule
+StringProcessor : bsk_문자열 제외, 주석 # , 쉼표로 구분
+MultiLineStringEditor : bsk_프롬프트 편집기,ctrl+/ 주석/해제
+RandomSeedNode : bsk_Random Seed
+BSK_LoadImage : BSK 이미지 불러오기
+BSK_SaveImage : BSK 이미지 저장
+BSK_MultiLayerImageLoader : BSK 다중 레이어 이미지 로더
+
+자동으로 생성된 노드(그는 패널 설정을 저장하는 데 사용됩니다))
+bsk_PanelConfigSaver : 패널 설정 정보
+
+사용하지 않는 노드(기능 테스트 및 자리 표시 노드)):
+ComfyUIPanel : ComfyUI Panel
+BSK_TestNode : BSK 테스트 노드
+HelloWorldNode : BSK 안녕하세요 세상
+이미지  확대: 이미지 확대aa
+MaskSeparatorTool : Mask도구 분리 (보존RGB)
+
+워크플로우에서 아직 아래 플러그인이 사용되고 있습니다. 설치되어 있지 않다면 먼저 설치하고 ComfyUI를 다시 시작해야 워크플로우가 올바르게 로드됩니다.：
+
+1. Efficiency Nodes for ComfyUI
+
+영향을 받는 노드	KSampler (Efficient)、LatentUpscaleBy、INTConstant、FloatConstant
+용도	효율적인 샘플러, 잠재 공간 축소(비례), 정수/부동 소수점 상수 노드
+설치 위치	https://github.com/jags111/efficiency-nodes-comfyui
+2. ComfyUI_ControlNet_Aux
+
+영향을 받는 노드	ControlNetApplyAdvanced、AIO_Preprocessor
+용도	ControlNet 고급 앱 (강도/시작/종료 비율 제어) 및 원스톱 전처리
+설치 위치	https://github.com/Fannovel16/comfyui_controlnet_aux
+3. ComfyUI-WD14-Tagger
+
+영향을 받는 노드	WD14Tagger
+용도	WD14 모델을 사용하여 제어 이미지를 위한 프롬프트 힌트
+설치 위치	https://github.com/pythongosssss/ComfyUI-WD14-Tagger
+4. ComfyUI-Custom-Scripts
+
+영향을 받는 노드	PreviewAny
+용도	워크플로우에서 텍스트/문자열 미리보기 (프롬프트 디버깅용)）
+이것은 comfyui 내장 노드일 수 있으며, 그렇지 않은 경우 아래 노드를 설치해 보세요
+설치 위치	https://github.com/pythongosssss/ComfyUI-Custom-Scripts
+5. ComfyUI_SimpleMath
+
+영향을 받는 노드	SimpleMath+
+용도	수학 연산을 실행합니다. 이 워크플로우는 ControlNet 종료 비율을 계산합니다.
+설치 위치	https://github.com/cubiq/ComfyUI_essentials
+
+설치 방법
+ComfyUI Manager(설치되지 않은 경우: https://github.com/ltdrdata/ComfyUI-Manager)를 사용하는 것이 좋습니다. Manager 인터페이스에서 위의 플러그인 이름을 검색하여 직접 설치하십시오.。
+
+수동 설치: 해당 저장소를 ComfyUI/custom_nodes/ 디렉토리에 복제한 다음 다시 시작합니다. ComfyUI。

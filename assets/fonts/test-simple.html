@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字体对比测试</title>
+    
+    <!-- 完全照搬参考网页的字体引入方式 -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+SC:wght@200;300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: #0a0807;
+            padding: 60px;
+        }
+        
+        .test-box {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #1a1a1a;
+            border-radius: 8px;
+        }
+        
+        .label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 10px;
+            font-family: sans-serif;
+        }
+        
+        /* 参考网页的样式 - 完全复制 */
+        .ref-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4rem;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            color: #c8956c;
+        }
+        
+        .ref-title .line-2 {
+            display: block;
+            font-style: italic;
+        }
+        
+        /* 简化版 - 只有斜体 */
+        .simple-italic {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4rem;
+            font-style: italic;
+            color: #c8956c;
+        }
+        
+        /* 无斜体版 */
+        .no-italic {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4rem;
+            color: #c8956c;
+        }
+        
+        /* 普通衬线字体对照组 */
+        .fallback {
+            font-family: serif;
+            font-weight: 900;
+            font-size: 4rem;
+            font-style: italic;
+            color: #c8956c;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: #888; font-size: 14px; font-weight: normal;">Playfair Display 字体测试 - 照搬参考网页写法</h1>
+    
+    <div class="test-box">
+        <div class="label">1. 参考网页写法 (span.line-2 + font-style: italic)</div>
+        <div class="ref-title">
+            <span class="line-2">ComfyUI 工作流</span>
+        </div>
+    </div>
+    
+    <div class="test-box">
+        <div class="label">2. 简化斜体写法 (直接 font-style: italic)</div>
+        <div class="simple-italic">ComfyUI 工作流</div>
+    </div>
+    
+    <div class="test-box">
+        <div class="label">3. 无斜体 (font-weight: 900 正常体)</div>
+        <div class="no-italic">ComfyUI 工作流</div>
+    </div>
+    
+    <div class="test-box">
+        <div class="label">4. 对照组 - 普通衬线字体斜体</div>
+        <div class="fallback">ComfyUI 工作流</div>
+    </div>
+    
+    <p style="color: #555; font-size: 12px; margin-top: 40px;">
+        观察：Playfair Display 斜体的特征是竖笔画特别粗，横笔画很细<br>
+        如果 1、2 和 3 看起来一样，说明斜体字体没加载成功
+    </p>
+</body>
+</html>

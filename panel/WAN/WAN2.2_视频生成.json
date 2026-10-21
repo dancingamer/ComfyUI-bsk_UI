@@ -1,0 +1,1722 @@
+{
+  "workflow": {
+    "11": {
+      "inputs": {
+        "model_name": "nsfw_wan_umt5-xxl_bf16.safetensors",
+        "precision": "bf16",
+        "load_device": "offload_device",
+        "quantization": "disabled"
+      },
+      "class_type": "LoadWanVideoT5TextEncoder",
+      "_meta": {
+        "title": "WanVideo T5 텍스트 인코더 로드"
+      }
+    },
+    "22": {
+      "inputs": {
+        "model": "DasiwaWAN22I2V14BLightspeed_synthseductionHighV9.safetensors",
+        "base_precision": "bf16",
+        "quantization": "disabled",
+        "load_device": "main_device",
+        "attention_mode": "sageattn",
+        "lora": null,
+        "vram_management_args": null,
+        "extra_model": null,
+        "fantasytalking_model": null,
+        "multitalk_model": null,
+        "fantasyportrait_model": null,
+        "rms_norm_function": "default"
+      },
+      "class_type": "WanVideoModelLoader",
+      "_meta": {
+        "title": "WanVideo 모델 로더"
+      }
+    },
+    "28": {
+      "inputs": {
+        "vae": [
+          "38",
+          0
+        ],
+        "samples": [
+          "473",
+          0
+        ],
+        "enable_vae_tiling": false,
+        "tile_x": 272,
+        "tile_y": 272,
+        "tile_stride_x": 144,
+        "tile_stride_y": 128,
+        "normalization": "default"
+      },
+      "class_type": "WanVideoDecode",
+      "_meta": {
+        "title": "WanVideo 디코딩"
+      }
+    },
+    "38": {
+      "inputs": {
+        "model_name": "Wan2_1_VAE_bf16.safetensors",
+        "precision": "bf16",
+        "use_cpu_cache": false,
+        "verbose": false
+      },
+      "class_type": "WanVideoVAELoader",
+      "_meta": {
+        "title": "WanVideo VAE ロード기기"
+      }
+    },
+    "60": {
+      "inputs": {
+        "images": [
+          "28",
+          0
+        ],
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "AICG",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true
+      },
+      "class_type": "VHS_VideoCombine",
+      "_meta": {
+        "title": "비디오로 병합"
+      }
+    },
+    "71": {
+      "inputs": {
+        "model": "DasiwaWAN22I2V14BLightspeed_synthseductionLowV9.safetensors",
+        "base_precision": "bf16",
+        "quantization": "disabled",
+        "load_device": "offload_device",
+        "attention_mode": "sageattn",
+        "lora": null,
+        "vram_management_args": null,
+        "extra_model": null,
+        "fantasytalking_model": null,
+        "multitalk_model": null,
+        "fantasyportrait_model": null,
+        "rms_norm_function": "default"
+      },
+      "class_type": "WanVideoModelLoader",
+      "_meta": {
+        "title": "WanVideo 모델 로더"
+      }
+    },
+    "89": {
+      "inputs": {
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "num_frames": [
+          "104",
+          0
+        ],
+        "noise_aug_strength": 0,
+        "start_latent_strength": 1,
+        "end_latent_strength": 1,
+        "force_offload": true,
+        "vae": [
+          "38",
+          0
+        ],
+        "start_image": [
+          "356",
+          0
+        ],
+        "fun_or_fl2v_model": false,
+        "tiled_vae": false,
+        "augment_empty_frames": 0
+      },
+      "class_type": "WanVideoImageToVideoEncode",
+      "_meta": {
+        "title": "WanVideo 이미지 -> 비디오 인코딩"
+      }
+    },
+    "94": {
+      "inputs": {
+        "value": 6
+      },
+      "class_type": "INTConstant",
+      "_meta": {
+        "title": "총 단계 수"
+      }
+    },
+    "104": {
+      "inputs": {
+        "value": "a*16+1",
+        "a": [
+          "500",
+          0
+        ],
+        "b": 0,
+        "c": 0
+      },
+      "class_type": "SimpleMath+",
+      "_meta": {
+        "title": "간단 계산"
+      }
+    },
+    "196": {
+      "inputs": {
+        "prompt": [
+          "391",
+          0
+        ],
+        "t5": [
+          "11",
+          0
+        ],
+        "force_offload": true,
+        "use_disk_cache": false,
+        "device": "gpu"
+      },
+      "class_type": "WanVideoTextEncodeSingle",
+      "_meta": {
+        "title": "WanVideo 단일 텍스트 인코딩"
+      }
+    },
+    "197": {
+      "inputs": {
+        "original_text_embeds": [
+          "196",
+          0
+        ],
+        "nag_text_embeds": [
+          "198",
+          0
+        ],
+        "nag_scale": 11,
+        "nag_tau": 2.5,
+        "nag_alpha": 0.25,
+        "inplace": true
+      },
+      "class_type": "WanVideoApplyNAG",
+      "_meta": {
+        "title": "WanVideoNAG적용"
+      }
+    },
+    "198": {
+      "inputs": {
+        "prompt": "느린 모션, 화려한 색조, 과다 노출, 정적, 흐릿한 디테일, 자막, 정지, 전체적으로 회색, 최악의 품질, 낮은 품질, JPEG 압축 잔여물, 흉하게, 불완전하게, 불필요한 손가락, 못 그리는 손가락, 못 그리는 얼굴, 변형된, 흉하게 만든, 형태가 변형된 신체, 손가락 융합, 정지된 화면, 혼란스러운 배경, 세 개의 다리, 배경에 많은 사람들, 뒤로 걸어가는 모습",
+        "t5": [
+          "11",
+          0
+        ],
+        "force_offload": true,
+        "use_disk_cache": false,
+        "device": "gpu"
+      },
+      "class_type": "WanVideoTextEncodeSingle",
+      "_meta": {
+        "title": "WanVideo 단일 텍스트 인코딩"
+      }
+    },
+    "199": {
+      "inputs": {
+        "value": "a-b",
+        "a": [
+          "94",
+          0
+        ],
+        "b": [
+          "367",
+          0
+        ],
+        "c": 0
+      },
+      "class_type": "SimpleMath+",
+      "_meta": {
+        "title": "간단 계산"
+      }
+    },
+    "348": {
+      "inputs": {
+        "image": [
+          "484",
+          0
+        ],
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "upscale_method": "lanczos",
+        "keep_proportion": "crop",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 8,
+        "swap_dimensions": false,
+        "auto_match_aspect": true,
+        "filename_prefix": "wan2",
+        "device": "cpu"
+      },
+      "class_type": "이미지 확대aa",
+      "_meta": {
+        "title": "이미지 확대aa"
+      }
+    },
+    "356": {
+      "inputs": {
+        "image": [
+          "482",
+          0
+        ],
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "upscale_method": "lanczos",
+        "keep_proportion": "crop",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 8,
+        "swap_dimensions": false,
+        "auto_match_aspect": true,
+        "filename_prefix": "wan2",
+        "device": "cpu"
+      },
+      "class_type": "이미지 확대aa",
+      "_meta": {
+        "title": "이미지 확대aa"
+      }
+    },
+    "358": {
+      "inputs": {
+        "image": [
+          "356",
+          0
+        ],
+        "format": "WEBP",
+        "quality": 90
+      },
+      "class_type": "FastPreview",
+      "_meta": {
+        "title": "빠른 미리보기"
+      }
+    },
+    "359": {
+      "inputs": {
+        "image": [
+          "348",
+          0
+        ],
+        "format": "WEBP",
+        "quality": 90
+      },
+      "class_type": "FastPreview",
+      "_meta": {
+        "title": "빠른 미리보기"
+      }
+    },
+    "367": {
+      "inputs": {
+        "value": 3
+      },
+      "class_type": "INTConstant",
+      "_meta": {
+        "title": "높은 노이즈 단계"
+      }
+    },
+    "376": {
+      "inputs": {
+        "image": [
+          "483",
+          0
+        ],
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "upscale_method": "lanczos",
+        "keep_proportion": "crop",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 8,
+        "swap_dimensions": false,
+        "auto_match_aspect": true,
+        "filename_prefix": "wan2",
+        "device": "cpu"
+      },
+      "class_type": "이미지 확대aa",
+      "_meta": {
+        "title": "이미지 확대aa"
+      }
+    },
+    "386": {
+      "inputs": {
+        "image": [
+          "376",
+          0
+        ],
+        "format": "WEBP",
+        "quality": 90
+      },
+      "class_type": "FastPreview",
+      "_meta": {
+        "title": "빠른 미리보기"
+      }
+    },
+    "391": {
+      "inputs": {
+        "delimiter": " ",
+        "string1": [
+          "464",
+          0
+        ],
+        "string2": ""
+      },
+      "class_type": "JoinStrings",
+      "_meta": {
+        "title": "문자열 병합"
+      }
+    },
+    "441": {
+      "inputs": {
+        "model": [
+          "22",
+          0
+        ],
+        "image_embeds": [
+          "486",
+          0
+        ],
+        "steps": [
+          "94",
+          0
+        ],
+        "cfg": 1,
+        "shift": 8,
+        "seed": [
+          "497",
+          0
+        ],
+        "force_offload": true,
+        "scheduler": "unipc",
+        "riflex_freq_index": 0,
+        "text_embeds": [
+          "197",
+          0
+        ],
+        "denoise_strength": 1,
+        "batched_cfg": false,
+        "rope_function": "comfy",
+        "start_step": 0,
+        "end_step": [
+          "367",
+          0
+        ],
+        "add_noise_to_samples": false,
+        "enable_highres_frame": false,
+        "highres_frame_index": 40,
+        "highres_denoise_strength": 0.3,
+        "highres_steps": 10,
+        "highres_cfg": 6,
+        "highres_width": 832,
+        "highres_height": 480,
+        "highres_vae": null,
+        "highres_guidance_weight": 0.3,
+        "highres_guidance_decay": 0.5
+      },
+      "class_type": "WanVideoSampler",
+      "_meta": {
+        "title": "wan2.2H"
+      }
+    },
+    "464": {
+      "inputs": {
+        "text": [
+          "470",
+          0
+        ],
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "bsk_프롬프트 편집기,ctrl+/ 주석/해제,"
+      }
+    },
+    "470": {
+      "inputs": {
+        "text": [
+          "505",
+          0
+        ],
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "bsk_프롬프트 편집기,ctrl+/ 주석/해제,"
+      }
+    },
+    "473": {
+      "inputs": {
+        "model": [
+          "71",
+          0
+        ],
+        "image_embeds": [
+          "486",
+          0
+        ],
+        "steps": [
+          "94",
+          0
+        ],
+        "cfg": 1,
+        "shift": 8,
+        "seed": [
+          "497",
+          0
+        ],
+        "force_offload": true,
+        "scheduler": "unipc",
+        "riflex_freq_index": 0,
+        "text_embeds": [
+          "197",
+          0
+        ],
+        "samples": [
+          "441",
+          0
+        ],
+        "denoise_strength": 1,
+        "batched_cfg": false,
+        "rope_function": "comfy",
+        "start_step": [
+          "367",
+          0
+        ],
+        "end_step": -1,
+        "add_noise_to_samples": false,
+        "enable_highres_frame": false,
+        "highres_frame_index": 40,
+        "highres_denoise_strength": 0.3,
+        "highres_steps": 10,
+        "highres_cfg": 6,
+        "highres_width": 832,
+        "highres_height": 480,
+        "highres_vae": null,
+        "highres_guidance_weight": 0.3,
+        "highres_guidance_decay": 0.5
+      },
+      "class_type": "WanVideoSampler",
+      "_meta": {
+        "title": "WAN2.2L"
+      }
+    },
+    "475": {
+      "inputs": {
+        "anything": [
+          "356",
+          0
+        ]
+      },
+      "class_type": "easy showAnything",
+      "_meta": {
+        "title": "어떤 것을 표시"
+      }
+    },
+    "478": {
+      "inputs": {
+        "text": "캐릭터 춤을 춰",
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "분할1"
+      }
+    },
+    "482": {
+      "inputs": {
+        "image": "bsk_source_482.png"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "첫 프레임"
+      }
+    },
+    "483": {
+      "inputs": {
+        "image": "bsk_source_483.png"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "1"
+      }
+    },
+    "484": {
+      "inputs": {
+        "image": "bsk_source_484.png"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "2"
+      }
+    },
+    "486": {
+      "inputs": {
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "num_frames": [
+          "104",
+          0
+        ],
+        "noise_aug_strength": 0,
+        "start_latent_strength": 1,
+        "end_latent_strength": 1,
+        "force_offload": true,
+        "vae": [
+          "38",
+          0
+        ],
+        "start_image": [
+          "356",
+          0
+        ],
+        "end_image": [
+          "493",
+          0
+        ],
+        "keyframe1": [
+          "376",
+          0
+        ],
+        "keyframe2": [
+          "348",
+          0
+        ],
+        "keyframe3": [
+          "490",
+          0
+        ],
+        "keyframe1_latent_strength": 1,
+        "keyframe2_latent_strength": 1,
+        "keyframe3_latent_strength": 1,
+        "fun_or_fl2v_model": true,
+        "tiled_vae": false,
+        "augment_empty_frames": 0
+      },
+      "class_type": "bsk_WanVideoImageToVideoEncode",
+      "_meta": {
+        "title": "bsk_wan3중간 프레임"
+      }
+    },
+    "489": {
+      "inputs": {
+        "image": "bsk_source_489.png"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "3"
+      }
+    },
+    "490": {
+      "inputs": {
+        "image": [
+          "489",
+          0
+        ],
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "upscale_method": "lanczos",
+        "keep_proportion": "crop",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 8,
+        "swap_dimensions": false,
+        "auto_match_aspect": true,
+        "filename_prefix": "wan2",
+        "device": "cpu"
+      },
+      "class_type": "이미지 확대aa",
+      "_meta": {
+        "title": "이미지 확대aa"
+      }
+    },
+    "492": {
+      "inputs": {
+        "image": "bsk_source_492.png"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "마지막 프레임"
+      }
+    },
+    "493": {
+      "inputs": {
+        "image": [
+          "492",
+          0
+        ],
+        "width": [
+          "503",
+          0
+        ],
+        "height": [
+          "503",
+          1
+        ],
+        "upscale_method": "lanczos",
+        "keep_proportion": "crop",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 8,
+        "swap_dimensions": false,
+        "auto_match_aspect": true,
+        "filename_prefix": "wan2",
+        "device": "cpu"
+      },
+      "class_type": "이미지 확대aa",
+      "_meta": {
+        "title": "이미지 확대aa"
+      }
+    },
+    "494": {
+      "inputs": {
+        "image": [
+          "490",
+          0
+        ],
+        "format": "WEBP",
+        "quality": 90
+      },
+      "class_type": "FastPreview",
+      "_meta": {
+        "title": "빠른 미리보기"
+      }
+    },
+    "495": {
+      "inputs": {
+        "image": [
+          "493",
+          0
+        ],
+        "format": "WEBP",
+        "quality": 90
+      },
+      "class_type": "FastPreview",
+      "_meta": {
+        "title": "빠른 미리보기"
+      }
+    },
+    "497": {
+      "inputs": {
+        "seed_str": "7008421793132065041",
+        "trigger": 3,
+        "auto_generate": true
+      },
+      "class_type": "RandomSeedNode",
+      "_meta": {
+        "title": "Random Seed (Panel)"
+      }
+    },
+    "500": {
+      "inputs": {
+        "value": 5
+      },
+      "class_type": "INTConstant",
+      "_meta": {
+        "title": "시간"
+      }
+    },
+    "503": {
+      "inputs": {
+        "image": [
+          "482",
+          0
+        ]
+      },
+      "class_type": "GetImageSize",
+      "_meta": {
+        "title": "Get Image Size"
+      }
+    },
+    "504": {
+      "inputs": {
+        "panel_config": "{\"tabs\":[{\"id\":\"main\",\"name\":\"일반\",\"nodeIds\":[\"505\",\"94\",\"367\",\"482\",\"483\",\"484\",\"489\",\"492\",\"500\",\"486\",\"503\"]},{\"id\":\"prompt\",\"name\":\"프롬프트\",\"nodeIds\":[\"464\",\"470\",\"478\",\"506\",\"507\"]},{\"id\":\"other\",\"name\":\"기타\",\"nodeIds\":[\"11\",\"22\",\"28\",\"38\",\"60\",\"71\",\"89\",\"104\",\"196\",\"197\",\"198\",\"199\",\"348\",\"356\",\"358\",\"359\",\"376\",\"386\",\"391\",\"441\",\"473\",\"475\",\"486\",\"490\",\"493\",\"494\",\"495\",\"497\",\"503\",\"505\"]}],\"currentTab\":\"main\",\"tabNodes\":{\"main\":[\"505\",\"94\",\"367\",\"482\",\"483\",\"484\",\"489\",\"492\",\"500\",\"486\",\"503\"],\"prompt\":[\"464\",\"470\",\"478\",\"506\",\"507\"],\"other\":[\"11\",\"22\",\"28\",\"38\",\"60\",\"71\",\"89\",\"104\",\"196\",\"197\",\"198\",\"199\",\"348\",\"356\",\"358\",\"359\",\"376\",\"386\",\"391\",\"441\",\"473\",\"475\",\"486\",\"490\",\"493\",\"494\",\"495\",\"497\",\"503\",\"505\"]},\"cardValues\":{\"11.model_name\":\"nsfw_wan_umt5-xxl_bf16.safetensors\",\"11.precision\":\"bf16\",\"11.load_device\":\"offload_device\",\"11.quantization\":\"disabled\",\"22.model\":\"DasiwaWAN22I2V14BLightspeed_synthseductionHighV9.safetensors\",\"22.base_precision\":\"bf16\",\"22.quantization\":\"disabled\",\"22.load_device\":\"main_device\",\"22.attention_mode\":\"sageattn\",\"22.lora\":null,\"22.vram_management_args\":null,\"22.extra_model\":null,\"22.fantasytalking_model\":null,\"22.multitalk_model\":null,\"22.fantasyportrait_model\":null,\"22.rms_norm_function\":\"default\",\"28.enable_vae_tiling\":false,\"28.tile_x\":272,\"28.tile_y\":272,\"28.tile_stride_x\":144,\"28.tile_stride_y\":128,\"28.normalization\":\"default\",\"38.model_name\":\"Wan2_1_VAE_bf16.safetensors\",\"38.precision\":\"bf16\",\"38.use_cpu_cache\":false,\"38.verbose\":false,\"60.frame_rate\":16,\"60.loop_count\":0,\"60.filename_prefix\":\"AICG\",\"60.format\":\"video/h264-mp4\",\"60.pingpong\":false,\"60.save_output\":true,\"71.model\":\"DasiwaWAN22I2V14BLightspeed_synthseductionLowV9.safetensors\",\"71.base_precision\":\"bf16\",\"71.quantization\":\"disabled\",\"71.load_device\":\"offload_device\",\"71.attention_mode\":\"sageattn\",\"71.lora\":null,\"71.vram_management_args\":null,\"71.extra_model\":null,\"71.fantasytalking_model\":null,\"71.multitalk_model\":null,\"71.fantasyportrait_model\":null,\"71.rms_norm_function\":\"default\",\"89.noise_aug_strength\":0,\"89.start_latent_strength\":1,\"89.end_latent_strength\":1,\"89.force_offload\":true,\"89.fun_or_fl2v_model\":false,\"89.tiled_vae\":false,\"89.augment_empty_frames\":0,\"94.value\":6,\"104.value\":\"a*16+1\",\"104.b\":0,\"104.c\":0,\"196.force_offload\":true,\"196.use_disk_cache\":false,\"196.device\":\"gpu\",\"197.nag_scale\":11,\"197.nag_tau\":2.5,\"197.nag_alpha\":0.25,\"197.inplace\":true,\"198.prompt\":\"느린 모션, 화려한 색조, 과다 노출, 정적, 흐릿한 디테일, 자막, 정지, 전체적으로 회색, 최악의 품질, 낮은 품질, JPEG 압축 잔여물, 흉하게, 불완전하게, 불필요한 손가락, 못 그리는 손가락, 못 그리는 얼굴, 변형된, 흉하게 만든, 형태가 변형된 신체, 손가락 융합, 정지된 화면, 혼란스러운 배경, 세 개의 다리, 배경에 많은 사람들, 뒤로 걸어가는 모습\",\"198.force_offload\":true,\"198.use_disk_cache\":false,\"198.device\":\"gpu\",\"199.value\":\"a-b\",\"199.c\":0,\"348.upscale_method\":\"lanczos\",\"348.keep_proportion\":\"crop\",\"348.pad_color\":\"0, 0, 0\",\"348.crop_position\":\"center\",\"348.divisible_by\":8,\"348.swap_dimensions\":false,\"348.auto_match_aspect\":true,\"348.filename_prefix\":\"wan2\",\"348.device\":\"cpu\",\"356.upscale_method\":\"lanczos\",\"356.keep_proportion\":\"crop\",\"356.pad_color\":\"0, 0, 0\",\"356.crop_position\":\"center\",\"356.divisible_by\":8,\"356.swap_dimensions\":false,\"356.auto_match_aspect\":true,\"356.filename_prefix\":\"wan2\",\"356.device\":\"cpu\",\"358.format\":\"WEBP\",\"358.quality\":90,\"359.format\":\"WEBP\",\"359.quality\":90,\"367.value\":3,\"376.upscale_method\":\"lanczos\",\"376.keep_proportion\":\"crop\",\"376.pad_color\":\"0, 0, 0\",\"376.crop_position\":\"center\",\"376.divisible_by\":8,\"376.swap_dimensions\":false,\"376.auto_match_aspect\":true,\"376.filename_prefix\":\"wan2\",\"376.device\":\"cpu\",\"386.format\":\"WEBP\",\"386.quality\":90,\"391.delimiter\":\" \",\"391.string2\":\"\",\"441.cfg\":1,\"441.shift\":8,\"441.force_offload\":true,\"441.scheduler\":\"unipc\",\"441.riflex_freq_index\":0,\"441.denoise_strength\":1,\"441.batched_cfg\":false,\"441.rope_function\":\"comfy\",\"441.start_step\":0,\"441.add_noise_to_samples\":false,\"441.enable_highres_frame\":false,\"441.highres_frame_index\":40,\"441.highres_denoise_strength\":0.3,\"441.highres_steps\":10,\"441.highres_cfg\":6,\"441.highres_width\":832,\"441.highres_height\":480,\"441.highres_vae\":null,\"441.highres_guidance_weight\":0.3,\"441.highres_guidance_decay\":0.5,\"464.separator\":\" \",\"470.separator\":\" \",\"473.cfg\":1,\"473.shift\":8,\"473.force_offload\":true,\"473.scheduler\":\"unipc\",\"473.riflex_freq_index\":0,\"473.denoise_strength\":1,\"473.batched_cfg\":false,\"473.rope_function\":\"comfy\",\"473.end_step\":-1,\"473.add_noise_to_samples\":false,\"473.enable_highres_frame\":false,\"473.highres_frame_index\":40,\"473.highres_denoise_strength\":0.3,\"473.highres_steps\":10,\"473.highres_cfg\":6,\"473.highres_width\":832,\"473.highres_height\":480,\"473.highres_vae\":null,\"473.highres_guidance_weight\":0.3,\"473.highres_guidance_decay\":0.5,\"478.text\":\"캐릭터 춤을 춰\",\"478.separator\":\" \",\"482.image\":\"bsk_source_482.png\",\"483.image\":\"bsk_source_483.png\",\"484.image\":\"bsk_source_484.png\",\"486.noise_aug_strength\":0,\"486.start_latent_strength\":1,\"486.end_latent_strength\":1,\"486.force_offload\":true,\"486.keyframe1_latent_strength\":1,\"486.keyframe2_latent_strength\":1,\"486.keyframe3_latent_strength\":1,\"486.fun_or_fl2v_model\":true,\"486.tiled_vae\":false,\"486.augment_empty_frames\":0,\"489.image\":\"bsk_source_489.png\",\"490.upscale_method\":\"lanczos\",\"490.keep_proportion\":\"crop\",\"490.pad_color\":\"0, 0, 0\",\"490.crop_position\":\"center\",\"490.divisible_by\":8,\"490.swap_dimensions\":false,\"490.auto_match_aspect\":true,\"490.filename_prefix\":\"wan2\",\"490.device\":\"cpu\",\"492.image\":\"bsk_source_492.png\",\"493.upscale_method\":\"lanczos\",\"493.keep_proportion\":\"crop\",\"493.pad_color\":\"0, 0, 0\",\"493.crop_position\":\"center\",\"493.divisible_by\":8,\"493.swap_dimensions\":false,\"493.auto_match_aspect\":true,\"493.filename_prefix\":\"wan2\",\"493.device\":\"cpu\",\"494.format\":\"WEBP\",\"494.quality\":90,\"495.format\":\"WEBP\",\"495.quality\":90,\"497.seed_str\":\"7008421793132065041\",\"497.trigger\":3,\"497.auto_generate\":true,\"500.value\":5,\"505.switch1\":true,\"505.switch2\":true,\"505.switch3\":true,\"505.input4\":\"\",\"505.switch4\":true,\"506.text\":\"\",\"506.separator\":\" \",\"507.text\":\"\",\"507.separator\":\" \",\"482.image_source\":\"bsk_source_482.png\",\"483.image_source\":\"bsk_source_483.png\",\"484.image_source\":\"bsk_source_484.png\",\"489.image_source\":\"bsk_source_489.png\",\"492.image_source\":\"bsk_source_492.png\",\"505.input5\":\"\",\"505.switch5\":true,\"505.input6\":\"\",\"505.switch6\":true,\"505.input7\":\"\",\"505.switch7\":true,\"505.input8\":\"\",\"505.switch8\":true,\"505.input9\":\"\",\"505.switch9\":true,\"505.input10\":\"\",\"505.switch10\":true,\"505.__input_order\":[3,2,1,4],\"478.title\":\"분할1\",\"507.title\":\"분할3\",\"cardOrder\":[\"505\",\"94\",\"367\",\"482\",\"483\",\"484\",\"489\",\"492\",\"500\",\"486\",\"503\"]},\"globalCropSize\":{\"width\":720,\"height\":1280},\"linkCropSize\":true,\"cropSizeLocked\":false,\"textareaHeights\":{\"57.text\":\"\",\"59.text\":\"\",\"69.rules\":\"\",\"79.rules\":\"\",\"67.strings_to_remove\":\"\",\"70.rules\":\"\",\"73.text\":\"398px\",\"75.rules\":\"\",\"76.text\":\"\",\"78.text_b\":\"\",\"78.text_c\":\"\",\"86.text\":\"\",\"87.text\":\"\",\"88.rules\":\"\",\"15.text\":\"452px\",\"20.text\":\"\",\"21.rules\":\"\",\"17.rules\":\"356px\",\"16.text\":\"\",\"29.text\":\"\",\"31.text\":\"\",\"44.text\":\"\",\"24.strings_to_remove\":\"\",\"30.rules\":\"\",\"17.text\":\"\",\"18.text\":\"\",\"36.text\":\"\",\"37.text\":\"\",\"38.strings_to_remove\":\"\",\"39.rules\":\"\",\"40.rules\":\"287px\",\"35.text\":\"\",\"10.text\":\"305px\",\"11.text\":\"271px\",\"5.text\":\"380px\",\"762.text\":\"\",\"586.text\":\"\",\"587.text\":\"\",\"646.text\":\"\",\"1.param_0\":\"\",\"4.value\":\"\",\"1.text\":\"\",\"198.prompt\":\"\",\"476.text_a\":\"\",\"476.text_c\":\"\",\"478.text\":\"\",\"53.text\":\"\",\"55.text\":\"\",\"56.text\":\"\",\"48.rules\":\"\",\"61.text\":\"\",\"65.text\":\"\",\"78.text\":\"\",\"6.text\":\"\",\"7.text\":\"\",\"12.text\":\"\",\"85.save_prompt_txt\":\"\",\"85.custom_prompt\":\"\",\"86.dedup_prompt\":\"\",\"87.dedup_prompt\":\"\",\"95.dedup_prompt\":\"\",\"96.dedup_prompt\":\"\",\"85.other_text\":\"\",\"506.text\":\"\",\"507.text\":\"\"},\"theme\":{\"primaryGradient\":\"linear-gradient(135deg, #667eea 0%, #764ba2 100%)\",\"backgroundColor\":\"linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)\",\"cardBackground\":\"rgba(255, 255, 255, 0.04)\",\"borderStyle\":\"rgba(255, 255, 255, 0.08)\",\"accentColor\":\"#667eea\",\"textColor\":\"white\",\"placeholderColor\":\"rgba(255, 255, 255, 0.6)\"},\"promptLibraryDarkMode\":true,\"highlightColorA\":\"#6496c8\",\"highlightColorB\":\"#c89664\",\"editorBgColorDark\":\"#2a2a2f\",\"editorBgColorLight\":\"#ffffff\",\"inputLinkSettings\":{\"486.keyframe3\":{\"enabled\":false,\"linkNodeId\":\"490\",\"linkOutputIndex\":0},\"486.keyframe2\":{\"enabled\":false,\"linkNodeId\":\"348\",\"linkOutputIndex\":0},\"486.keyframe1\":{\"enabled\":false,\"linkNodeId\":\"376\",\"linkOutputIndex\":0},\"486.end_image\":{\"enabled\":false,\"linkNodeId\":\"493\",\"linkOutputIndex\":0},\"28.vae\":{\"enabled\":true,\"linkNodeId\":\"38\",\"linkOutputIndex\":0},\"28.samples\":{\"enabled\":true,\"linkNodeId\":\"473\",\"linkOutputIndex\":0},\"60.images\":{\"enabled\":true,\"linkNodeId\":\"28\",\"linkOutputIndex\":0},\"89.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"89.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"89.num_frames\":{\"enabled\":true,\"linkNodeId\":\"104\",\"linkOutputIndex\":0},\"89.vae\":{\"enabled\":true,\"linkNodeId\":\"38\",\"linkOutputIndex\":0},\"89.start_image\":{\"enabled\":true,\"linkNodeId\":\"356\",\"linkOutputIndex\":0},\"104.a\":{\"enabled\":true,\"linkNodeId\":\"500\",\"linkOutputIndex\":0},\"196.prompt\":{\"enabled\":true,\"linkNodeId\":\"391\",\"linkOutputIndex\":0},\"196.t5\":{\"enabled\":true,\"linkNodeId\":\"11\",\"linkOutputIndex\":0},\"197.original_text_embeds\":{\"enabled\":true,\"linkNodeId\":\"196\",\"linkOutputIndex\":0},\"197.nag_text_embeds\":{\"enabled\":true,\"linkNodeId\":\"198\",\"linkOutputIndex\":0},\"198.t5\":{\"enabled\":true,\"linkNodeId\":\"11\",\"linkOutputIndex\":0},\"199.a\":{\"enabled\":true,\"linkNodeId\":\"94\",\"linkOutputIndex\":0},\"199.b\":{\"enabled\":true,\"linkNodeId\":\"367\",\"linkOutputIndex\":0},\"348.image\":{\"enabled\":true,\"linkNodeId\":\"484\",\"linkOutputIndex\":0},\"348.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"348.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"356.image\":{\"enabled\":true,\"linkNodeId\":\"482\",\"linkOutputIndex\":0},\"356.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"356.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"358.image\":{\"enabled\":true,\"linkNodeId\":\"356\",\"linkOutputIndex\":0},\"359.image\":{\"enabled\":true,\"linkNodeId\":\"348\",\"linkOutputIndex\":0},\"376.image\":{\"enabled\":true,\"linkNodeId\":\"483\",\"linkOutputIndex\":0},\"376.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"376.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"386.image\":{\"enabled\":true,\"linkNodeId\":\"376\",\"linkOutputIndex\":0},\"391.string1\":{\"enabled\":true,\"linkNodeId\":\"464\",\"linkOutputIndex\":0},\"441.model\":{\"enabled\":true,\"linkNodeId\":\"22\",\"linkOutputIndex\":0},\"441.image_embeds\":{\"enabled\":true,\"linkNodeId\":\"486\",\"linkOutputIndex\":0},\"441.steps\":{\"enabled\":true,\"linkNodeId\":\"94\",\"linkOutputIndex\":0},\"441.seed\":{\"enabled\":true,\"linkNodeId\":\"497\",\"linkOutputIndex\":0},\"441.text_embeds\":{\"enabled\":true,\"linkNodeId\":\"197\",\"linkOutputIndex\":0},\"441.end_step\":{\"enabled\":true,\"linkNodeId\":\"367\",\"linkOutputIndex\":0},\"464.text\":{\"enabled\":true,\"linkNodeId\":\"470\",\"linkOutputIndex\":0},\"470.text\":{\"enabled\":true,\"linkNodeId\":\"505\",\"linkOutputIndex\":0},\"473.model\":{\"enabled\":true,\"linkNodeId\":\"71\",\"linkOutputIndex\":0},\"473.image_embeds\":{\"enabled\":true,\"linkNodeId\":\"486\",\"linkOutputIndex\":0},\"473.steps\":{\"enabled\":true,\"linkNodeId\":\"94\",\"linkOutputIndex\":0},\"473.seed\":{\"enabled\":true,\"linkNodeId\":\"497\",\"linkOutputIndex\":0},\"473.text_embeds\":{\"enabled\":true,\"linkNodeId\":\"197\",\"linkOutputIndex\":0},\"473.samples\":{\"enabled\":true,\"linkNodeId\":\"441\",\"linkOutputIndex\":0},\"473.start_step\":{\"enabled\":true,\"linkNodeId\":\"367\",\"linkOutputIndex\":0},\"475.anything\":{\"enabled\":true,\"linkNodeId\":\"356\",\"linkOutputIndex\":0},\"486.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"486.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"486.num_frames\":{\"enabled\":true,\"linkNodeId\":\"104\",\"linkOutputIndex\":0},\"486.vae\":{\"enabled\":true,\"linkNodeId\":\"38\",\"linkOutputIndex\":0},\"486.start_image\":{\"enabled\":true,\"linkNodeId\":\"356\",\"linkOutputIndex\":0},\"490.image\":{\"enabled\":true,\"linkNodeId\":\"489\",\"linkOutputIndex\":0},\"490.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"490.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"493.image\":{\"enabled\":true,\"linkNodeId\":\"492\",\"linkOutputIndex\":0},\"493.width\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":0},\"493.height\":{\"enabled\":true,\"linkNodeId\":\"503\",\"linkOutputIndex\":1},\"494.image\":{\"enabled\":true,\"linkNodeId\":\"490\",\"linkOutputIndex\":0},\"495.image\":{\"enabled\":true,\"linkNodeId\":\"493\",\"linkOutputIndex\":0},\"503.image\":{\"enabled\":true,\"linkNodeId\":\"482\",\"linkOutputIndex\":0},\"505.input1\":{\"enabled\":true,\"linkNodeId\":\"507\",\"linkOutputIndex\":0},\"505.input2\":{\"enabled\":true,\"linkNodeId\":\"506\",\"linkOutputIndex\":0},\"505.input3\":{\"enabled\":true,\"linkNodeId\":\"478\",\"linkOutputIndex\":0}},\"cardLinkToggleState\":{},\"inputDefaultConfig\":{},\"inputDisabledValues\":{},\"localOutputConfigs\":{},\"workflowInfo\":{\"title\":\"\",\"subtitle\":\"너의 여정에 변할래중의일점미세한 빛\",\"subtitles\":[\"너의 여정에 변할래중의일점미세한 빛\",\"매번 생성할 때마다 혼돈에 대한 심문。\"],\"author\":\"灰暗x\",\"authorAvatar\":\"https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif\",\"description\":\"wan2.2비디오 생성 \\n설정 패널에서 다운로드 워크플로우 먼저 실행, ComfyUI에 드래그하여 누락된 모델 및 플러그인 확인,\\n잘 작동하면 API 워크플로우를 가져와 자동 태그 버튼 활성화 후 표시.\",\"usage\":\"wan2.2비디오 생성 \\n설정 패널에서 다운로드 워크플로우 먼저 실행, ComfyUI에 드래그하여 누락된 모델 및 플러그인 확인,\\n잘 작동하면 API 워크플로우를 가져와 자동 태그 버튼 활성화 후 표시.\",\"links\":[{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"}],\"background\":{\"image\":\"https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\",\"opacity\":0.62},\"styles\":{\"titleColor\":\"#f2ece5\",\"titleSize\":\"22px\",\"textColor\":\"#908278\",\"textSize\":\"14px\",\"panelBgColor\":\"#0a0807\",\"panelOpacity\":1,\"blurStrength\":0,\"bgOverlayOpacity\":0.15}},\"modelDownloads\":[]}"
+      },
+      "class_type": "bsk_PanelConfigSaver",
+      "_meta": {
+        "title": "패널 설정 정보"
+      }
+    },
+    "505": {
+      "inputs": {
+        "input1": [
+          "507",
+          0
+        ],
+        "switch1": true,
+        "input2": [
+          "506",
+          0
+        ],
+        "switch2": true,
+        "input3": [
+          "478",
+          0
+        ],
+        "switch3": true,
+        "input4": "",
+        "switch4": true,
+        "input5": "",
+        "switch5": true,
+        "input6": "",
+        "switch6": true,
+        "input7": "",
+        "switch7": true,
+        "input8": "",
+        "switch8": true,
+        "input9": "",
+        "switch9": true,
+        "input10": "",
+        "switch10": true,
+        "merge_order": "",
+        "preserve_newlines": false
+      },
+      "class_type": "bsk_StringMergeWithSwitch",
+      "_meta": {
+        "title": "bsk_String Merge (Switch)"
+      }
+    },
+    "506": {
+      "inputs": {
+        "text": "",
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "분할2"
+      }
+    },
+    "507": {
+      "inputs": {
+        "text": "",
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "분할3"
+      }
+    }
+  },
+  "tabs": [
+    {
+      "id": "main",
+      "name": "일반",
+      "nodeIds": [
+        "505",
+        "94",
+        "367",
+        "482",
+        "483",
+        "484",
+        "489",
+        "492",
+        "500",
+        "486",
+        "503"
+      ]
+    },
+    {
+      "id": "prompt",
+      "name": "프롬프트",
+      "nodeIds": [
+        "464",
+        "470",
+        "478",
+        "506",
+        "507"
+      ]
+    },
+    {
+      "id": "other",
+      "name": "기타",
+      "nodeIds": [
+        "11",
+        "22",
+        "28",
+        "38",
+        "60",
+        "71",
+        "89",
+        "104",
+        "196",
+        "197",
+        "198",
+        "199",
+        "348",
+        "356",
+        "358",
+        "359",
+        "376",
+        "386",
+        "391",
+        "441",
+        "473",
+        "475",
+        "486",
+        "490",
+        "493",
+        "494",
+        "495",
+        "497",
+        "503",
+        "505"
+      ]
+    }
+  ],
+  "currentTab": "main",
+  "tabNodes": {
+    "main": [
+      "505",
+      "94",
+      "367",
+      "482",
+      "483",
+      "484",
+      "489",
+      "492",
+      "500",
+      "486",
+      "503"
+    ],
+    "prompt": [
+      "464",
+      "470",
+      "478",
+      "506",
+      "507"
+    ],
+    "other": [
+      "11",
+      "22",
+      "28",
+      "38",
+      "60",
+      "71",
+      "89",
+      "104",
+      "196",
+      "197",
+      "198",
+      "199",
+      "348",
+      "356",
+      "358",
+      "359",
+      "376",
+      "386",
+      "391",
+      "441",
+      "473",
+      "475",
+      "486",
+      "490",
+      "493",
+      "494",
+      "495",
+      "497",
+      "503",
+      "505"
+    ]
+  },
+  "cardValues": {
+    "11.model_name": "nsfw_wan_umt5-xxl_bf16.safetensors",
+    "11.precision": "bf16",
+    "11.load_device": "offload_device",
+    "11.quantization": "disabled",
+    "22.model": "DasiwaWAN22I2V14BLightspeed_synthseductionHighV9.safetensors",
+    "22.base_precision": "bf16",
+    "22.quantization": "disabled",
+    "22.load_device": "main_device",
+    "22.attention_mode": "sageattn",
+    "22.lora": null,
+    "22.vram_management_args": null,
+    "22.extra_model": null,
+    "22.fantasytalking_model": null,
+    "22.multitalk_model": null,
+    "22.fantasyportrait_model": null,
+    "22.rms_norm_function": "default",
+    "28.enable_vae_tiling": false,
+    "28.tile_x": 272,
+    "28.tile_y": 272,
+    "28.tile_stride_x": 144,
+    "28.tile_stride_y": 128,
+    "28.normalization": "default",
+    "38.model_name": "Wan2_1_VAE_bf16.safetensors",
+    "38.precision": "bf16",
+    "38.use_cpu_cache": false,
+    "38.verbose": false,
+    "60.frame_rate": 16,
+    "60.loop_count": 0,
+    "60.filename_prefix": "AICG",
+    "60.format": "video/h264-mp4",
+    "60.pingpong": false,
+    "60.save_output": true,
+    "71.model": "DasiwaWAN22I2V14BLightspeed_synthseductionLowV9.safetensors",
+    "71.base_precision": "bf16",
+    "71.quantization": "disabled",
+    "71.load_device": "offload_device",
+    "71.attention_mode": "sageattn",
+    "71.lora": null,
+    "71.vram_management_args": null,
+    "71.extra_model": null,
+    "71.fantasytalking_model": null,
+    "71.multitalk_model": null,
+    "71.fantasyportrait_model": null,
+    "71.rms_norm_function": "default",
+    "89.noise_aug_strength": 0,
+    "89.start_latent_strength": 1,
+    "89.end_latent_strength": 1,
+    "89.force_offload": true,
+    "89.fun_or_fl2v_model": false,
+    "89.tiled_vae": false,
+    "89.augment_empty_frames": 0,
+    "94.value": 6,
+    "104.value": "a*16+1",
+    "104.b": 0,
+    "104.c": 0,
+    "196.force_offload": true,
+    "196.use_disk_cache": false,
+    "196.device": "gpu",
+    "197.nag_scale": 11,
+    "197.nag_tau": 2.5,
+    "197.nag_alpha": 0.25,
+    "197.inplace": true,
+    "198.prompt": "느린 모션, 화려한 색조, 과다 노출, 정적, 흐릿한 디테일, 자막, 정지, 전체적으로 회색, 최악의 품질, 낮은 품질, JPEG 압축 잔여물, 흉하게, 불완전하게, 불필요한 손가락, 못 그리는 손가락, 못 그리는 얼굴, 변형된, 흉하게 만든, 형태가 변형된 신체, 손가락 융합, 정지된 화면, 혼란스러운 배경, 세 개의 다리, 배경에 많은 사람들, 뒤로 걸어가는 모습",
+    "198.force_offload": true,
+    "198.use_disk_cache": false,
+    "198.device": "gpu",
+    "199.value": "a-b",
+    "199.c": 0,
+    "348.upscale_method": "lanczos",
+    "348.keep_proportion": "crop",
+    "348.pad_color": "0, 0, 0",
+    "348.crop_position": "center",
+    "348.divisible_by": 8,
+    "348.swap_dimensions": false,
+    "348.auto_match_aspect": true,
+    "348.filename_prefix": "wan2",
+    "348.device": "cpu",
+    "356.upscale_method": "lanczos",
+    "356.keep_proportion": "crop",
+    "356.pad_color": "0, 0, 0",
+    "356.crop_position": "center",
+    "356.divisible_by": 8,
+    "356.swap_dimensions": false,
+    "356.auto_match_aspect": true,
+    "356.filename_prefix": "wan2",
+    "356.device": "cpu",
+    "358.format": "WEBP",
+    "358.quality": 90,
+    "359.format": "WEBP",
+    "359.quality": 90,
+    "367.value": 3,
+    "376.upscale_method": "lanczos",
+    "376.keep_proportion": "crop",
+    "376.pad_color": "0, 0, 0",
+    "376.crop_position": "center",
+    "376.divisible_by": 8,
+    "376.swap_dimensions": false,
+    "376.auto_match_aspect": true,
+    "376.filename_prefix": "wan2",
+    "376.device": "cpu",
+    "386.format": "WEBP",
+    "386.quality": 90,
+    "391.delimiter": " ",
+    "391.string2": "",
+    "441.cfg": 1,
+    "441.shift": 8,
+    "441.force_offload": true,
+    "441.scheduler": "unipc",
+    "441.riflex_freq_index": 0,
+    "441.denoise_strength": 1,
+    "441.batched_cfg": false,
+    "441.rope_function": "comfy",
+    "441.start_step": 0,
+    "441.add_noise_to_samples": false,
+    "441.enable_highres_frame": false,
+    "441.highres_frame_index": 40,
+    "441.highres_denoise_strength": 0.3,
+    "441.highres_steps": 10,
+    "441.highres_cfg": 6,
+    "441.highres_width": 832,
+    "441.highres_height": 480,
+    "441.highres_vae": null,
+    "441.highres_guidance_weight": 0.3,
+    "441.highres_guidance_decay": 0.5,
+    "464.separator": " ",
+    "470.separator": " ",
+    "473.cfg": 1,
+    "473.shift": 8,
+    "473.force_offload": true,
+    "473.scheduler": "unipc",
+    "473.riflex_freq_index": 0,
+    "473.denoise_strength": 1,
+    "473.batched_cfg": false,
+    "473.rope_function": "comfy",
+    "473.end_step": -1,
+    "473.add_noise_to_samples": false,
+    "473.enable_highres_frame": false,
+    "473.highres_frame_index": 40,
+    "473.highres_denoise_strength": 0.3,
+    "473.highres_steps": 10,
+    "473.highres_cfg": 6,
+    "473.highres_width": 832,
+    "473.highres_height": 480,
+    "473.highres_vae": null,
+    "473.highres_guidance_weight": 0.3,
+    "473.highres_guidance_decay": 0.5,
+    "478.text": "캐릭터 춤을 춰",
+    "478.separator": " ",
+    "482.image": "bsk_source_26.png",
+    "483.image": "bsk_source_26.png",
+    "484.image": "bsk_source_26.png",
+    "486.noise_aug_strength": 0,
+    "486.start_latent_strength": 1,
+    "486.end_latent_strength": 1,
+    "486.force_offload": true,
+    "486.keyframe1_latent_strength": 1,
+    "486.keyframe2_latent_strength": 1,
+    "486.keyframe3_latent_strength": 1,
+    "486.fun_or_fl2v_model": true,
+    "486.tiled_vae": false,
+    "486.augment_empty_frames": 0,
+    "489.image": "bsk_source_26.png",
+    "490.upscale_method": "lanczos",
+    "490.keep_proportion": "crop",
+    "490.pad_color": "0, 0, 0",
+    "490.crop_position": "center",
+    "490.divisible_by": 8,
+    "490.swap_dimensions": false,
+    "490.auto_match_aspect": true,
+    "490.filename_prefix": "wan2",
+    "490.device": "cpu",
+    "492.image": "bsk_source_26.png",
+    "493.upscale_method": "lanczos",
+    "493.keep_proportion": "crop",
+    "493.pad_color": "0, 0, 0",
+    "493.crop_position": "center",
+    "493.divisible_by": 8,
+    "493.swap_dimensions": false,
+    "493.auto_match_aspect": true,
+    "493.filename_prefix": "wan2",
+    "493.device": "cpu",
+    "494.format": "WEBP",
+    "494.quality": 90,
+    "495.format": "WEBP",
+    "495.quality": 90,
+    "497.seed_str": "7008421793132065041",
+    "497.trigger": 3,
+    "497.auto_generate": true,
+    "500.value": 5,
+    "505.switch1": true,
+    "505.switch2": true,
+    "505.switch3": true,
+    "505.input4": "",
+    "505.switch4": true,
+    "505.input5": "",
+    "505.switch5": true,
+    "505.input6": "",
+    "505.switch6": true,
+    "505.input7": "",
+    "505.switch7": true,
+    "505.input8": "",
+    "505.switch8": true,
+    "505.input9": "",
+    "505.switch9": true,
+    "505.input10": "",
+    "505.switch10": true,
+    "505.merge_order": "3,2,1,4",
+    "505.preserve_newlines": false,
+    "506.text": "",
+    "506.separator": " ",
+    "507.text": "",
+    "507.separator": " ",
+    "482.image_source": "bsk_source_26.png",
+    "483.image_source": "bsk_source_26.png",
+    "484.image_source": "bsk_source_26.png",
+    "489.image_source": "bsk_source_26.png",
+    "492.image_source": "bsk_source_26.png",
+    "505.__input_order": [
+      3,
+      2,
+      1,
+      4
+    ],
+    "478.title": "분할1",
+    "507.title": "분할3",
+    "cardOrder": [
+      "505",
+      "94",
+      "367",
+      "482",
+      "483",
+      "484",
+      "489",
+      "492",
+      "500",
+      "486",
+      "503"
+    ],
+    "486.title": "bsk_wan3중간 프레임"
+  },
+  "globalCropSize": {
+    "width": 720,
+    "height": 1280
+  },
+  "linkCropSize": true,
+  "cropSizeLocked": false,
+  "autoDetectOrientation": true,
+  "autoAdaptResolution": false,
+  "noCropMode": false,
+  "textareaHeights": {
+    "57.text": "",
+    "59.text": "",
+    "69.rules": "",
+    "79.rules": "",
+    "67.strings_to_remove": "",
+    "70.rules": "",
+    "73.text": "398px",
+    "75.rules": "",
+    "76.text": "",
+    "78.text_b": "",
+    "78.text_c": "",
+    "86.text": "",
+    "87.text": "",
+    "88.rules": "",
+    "15.text": "452px",
+    "20.text": "",
+    "21.rules": "",
+    "17.rules": "356px",
+    "16.text": "",
+    "29.text": "",
+    "31.text": "",
+    "44.text": "",
+    "24.strings_to_remove": "",
+    "30.rules": "",
+    "17.text": "",
+    "18.text": "",
+    "36.text": "",
+    "37.text": "",
+    "38.strings_to_remove": "",
+    "39.rules": "",
+    "40.rules": "287px",
+    "35.text": "",
+    "10.text": "305px",
+    "11.text": "271px",
+    "5.text": "380px",
+    "762.text": "",
+    "586.text": "",
+    "587.text": "",
+    "646.text": "",
+    "1.param_0": "",
+    "4.value": "",
+    "1.text": "",
+    "198.prompt": "",
+    "476.text_a": "",
+    "476.text_c": "",
+    "478.text": "",
+    "53.text": "",
+    "55.text": "",
+    "56.text": "",
+    "48.rules": "",
+    "61.text": "",
+    "65.text": "",
+    "78.text": "",
+    "6.text": "",
+    "7.text": "",
+    "12.text": "",
+    "85.save_prompt_txt": "",
+    "85.custom_prompt": "",
+    "86.dedup_prompt": "",
+    "87.dedup_prompt": "",
+    "95.dedup_prompt": "",
+    "96.dedup_prompt": "",
+    "85.other_text": "",
+    "3.text": "",
+    "4.text": "",
+    "506.text": "",
+    "507.text": "",
+    "8.text": "",
+    "9.text": "",
+    "12.rules": "",
+    "72.text": "",
+    "21.text": "",
+    "21.strings_to_remove": "",
+    "132.text": "",
+    "147.text": "",
+    "153.text": "",
+    "155.text": "",
+    "156.text": "",
+    "163.text": "",
+    "165.text": "",
+    "172.text": "",
+    "226.text": "",
+    "228.text": "",
+    "227.text": "",
+    "229.text": "",
+    "230.text": "",
+    "248.rules": "",
+    "249.rules": "",
+    "250.strings_to_remove": "",
+    "251.text": "",
+    "252.rules": "",
+    "254.text": "",
+    "14.text": "",
+    "37.other_text": "",
+    "66.text": "",
+    "98.text": "",
+    "168.value": "",
+    "121.text": "",
+    "136.prompt": "",
+    "146.text": "",
+    "117.text": "",
+    "119.param_0": "",
+    "143.param_0": "",
+    "144.param_0": "",
+    "139.LanPaint_PromptMode": "",
+    "145.LanPaint_PromptMode": "",
+    "209.text": "",
+    "295.text": "",
+    "20.other_text": "",
+    "26.prompt": "",
+    "27.prompt": ""
+  },
+  "theme": {
+    "primaryGradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "backgroundColor": "linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)",
+    "cardBackground": "rgba(255, 255, 255, 0.04)",
+    "borderStyle": "rgba(255, 255, 255, 0.08)",
+    "accentColor": "#667eea",
+    "textColor": "white",
+    "placeholderColor": "rgba(255, 255, 255, 0.6)"
+  },
+  "promptLibraryDarkMode": true,
+  "highlightColorA": "#6496c8",
+  "highlightColorB": "#c89664",
+  "editorBgColorDark": "#2a2a2f",
+  "editorBgColorLight": "#ffffff",
+  "inputLinkSettings": {
+    "486.keyframe3": {
+      "enabled": false,
+      "linkNodeId": "490",
+      "linkOutputIndex": 0
+    },
+    "486.keyframe2": {
+      "enabled": false,
+      "linkNodeId": "348",
+      "linkOutputIndex": 0
+    },
+    "486.keyframe1": {
+      "enabled": false,
+      "linkNodeId": "376",
+      "linkOutputIndex": 0
+    },
+    "486.end_image": {
+      "enabled": false,
+      "linkNodeId": "493",
+      "linkOutputIndex": 0
+    },
+    "28.vae": {
+      "enabled": true,
+      "linkNodeId": "38",
+      "linkOutputIndex": 0
+    },
+    "28.samples": {
+      "enabled": true,
+      "linkNodeId": "473",
+      "linkOutputIndex": 0
+    },
+    "60.images": {
+      "enabled": true,
+      "linkNodeId": "28",
+      "linkOutputIndex": 0
+    },
+    "89.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "89.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "89.num_frames": {
+      "enabled": true,
+      "linkNodeId": "104",
+      "linkOutputIndex": 0
+    },
+    "89.vae": {
+      "enabled": true,
+      "linkNodeId": "38",
+      "linkOutputIndex": 0
+    },
+    "89.start_image": {
+      "enabled": true,
+      "linkNodeId": "356",
+      "linkOutputIndex": 0
+    },
+    "104.a": {
+      "enabled": true,
+      "linkNodeId": "500",
+      "linkOutputIndex": 0
+    },
+    "196.prompt": {
+      "enabled": true,
+      "linkNodeId": "391",
+      "linkOutputIndex": 0
+    },
+    "196.t5": {
+      "enabled": true,
+      "linkNodeId": "11",
+      "linkOutputIndex": 0
+    },
+    "197.original_text_embeds": {
+      "enabled": true,
+      "linkNodeId": "196",
+      "linkOutputIndex": 0
+    },
+    "197.nag_text_embeds": {
+      "enabled": true,
+      "linkNodeId": "198",
+      "linkOutputIndex": 0
+    },
+    "198.t5": {
+      "enabled": true,
+      "linkNodeId": "11",
+      "linkOutputIndex": 0
+    },
+    "199.a": {
+      "enabled": true,
+      "linkNodeId": "94",
+      "linkOutputIndex": 0
+    },
+    "199.b": {
+      "enabled": true,
+      "linkNodeId": "367",
+      "linkOutputIndex": 0
+    },
+    "348.image": {
+      "enabled": true,
+      "linkNodeId": "484",
+      "linkOutputIndex": 0
+    },
+    "348.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "348.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "356.image": {
+      "enabled": true,
+      "linkNodeId": "482",
+      "linkOutputIndex": 0
+    },
+    "356.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "356.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "358.image": {
+      "enabled": true,
+      "linkNodeId": "356",
+      "linkOutputIndex": 0
+    },
+    "359.image": {
+      "enabled": true,
+      "linkNodeId": "348",
+      "linkOutputIndex": 0
+    },
+    "376.image": {
+      "enabled": true,
+      "linkNodeId": "483",
+      "linkOutputIndex": 0
+    },
+    "376.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "376.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "386.image": {
+      "enabled": true,
+      "linkNodeId": "376",
+      "linkOutputIndex": 0
+    },
+    "391.string1": {
+      "enabled": true,
+      "linkNodeId": "464",
+      "linkOutputIndex": 0
+    },
+    "441.model": {
+      "enabled": true,
+      "linkNodeId": "22",
+      "linkOutputIndex": 0
+    },
+    "441.image_embeds": {
+      "enabled": true,
+      "linkNodeId": "486",
+      "linkOutputIndex": 0
+    },
+    "441.steps": {
+      "enabled": true,
+      "linkNodeId": "94",
+      "linkOutputIndex": 0
+    },
+    "441.seed": {
+      "enabled": true,
+      "linkNodeId": "497",
+      "linkOutputIndex": 0
+    },
+    "441.text_embeds": {
+      "enabled": true,
+      "linkNodeId": "197",
+      "linkOutputIndex": 0
+    },
+    "441.end_step": {
+      "enabled": true,
+      "linkNodeId": "367",
+      "linkOutputIndex": 0
+    },
+    "464.text": {
+      "enabled": true,
+      "linkNodeId": "470",
+      "linkOutputIndex": 0
+    },
+    "470.text": {
+      "enabled": true,
+      "linkNodeId": "505",
+      "linkOutputIndex": 0
+    },
+    "473.model": {
+      "enabled": true,
+      "linkNodeId": "71",
+      "linkOutputIndex": 0
+    },
+    "473.image_embeds": {
+      "enabled": true,
+      "linkNodeId": "486",
+      "linkOutputIndex": 0
+    },
+    "473.steps": {
+      "enabled": true,
+      "linkNodeId": "94",
+      "linkOutputIndex": 0
+    },
+    "473.seed": {
+      "enabled": true,
+      "linkNodeId": "497",
+      "linkOutputIndex": 0
+    },
+    "473.text_embeds": {
+      "enabled": true,
+      "linkNodeId": "197",
+      "linkOutputIndex": 0
+    },
+    "473.samples": {
+      "enabled": true,
+      "linkNodeId": "441",
+      "linkOutputIndex": 0
+    },
+    "473.start_step": {
+      "enabled": true,
+      "linkNodeId": "367",
+      "linkOutputIndex": 0
+    },
+    "475.anything": {
+      "enabled": true,
+      "linkNodeId": "356",
+      "linkOutputIndex": 0
+    },
+    "486.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "486.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "486.num_frames": {
+      "enabled": true,
+      "linkNodeId": "104",
+      "linkOutputIndex": 0
+    },
+    "486.vae": {
+      "enabled": true,
+      "linkNodeId": "38",
+      "linkOutputIndex": 0
+    },
+    "486.start_image": {
+      "enabled": true,
+      "linkNodeId": "356",
+      "linkOutputIndex": 0
+    },
+    "490.image": {
+      "enabled": true,
+      "linkNodeId": "489",
+      "linkOutputIndex": 0
+    },
+    "490.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "490.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "493.image": {
+      "enabled": true,
+      "linkNodeId": "492",
+      "linkOutputIndex": 0
+    },
+    "493.width": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 0
+    },
+    "493.height": {
+      "enabled": true,
+      "linkNodeId": "503",
+      "linkOutputIndex": 1
+    },
+    "494.image": {
+      "enabled": true,
+      "linkNodeId": "490",
+      "linkOutputIndex": 0
+    },
+    "495.image": {
+      "enabled": true,
+      "linkNodeId": "493",
+      "linkOutputIndex": 0
+    },
+    "503.image": {
+      "enabled": true,
+      "linkNodeId": "482",
+      "linkOutputIndex": 0
+    },
+    "505.input1": {
+      "enabled": true,
+      "linkNodeId": "507",
+      "linkOutputIndex": 0
+    },
+    "505.input2": {
+      "enabled": true,
+      "linkNodeId": "506",
+      "linkOutputIndex": 0
+    },
+    "505.input3": {
+      "enabled": true,
+      "linkNodeId": "478",
+      "linkOutputIndex": 0
+    }
+  },
+  "cardLinkToggleState": {},
+  "cardAutoCollapse": {},
+  "inputDefaultConfig": {},
+  "inputDisabledValues": {},
+  "localOutputConfigs": {},
+  "workflowInfo": {
+    "title": "",
+    "subtitle": "너의 여정에 변할래중의일점미세한 빛",
+    "subtitles": [
+      "너의 여정에 변할래중의일점미세한 빛",
+      "매번 생성할 때마다 혼돈에 대한 심문。"
+    ],
+    "author": "灰暗x",
+    "authorAvatar": "https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif",
+    "authors": [
+      {
+        "name": "灰暗x",
+        "avatar": "https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif",
+        "links": [
+          {
+            "name": "Bilibili",
+            "url": "https://space.bilibili.com/26779709"
+          }
+        ]
+      }
+    ],
+    "description": "<H2>\nwan2.2비디오 생성 \nbsk_wan3중간 프레임 노드 내, \nKeyframe1~3 및 end_image 전의 값을 찾습니다🔗버튼을 활성화/비활성화하여 해당 키프레임을 설정합니다,\n\n설정 패널에서 다운로드 워크플로우 먼저 실행, ComfyUI에 드래그하여 누락된 모델 및 플러그인 확인,\n잘 작동하면 API 워크플로우를 가져와 자동 태그 버튼 활성화 후 표시.\n</h2>\n",
+    "usage": "<H2>\nwan2.2비디오 생성 \nbsk_wan3중간 프레임 노드 내, \nKeyframe1~3 및 end_image 전의 값을 찾습니다🔗버튼을 활성화/비활성화하여 해당 키프레임을 설정합니다,\n\n설정 패널에서 다운로드 워크플로우 먼저 실행, ComfyUI에 드래그하여 누락된 모델 및 플러그인 확인,\n잘 작동하면 API 워크플로우를 가져와 자동 태그 버튼 활성화 후 표시.\n</h2>\n",
+    "links": [
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      },
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      }
+    ],
+    "background": {
+      "image": "https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "opacity": 0.62,
+      "useEmbeddedImage": false
+    },
+    "styles": {
+      "titleColor": "#f2ece5",
+      "titleSize": "22px",
+      "textColor": "#908278",
+      "textSize": "14px",
+      "panelBgColor": "#0a0807",
+      "panelOpacity": 1,
+      "blurStrength": 0,
+      "bgOverlayOpacity": 0.15
+    }
+  },
+  "pluginDeps": {},
+  "modelDownloads": [],
+  "samplerPreviewMethod": "latent2rgb",
+  "nodeTrackingEnabled": false,
+  "autoSwitchTab": false
+}

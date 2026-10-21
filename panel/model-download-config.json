@@ -1,0 +1,202 @@
+[
+  {
+    "model_type": "diffusion_models",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/circlestone-labs/Anima/resolve/master/split_files/diffusion_models/anima-base-v1.0.safetensors",
+    "releasePageUrl": "https://modelscope.cn/models/circlestone-labs/Anima",
+    "filename": "anima-base-v1.0.safetensors",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "circlestone-labs",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "text_encoders",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/circlestone-labs/Anima/resolve/master/split_files/text_encoders/qwen_3_06b_base.safetensors",
+    "releasePageUrl": "https://modelscope.cn/models/circlestone-labs/Anima",
+    "filename": "qwen_3_06b_base.safetensors",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "circlestone-labs",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "vae",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/circlestone-labs/Anima/resolve/master/split_files/vae/qwen_image_vae.safetensors",
+    "releasePageUrl": "https://modelscope.cn/models/circlestone-labs/Anima",
+    "filename": "qwen_image_vae.safetensors",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "circlestone-labs",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "loras",
+    "subdir": "",
+    "url": "https://hf-mirror.com/Lisabensen/animaloras-jun1/resolve/main/122-Turbo-ANIMA.safetensors",
+    "releasePageUrl": "https://civitai.red/models/2560840/anima-turbo-lora?modelVersionId=2877687",
+    "filename": "Turbo-ANIMA.safetensors",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "n_Arno",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "loras",
+    "subdir": "",
+    "url": "lora: anima_npu_bskgs-0000012 웹 다운로드 주소 수동으로 열기 https://civitai.red/models/2697228/bskff?modelVersionId=3028770",
+    "releasePageUrl": "https://civitai.red/models/2697228/bskff?modelVersionId=3028770",
+    "filename": "anima_npu_bskgs-0000012.safetensors",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "灰暗x",
+    "authorLinks": [
+      {
+        "name": "CivitAI",
+        "url": "https://civitai.red/user/blueskyfff"
+      }
+    ],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "",
+    "subdir": "",
+    "url": "웹 드라이브 다운로드 플러그인 업데이트 및 기타lora https://www.bilibili.com/video/BV153LV6TEqd",
+    "releasePageUrl": "https://www.bilibili.com/video/BV153LV6TEqd",
+    "filename": "",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "controlnet",
+    "subdir": "",
+    "url": "https://hf-mirror.com/kohya-ss/Anima-LLLite/resolve/main/anima-lllite-any-test-like-v2.safetensors?download=true",
+    "releasePageUrl": "https://huggingface.co/kohya-ss/Anima-LLLite",
+    "filename": "anima-lllite-any-test-like-v2.safetensors",
+    "actual_filename": "anima-lllite-any-test-like-v2.safetensors",
+    "actual_model_type": "controlnet",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "kohya-ss",
+    "authorLinks": [
+      {
+        "name": "HuggingFace",
+        "url": "https://huggingface.co/kohya-ss/Anima-LLLite"
+      }
+    ],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "controlnet",
+    "subdir": "",
+    "url": "https://hf-mirror.com/kohya-ss/Anima-LLLite/resolve/main/anima-lllite-inpainting-v2.safetensors?download=true",
+    "releasePageUrl": "https://huggingface.co/kohya-ss/Anima-LLLite",
+    "filename": "anima-lllite-inpainting-v2.safetensors",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "kohya-ss",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "custom_nodes/comfyui-wd14-tagger/models",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/shiertier/wd14_tagger/resolve/master/wd-vit-tagger-v3.onnx",
+    "releasePageUrl": "",
+    "filename": "wd-vit-tagger-v3.onnx",
+    "actual_filename": "11wd-vit-tagger-v3.onnx",
+    "actual_model_type": "custom_nodes/comfyui-wd14-tagger/models",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "custom_nodes/comfyui-wd14-tagger/models",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/shiertier/wd14_tagger/resolve/master/wd-vit-tagger-v3.csv",
+    "releasePageUrl": "",
+    "filename": "wd-vit-tagger-v3.csv",
+    "actual_filename": "",
+    "actual_model_type": "",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "",
+    "authorLinks": [],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "models/cltagger",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/nikoovo/cl-tagger/resolve/master/cl_tagger_1_02/model.onnx",
+    "releasePageUrl": "https://huggingface.co/cella110n/cl_tagger",
+    "filename": "model.onnx",
+    "actual_filename": "model.onnx",
+    "actual_model_type": "models/cltagger",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "cella110n",
+    "authorLinks": [
+      {
+        "name": "HuggingFace",
+        "url": "https://huggingface.co/cella110n/cl_tagger"
+      }
+    ],
+    "authorDesc": ""
+  },
+  {
+    "model_type": "models/cltagger",
+    "subdir": "",
+    "url": "https://modelscope.cn/models/nikoovo/cl-tagger/resolve/master/cl_tagger_1_02/tag_mapping.json",
+    "releasePageUrl": "",
+    "filename": "tag_mapping.json",
+    "actual_filename": "tag_mapping.json",
+    "actual_model_type": "models/cltagger",
+    "actual_subdir": "",
+    "authorAvatar": "",
+    "authorAvatarData": "",
+    "authorName": "cella110n",
+    "authorLinks": [
+      {
+        "name": "HuggingFace",
+        "url": "https://huggingface.co/cella110n/cl_tagger"
+      }
+    ],
+    "authorDesc": ""
+  }
+]

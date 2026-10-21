@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComfyUI_bsk_UI - 독립 실행 모드</title>
+  <style>
+    /* 기본 스타일 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #fff8fa 0%, #fbfbfb 50%, #bfd9f7 100%);
+    }
+    
+    /* 로드 안내 */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(163deg, #b0b0b9 0%, #89a1b1 50%, #919191 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.3s ease;
+    }
+    
+    #loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .loading-title {
+      color: white;
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    /* Null pointer protection: loading-hint may not exist */
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* 독립 모드 안내 */
+    #standalone-notice {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(102, 126, 234, 0.2);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 9998;
+      backdrop-filter: blur(4px);
+    }
+  </style>
+  <!-- 프롬프트 편집기에서 CodeMirror 5를 사용합니다(로컬화, file:// 직접 열기 지원)） -->
+  <link rel="stylesheet" href="./js/codemirror/codemirror.min.css">
+  <link rel="stylesheet" href="./js/codemirror/addon/hint/show-hint.min.css?t=20260811">
+  <link rel="stylesheet" href="./js/codemirror/addon/dialog/dialog.min.css?t=20260811">
+  <link rel="stylesheet" href="./js/codemirror/addon/fold/foldgutter.min.css?t=20260811">
+  <link rel="stylesheet" href="./js/codemirror/addon/scroll/simplescrollbars.min.css?t=20260811">
+</head>
+<body>
+  <!-- 로드 안내 -->
+  <div id="loading-overlay">
+    <div class="loading-title">ComfyUI_bsk_UI</div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">로딩 중...</div>
+  </div>
+  
+  <!-- 독립 모드 안내 -->
+  <div id="standalone-notice" style="display: none;">
+    독립 실행 모드 | ESC 키로 닫기
+  </div>
+  
+  <!-- 독립 모드 활성화 - 스크립트 로드 전에 반드시 설정해야 합니다. -->
+  <script>
+    window.COMFYUI_PANEL_STANDALONE = true;
+  </script>
+
+  <!-- js 디렉토리의 스크립트 로드 (multiline_comment.js 및 백업 파일 제외） -->
+  <script>
+    (function() {
+      // 로드할 스크립트 목록(순서대로 로드)）
+      var scriptsToLoad = [
+        './js/wasm_inline.js',  // WASM인라인 버전 (file:// 프로토콜에서 작동))
+        './js/wasm_guard_inline.js',  // WASM Guard인라인 버전 (저자 정보 보호)
+        './js/codemirror/codemirror.min.js?t=' + Date.now(),  // CodeMirror 5（프롬프트 편집기/드로잉 강조）
+        './js/codemirror/placeholder.min.js?t=' + Date.now(),
+        // CodeMirror addon（자동 완성/괄호 매칭/현재 행 강조/검색/접기/스크롤 등）
+        './js/codemirror/addon/hint/show-hint.min.js?t=' + Date.now(),
+        './js/codemirror/addon/hint/anyword-hint.min.js?t=' + Date.now(),
+        './js/codemirror/addon/edit/matchbrackets.min.js?t=' + Date.now(),
+        './js/codemirror/addon/selection/active-line.min.js?t=' + Date.now(),
+        './js/codemirror/addon/display/autorefresh.min.js?t=' + Date.now(),
+        './js/codemirror/addon/search/searchcursor.min.js?t=' + Date.now(),
+        './js/codemirror/addon/dialog/dialog.min.js?t=' + Date.now(),
+        './js/codemirror/addon/search/search.min.js?t=' + Date.now(),
+        './js/codemirror/addon/search/match-highlighter.min.js?t=' + Date.now(),
+        './js/codemirror/addon/fold/foldcode.min.js?t=' + Date.now(),
+        './js/codemirror/addon/fold/foldgutter.min.js?t=' + Date.now(),
+        './js/codemirror/addon/fold/comment-fold.min.js?t=' + Date.now(),
+        './js/codemirror/addon/scroll/simplescrollbars.min.js?t=' + Date.now(),
+        './js/codemirror/addon/scroll/scrollpastend.min.js?t=' + Date.now(),
+        './js/codemirror/bsk_prompt_mode.js?t=' + Date.now(),  // BSK 프롬프트 강조 mode + textarea 호환 레이어
+        './js/codemirror/bsk_prompt_hint.js?t=' + Date.now(),  // BSK 편집기 강화 (자동 완성/상태 표시줄/접기)）
+        './js/codemirror/bsk_prompt_autocomplete_lib.js?t=' + Date.now(),  // 사용자가 편집 가능한 자동 완성 구성 (일반, 두 편집기 공유)）
+        './js/panel.js',
+        './js/multi_layer_card.js',
+        './js/rgba_image_editor.js',
+        './js/workflow_editor.js',
+        './js/plugin_pip_installer.js',
+        './js/gallery.js',
+        './js/training_panel.js',
+        './js/video_studio/vs_state.js?t=' + Date.now(),
+        './js/video_studio/vs_crop_shared.js?t=' + Date.now(),
+        './js/video_studio/vs_asset_registry.js?t=' + Date.now(),
+        './js/video_studio/vs_styles.js?t=' + Date.now(),
+        './js/video_studio/vs_main.js?t=' + Date.now(),
+        './js/video_studio/vs_timeline.js?t=' + Date.now(),
+        './js/video_studio/vs_assets.js?t=' + Date.now(),
+        './js/video_studio/vs_refpanel.js?t=' + Date.now(),
+        './js/video_studio/vs_audio.js?t=' + Date.now(),
+        './js/video_studio/vs_motion.js?t=' + Date.now(),
+        './js/video_studio/vs_inspector.js?t=' + Date.now(),
+        './js/video_studio/vs_crop.js?t=' + Date.now(),
+        './js/video_studio/vs_preview.js?t=' + Date.now(),
+        './js/video_studio/vs_player.js?t=' + Date.now(),
+        './js/video_studio/vs_submit.js?t=' + Date.now(),
+        './js/video_studio/vs_config.js?t=' + Date.now(),
+        './js/video_studio/vs_batch.js?t=' + Date.now(),
+        './js/video_studio/vs_labels.js?t=' + Date.now(),
+        './js/video_studio/vs_ref_builder.js?t=' + Date.now(),
+        './js/video_studio/vs_prompt_editor.js?t=' + Date.now(),
+        './js/prompt_tag_editor.js?t=' + Date.now(),
+        './js/prompt_image_library.js?t=' + Date.now()  // 프롬프트 갤러리: 트리거 단어 ↔ 이미지 ↔ 프롬프트
+      ];  // END_SCRIPTS
+
+      // 독립 모드 보완: HTML이 file://로 직접 열리는 경우(ComfyUI 서버에서 제공하지 않는 경우).，
+      // __init__.py 카드 스크립트에 대한 자동 주입은 실행되지 않으며, 여기에서 js/cards/ 아래의 카드를 수동으로 추가합니다.。
+      // 중복을 방지하기 위해 served 모드에서 __init__.py로 주입된 카드를 다시 로드하지 않도록 합니다.。
+      (function() {
+        var cardFiles = [
+          'batch_random_prompt_card.js',
+          'bsk_ltx_director_card.js',
+          'camera_control_card.js',
+          'cltagger_card.js',
+          'hello_world_card.js',
+          'hub_node_card.js',
+          'multi_lora_loader_card.js',
+          'param_set_card.js',
+          'prompt_format_card.js',
+          'random_seed_card.js',
+          'string_merge_switch_card.js',
+          'txt_prompt_batch_card.js',
+          'ai_text_card.js'
+        ];
+        cardFiles.forEach(function(f) {
+          var src = './js/cards/' + f;
+          if (scriptsToLoad.indexOf(src) === -1) {
+            scriptsToLoad.push(src);
+          }
+        });
+      })();
+
+      var loadedCount = 0;
+      var totalScripts = scriptsToLoad.length;
+
+      function loadScript(src, callback) {
+        var script = document.createElement('script');
+        script.src = src;
+        script.onload = callback;
+        script.onerror = function() {
+          console.warn('Failed to load script: ' + src);
+          // video_studio 스크립트 로드 실패 기록, 로드 완료 후 일괄 진단 메시지 제공
+          if (/\/video_studio\//.test(src)) {
+            window.__bskVSLoadFailed = window.__bskVSLoadFailed || [];
+            window.__bskVSLoadFailed.push(src);
+          }
+          callback();
+        };
+        document.head.appendChild(script);
+      }
+
+      function loadNext() {
+        if (loadedCount < totalScripts) {
+          loadScript(scriptsToLoad[loadedCount], function() {
+            loadedCount++;
+            loadNext();
+          });
+        } else if (window.__bskVSLoadFailed && window.__bskVSLoadFailed.length) {
+          console.error('[BSK Video Studio] video_studio 스크립트 로드 실패(404/네트워크 오류)는 플러그인 js/video_studio/ 디렉토리가 로컬 소스와 일치하는지 확인:', window.__bskVSLoadFailed);
+        }
+      }
+
+      loadNext();
+    })();
+  </script>
+  
+  <script>
+    // 스크립트 로딩 완료 대기
+    window.addEventListener('load', function() {
+      // 숨겨진 로딩 팁
+      function hideLoadingOverlay() {
+        var loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+          loadingOverlay.classList.add('hidden');
+          setTimeout(function() {
+            loadingOverlay.style.display = 'none';
+          }, 300);
+        }
+      }
+      
+      // 자동 연결 모드에서 즉시 로딩을 숨겨 연결 패널(연결 중 애니메이션 포함)을 표시합니다.
+      if (window.COMFYUI_PANEL_AUTO_CONNECT) {
+        hideLoadingOverlay();
+      } else {
+        setTimeout(hideLoadingOverlay, 500);
+      }
+      
+      // 독립 모드 팁 표시
+      var notice = document.getElementById('standalone-notice');
+      if (notice) {
+        notice.style.display = 'block';
+      }
+      
+      // 자동 패널 표시 (독립 모드에서）
+      // panel.js setTimeout(init, 100)을 사용하여 초기화를 지연하고, window.load 시 comfyUIPanel이 아직 생성되지 않을 수 있습니다.
+      // comfyUIPanel을 폴링 방식으로 기다림
+      function tryShowPanel() {
+        if (window.comfyUIPanel) {
+          window.comfyUIPanel.show();
+        } else {
+          setTimeout(tryShowPanel, 50);
+        }
+      }
+      tryShowPanel();
+    });
+  </script>
+</body>
+</html>

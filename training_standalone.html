@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>훈련 도구 (독립 모드)</title>
+  <style>
+    /* 전체 화면 레이아웃, 훈련 패널이 페이지 전체를 차지함 */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: "Noto Sans SC", "Inter", system-ui, sans-serif; }
+    #training-root { width: 100%; height: 100%; }
+    /* 로드 안내 */
+    #loading-hint {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+      font-size: 18px; color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div id="training-root">
+    <div id="loading-hint">훈련 도구 로드 중...</div>
+  </div>
+  
+  <!-- 독립 모드 플래그 설정, training_panel.js 읽기 -->
+  <script>
+    window.TRAINING_STANDALONE = true;
+    // window.app 및 의존하지 않습니다 window.comfyUIPanel
+  </script>
+  
+  <!-- gallery.js 먼저 로드 (training_panel.js 의존) window.BskGallery) -->
+  <script src="./js/gallery.js"></script>
+  <!-- 다시 로드 training_panel.js -->
+  <script src="./js/training_panel.js"></script>
+  <script>
+    // 독립 모드: 훈련 패널이 전체 화면 컨테이너에 직접 마운트됩니다
+    if (window.TrainingPanel) {
+      var root = document.getElementById('training-root');
+      var hint = document.getElementById('loading-hint');
+      if (hint) hint.remove();
+      window.TrainingPanel.show(root);
+    } else {
+      document.getElementById('loading-hint').textContent = '훈련 패널 로드 실패';
+    }
+  </script>
+</body>
+</html>

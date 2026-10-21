@@ -1,0 +1,1 @@
+!function(){"use strict";window.__bskCards=window.__bskCards||{},window.__bskCards.BSK_Hub=function(n,t,e){var d=document.createElement("div");d.style.cssText="padding:12px;color:#888;font-size:13px;line-height:1.7;",d.textContent="스플리터 노드: 노드 캔버스에서 임의의 끝점을 연결하면 입력/출력 그룹이 자동으로 증가/감소하고, 출력 직통이 해당 입력에 연결됩니다. 이 패널은 설명만 제공하며, 동적 연결은 캔버스에서 직접 수행하십시오.。",n.appendChild(d)}}();

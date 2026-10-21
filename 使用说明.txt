@@ -1,0 +1,85 @@
+﻿════════════════════════════════════════════════════════
+  저작권 및 라이선스 © 2026 B상 @灰暗x ｜ AGPL-3.0
+  이 플러그인은 AGPL-3.0로 게시되며 자유롭게 사용/수정/재배포할 수 있습니다.，
+  본 저작권 선언 및 LICENSE 파일을 유지해야 하며, 모든 파생 또는 재배포는...
+  전체는 AGPL-3.0 라이선스 하에 있어야 하며, 폐쇄형 상업용으로 변경하지 않아야 합니다.）。
+  AI 지능체를 사용하여 이 코드를 복사해도 저작권 및 라이선스 정보를 삭제할 수 없습니다。
+  제3자 파생 코드에 따라 각 라이선스에 서명, 파일 헤더 및 LICENSES/。
+════════════════════════════════════════════════════════
+
+╔═══════════════════════════════════════════════════════
+║
+║                   bsk_UI 새 버전 권한 설명
+║
+║   저자: B상 @灰暗x
+║   버전: v1.2 (2026년 3월부터)）
+║
+╚═══════════════════════════════════════════════════════
+comfyui_prompt_library.json 전체 프롬프트 딕셔너리입니다. 패널 폴더에 넣어야 활성화됩니다. 루트 디렉토리에 두면 중복 설치 시 덮어쓰는 것을 방지합니다.,
+워크플로우가 실행되지 않으면 먼저 w를 눌러 워크플로우 편집기를 열고, 오른쪽 상단 버튼을 사용하여 패널에서 가져오고, 다시 오른쪽 상단 버튼을 사용하여 패널로 전송하면 대부분의 문제를 해결할 수 있습니다(이는 일부 플러그인이 업데이트된 후 입력 또는 출력 엔드포인트를 추가하여 워크플로우 데이터 편집기를 업데이트해야 하는 원리입니다)),
+
+사용 방법을 모를 경우, B상에 업로드한 비디오 튜토리얼을 참조하세요, 최근 모든 사용법을 설명할 예정,
+https://space.bilibili.com/26779709
+설치:ComfyUI-bsk_UI 폴더를 ComfyUI/custom_nodes/ 폴더에 넣으세요(ComfyUI-bsk_UI 폴더 내에 ComfyUI 폴더 구조가 보장되어야 함)__init__.py
+wd14 플러그인을 사용하여 역추적하려면 ComfyUI-bsk_UI/wd14 폴더 내의 파일을 ComfyUI/custom_nodes/ComfyUI-WD14-Tagger의 동일한 이름의 파일로 덮어씁니다.,
+wd14디렉토리 내 파일의 변경 사항: 역추적 플러그인에 스위치 버튼과 대상 디렉토리 내 모든 파일에 태그 파일을 생성하는 기능을 추가했습니다.,
+
+【안녕하세요, 세상】✅
+
+• 노드 정의 로드 실패, 워크플로우 변환 불가
+• 코드 수정 (자체 사용)
+• 원작자 및 출처를 명시하는 경우 친구에게 공유
+
+
+【당신은 무엇을 할 수 없습니다】❌
+
+• 삭제하거나 숨기세요 소프트웨어 인터페이스의 저작자 표시와 소셜 링크 버튼(예: %s)"@灰暗x | bsk_UI"）
+• 본 소프트웨어 또는 수정 버전을 패키징하여 공개적으로 배포하고, 원작자 및 출처를 명시하지 않은 경우
+• 본 소프트웨어를 상업적 목적으로 사용해서는 안 됩니다 (판매, 유료 서비스의 일부로 사용, 상업 제품에 내장 등 포함).）
+• 이 소프트웨어의 저자라고 주장
+
+
+【본 버전 정보】📌
+
+본 버전 (v1.0 이상)은 GitHub의 AGPLv3 이전 버전 (v260315 및 이전)과 독립적이며, 다른 라이선스 방식을 사용합니다.。
+
+GitHub 위에 있는 이전 버전은 AGPLv3 프로토콜로 유지。
+새 버전은 B상에서만 게시되며, GitHub 버전 업데이트는 느릴 수 있습니다。
+
+
+【지원 및 최신 버전 가져오기】💬
+
+• 최근 생성 상태를 디스크에 기록 @灰暗x 동적 게시
+• 문제 피드백: B상 사설 메시지 또는 비디오 댓글
+• 비디오 튜토리얼: B상 검색 @灰暗x
+
+If you find this tool helpful, please follow Bsite channel ⭐
+
+→ B사이트 홈：https://space.bilibili.com/26779709
+
+【감사합니다】
+
+• ComfyUI: https://github.com/Comfy-Org/ComfyUI （GPL-3.0 License）
+• ComfyUI-Manager: https://github.com/ltdrdata/ComfyUI-Manager （GPL-3.0 License）— 플러그인 의존성 검색 및 설치
+• 하드웨어 모니터링 기능은 [Crystools](https://github.com/crystian/ComfyUI-Crystools)의 구현을 참조했습니다 (MIT License, Copyright (c) 2023 Crystian)
+• 후면 다중 LoRA 로드 노드는 참조함 Comfyroll Studio https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes （GPL-3.0 License）
+• wan_nodes.py 기반 ComfyUI-WanVideoWrapper https://github.com/kijai/ComfyUI-WanVideoWrapper （Apache-2.0 License）
+• bsk_ltx_director.py 기반 WhatDreamsCost-ComfyUI https://github.com/WhatDreamsCost/WhatDreamsCost-ComfyUI （GPL-3.0 License）
+• H3 비디오 워크스테이션 및 프롬프트 편집기 참조 MiniMax H3 https://github.com/MiniMax-AI/MiniMax-H3 （MiniMax H3 Community License, © 2026 MiniMax）— 힌트 편집기 구조는 공식 skill 프로젝트 참조 https://github.com/MiniMax-AI/MiniMax-H3/tree/main/skills
+• 프롬프트 카드 (실행 시 펼쳐짐 사용) CodeMirror 5 https://codemirror.net/5/ （MIT License）
+• 이미지 라벨링 노드 참조는 cl_tagger https://github.com/Cirius0310/cl_tagger (Apache-2.0 License)와 ComfyUI-WD14-Tagger https://github.com/pythongosssss/ComfyUI-WD14-Tagger （MIT License）
+• 인터페이스 폰트 Playfair Display / Noto Sans SC Google Fonts （SIL OFL 1.1）
+• 일부 SVG 아이콘이 이 웹사이트에서 공유한 아이콘을 사용,https://www.svgrepo.com/
+ * Lasso Select & Paint Bucket: MIT License (Author: Esri, Denali Design)
+ * Pen Icon: CC BY License (Author: Solar Icons)
+ * Source: SVG Repo (https://www.svgrepo.com/)
+• Photo by Andrew S on Unsplash https://unsplash.com/photos/a-dog-and-a-cat-laying-in-the-grass-ouo1hbizWwo
+
+【마지막 말】
+
+이 플러그인은 제가 개인적으로 많은 시간을 들여 다듬은 작품입니다.，
+진정으로 ComfyUI 사용 경험 향상에 도움을 줄 수 있기를。
+
+당신의 관심과 지원은 지속적인 개선의 동기입니다. 감사합니다.！
+
+—— @灰暗x

@@ -1,0 +1,44 @@
+MIT License
+
+Copyright (c) 2026 AnimaDex contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+关于本文件 / About this file
+--------------------------------------------------------------------------------
+
+项目 Project : AnimaDex
+主页 Home    : https://github.com/zetaneko/AnimaDex
+许可 License : MIT License
+
+以上是 AnimaDex 项目所采用的 MIT 许可协议全文，转载自其仓库的 LICENSE 文件。
+
+ComfyUI-bsk_UI 与本项目的关系：
+
+  · 并未包含或复制 AnimaDex 的源码，仅以只读方式读取其导出的
+    animadex.db（SQLite）与 import/*.csv，并独立实现了与之兼容的查询逻辑。
+  · 提供的「克隆 / 安装」功能会调用 AnimaDex 自带的
+    install.sh / install.bat，该脚本属 AnimaDex 项目原作者所有，
+    本插件只做调用，不做任何修改。
+  · 数据（角色名 / 画师名 / 标签 / 图片）的版权归各自权利人所有。
+    原始图片素材来自 HuggingFace 数据集 Laxhar/noob-wiki
+    （https://huggingface.co/datasets/Laxhar/noob-wiki）。
+  · 本插件不打包、不二次分发上述数据；用户需自行通过 AnimaDex 获取。

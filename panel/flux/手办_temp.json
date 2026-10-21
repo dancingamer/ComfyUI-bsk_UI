@@ -1,0 +1,887 @@
+{
+  "workflow": {
+    "585": {
+      "inputs": {
+        "vae_name": "flux2-vae.safetensors"
+      },
+      "class_type": "VAELoader",
+      "_meta": {
+        "title": "ロードVAE"
+      }
+    },
+    "586": {
+      "inputs": {
+        "text": "8K고화질",
+        "clip": [
+          "608",
+          0
+        ]
+      },
+      "class_type": "CLIPTextEncode",
+      "_meta": {
+        "title": "CLIP텍스트 인코딩"
+      }
+    },
+    "587": {
+      "inputs": {
+        "text": "",
+        "clip": [
+          "608",
+          0
+        ]
+      },
+      "class_type": "CLIPTextEncode",
+      "_meta": {
+        "title": "CLIP텍스트 인코딩"
+      }
+    },
+    "589": {
+      "inputs": {
+        "samples": [
+          "599",
+          0
+        ],
+        "vae": [
+          "593",
+          0
+        ]
+      },
+      "class_type": "VAEDecode",
+      "_meta": {
+        "title": "VAE디코딩"
+      }
+    },
+    "590": {
+      "inputs": {
+        "lora_name": "z_image/Kook_Zimage_현실적인 환상_Turbo.safetensors",
+        "strength_model": [
+          "754",
+          0
+        ],
+        "model": [
+          "594",
+          0
+        ]
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "_meta": {
+        "title": "LoRA모델만 로더）"
+      }
+    },
+    "591": {
+      "inputs": {
+        "shift": 3,
+        "model": [
+          "590",
+          0
+        ]
+      },
+      "class_type": "ModelSamplingAuraFlow",
+      "_meta": {
+        "title": "샘플링 알고리즘（AuraFlow）"
+      }
+    },
+    "592": {
+      "inputs": {
+        "unet_name": "flux2-klein/flux-2-klein-9b-fp8.safetensors",
+        "weight_dtype": "default"
+      },
+      "class_type": "UNETLoader",
+      "_meta": {
+        "title": "UNetロード기기"
+      }
+    },
+    "593": {
+      "inputs": {
+        "vae_name": "ae.safetensors"
+      },
+      "class_type": "VAELoader",
+      "_meta": {
+        "title": "ロードVAE"
+      }
+    },
+    "594": {
+      "inputs": {
+        "unet_name": "z_image_turbo_bf16.safetensors",
+        "weight_dtype": "default"
+      },
+      "class_type": "UNETLoader",
+      "_meta": {
+        "title": "UNetロード기기"
+      }
+    },
+    "595": {
+      "inputs": {
+        "clip_name": "flux2-klein/qwen_3_8b_fp8mixed.safetensors",
+        "type": "flux2",
+        "device": "default"
+      },
+      "class_type": "CLIPLoader",
+      "_meta": {
+        "title": "ロードCLIP"
+      }
+    },
+    "596": {
+      "inputs": {
+        "samples": [
+          "605",
+          0
+        ],
+        "vae": [
+          "585",
+          0
+        ]
+      },
+      "class_type": "VAEDecode",
+      "_meta": {
+        "title": "VAE디코딩"
+      }
+    },
+    "597": {
+      "inputs": {
+        "anything": [
+          "735",
+          0
+        ]
+      },
+      "class_type": "easy cleanGpuUsed",
+      "_meta": {
+        "title": "메모리 정리"
+      }
+    },
+    "599": {
+      "inputs": {
+        "add_noise": "enable",
+        "noise_seed": [
+          "763",
+          0
+        ],
+        "steps": 8,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "beta57",
+        "start_at_step": 6,
+        "end_at_step": 10000,
+        "return_with_leftover_noise": "disable",
+        "model": [
+          "591",
+          0
+        ],
+        "positive": [
+          "586",
+          0
+        ],
+        "negative": [
+          "587",
+          0
+        ],
+        "latent_image": [
+          "607",
+          0
+        ]
+      },
+      "class_type": "KSamplerAdvanced",
+      "_meta": {
+        "title": "K샘플러 (고급)）"
+      }
+    },
+    "605": {
+      "inputs": {
+        "seed": [
+          "763",
+          0
+        ],
+        "steps": 4,
+        "cfg": 1,
+        "sampler_name": "euler_ancestral",
+        "scheduler": "simple",
+        "denoise": 1,
+        "model": [
+          "648",
+          0
+        ],
+        "positive": [
+          "643",
+          0
+        ],
+        "negative": [
+          "647",
+          0
+        ],
+        "latent_image": [
+          "643",
+          1
+        ]
+      },
+      "class_type": "KSampler",
+      "_meta": {
+        "title": "K샘플러"
+      }
+    },
+    "607": {
+      "inputs": {
+        "pixels": [
+          "597",
+          0
+        ],
+        "vae": [
+          "593",
+          0
+        ]
+      },
+      "class_type": "VAEEncode",
+      "_meta": {
+        "title": "VAE인코딩"
+      }
+    },
+    "608": {
+      "inputs": {
+        "clip_name": "z_image/qwen_3_4b.safetensors",
+        "type": "lumina2",
+        "device": "default"
+      },
+      "class_type": "CLIPLoader",
+      "_meta": {
+        "title": "ロードCLIP"
+      }
+    },
+    "642": {
+      "inputs": {
+        "image": "ComfyUI_00025_ (13).png"
+      },
+      "class_type": "LoadImage",
+      "_meta": {
+        "title": "이미지 로드"
+      }
+    },
+    "643": {
+      "inputs": {
+        "prompt": [
+          "747",
+          0
+        ],
+        "speak_and_recognation": {
+          "__value__": [
+            false,
+            true
+          ]
+        },
+        "clip": [
+          "595",
+          0
+        ],
+        "vae": [
+          "585",
+          0
+        ],
+        "model_config": [
+          "644",
+          0
+        ],
+        "configs": [
+          "645",
+          0
+        ]
+      },
+      "class_type": "EditTextEncode_EditUtils",
+      "_meta": {
+        "title": "EditUtils: EditTextEncode lrzjason"
+      }
+    },
+    "644": {
+      "inputs": {},
+      "class_type": "Flux2KleinModelConfig_EditUtils",
+      "_meta": {
+        "title": "EditUtils: Flux2Klein Model Config lrzjason"
+      }
+    },
+    "645": {
+      "inputs": {
+        "to_ref": true,
+        "ref_main_image": true,
+        "ref_longest_edge": [
+          "755",
+          0
+        ],
+        "ref_crop": "pad",
+        "ref_upscale": "lanczos",
+        "image": [
+          "652",
+          0
+        ]
+      },
+      "class_type": "Flux2KleinConfigPreparer_EditUtils",
+      "_meta": {
+        "title": "EditUtils: Flux2Klein Config Preparer lrzjason"
+      }
+    },
+    "646": {
+      "inputs": {
+        "text": "",
+        "clip": [
+          "595",
+          0
+        ]
+      },
+      "class_type": "CLIPTextEncode",
+      "_meta": {
+        "title": "CLIP텍스트 인코딩"
+      }
+    },
+    "647": {
+      "inputs": {
+        "conditioning": [
+          "646",
+          0
+        ],
+        "latent": [
+          "643",
+          1
+        ]
+      },
+      "class_type": "ReferenceLatent",
+      "_meta": {
+        "title": "참조Latent"
+      }
+    },
+    "648": {
+      "inputs": {
+        "lora_name": "flux.2-klein/일관성-f2k_consis.safetensors",
+        "strength_model": 0.5,
+        "model": [
+          "592",
+          0
+        ]
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "_meta": {
+        "title": "LoRA모델만 로더）"
+      }
+    },
+    "652": {
+      "inputs": {
+        "너비": 512,
+        "높이": 512,
+        "확대 방법": "긴 변에 따라 동일 비율",
+        "경계선을 확대/축소": [
+          "755",
+          0
+        ],
+        "확대 보간": "근접-정확",
+        "확대 모드": "자르기",
+        "고정 방향": "중앙",
+        "실행 조건": "항상",
+        "채우기 색상": "#364254",
+        "나누는 수": 16,
+        "이미지": [
+          "642",
+          0
+        ]
+      },
+      "class_type": "이미지 스케일링 V2_고해",
+      "_meta": {
+        "title": "이미지 스케일링 V2 고해"
+      }
+    },
+    "734": {
+      "inputs": {
+        "method": "wavelet",
+        "image_output": "Hide",
+        "save_prefix": "ComfyUI",
+        "image_ref": [
+          "652",
+          0
+        ],
+        "image_target": [
+          "596",
+          0
+        ]
+      },
+      "class_type": "easy imageColorMatch",
+      "_meta": {
+        "title": "이미지 색상 매칭"
+      }
+    },
+    "735": {
+      "inputs": {
+        "boolean": [
+          "737",
+          0
+        ],
+        "on_true": [
+          "734",
+          0
+        ],
+        "on_false": [
+          "751",
+          0
+        ]
+      },
+      "class_type": "easy ifElse",
+      "_meta": {
+        "title": "계속 확인하나요?"
+      }
+    },
+    "737": {
+      "inputs": {
+        "value": false
+      },
+      "class_type": "easy boolean",
+      "_meta": {
+        "title": "색조 유지"
+      }
+    },
+    "743": {
+      "inputs": {
+        "separator": "",
+        "text1": [
+          "745",
+          0
+        ],
+        "text2": [
+          "744",
+          1
+        ]
+      },
+      "class_type": "CR Text Concatenate",
+      "_meta": {
+        "title": "텍스트 연결"
+      }
+    },
+    "744": {
+      "inputs": {
+        "색상": "#85848b",
+        "모드": "HEX"
+      },
+      "class_type": "색상기_고해",
+      "_meta": {
+        "title": "배경 색상"
+      }
+    },
+    "745": {
+      "inputs": {
+        "string": "배경을 단색으로 변경하고 배경색을 설정합니다："
+      },
+      "class_type": "StringConstant",
+      "_meta": {
+        "title": "문자열 상수"
+      }
+    },
+    "746": {
+      "inputs": {
+        "separator": "，",
+        "text1": [
+          "762",
+          0
+        ],
+        "text2": [
+          "743",
+          0
+        ]
+      },
+      "class_type": "CR Text Concatenate",
+      "_meta": {
+        "title": "텍스트 연결"
+      }
+    },
+    "747": {
+      "inputs": {
+        "boolean": [
+          "748",
+          0
+        ],
+        "on_true": [
+          "746",
+          0
+        ],
+        "on_false": [
+          "762",
+          0
+        ]
+      },
+      "class_type": "easy ifElse",
+      "_meta": {
+        "title": "계속 확인하나요?"
+      }
+    },
+    "748": {
+      "inputs": {
+        "value": false
+      },
+      "class_type": "easy boolean",
+      "_meta": {
+        "title": "배경 변경"
+      }
+    },
+    "751": {
+      "inputs": {
+        "temperature": 0,
+        "hue": 4,
+        "brightness": 0,
+        "contrast": 0,
+        "saturation": -8,
+        "gamma": 1,
+        "image": [
+          "596",
+          0
+        ]
+      },
+      "class_type": "ColorCorrect",
+      "_meta": {
+        "title": "색상 보정"
+      }
+    },
+    "754": {
+      "inputs": {
+        "값": 0.19357090343416636
+      },
+      "class_type": "고해-부동점 슬라이더",
+      "_meta": {
+        "title": "피부 미화 강도"
+      }
+    },
+    "755": {
+      "inputs": {
+        "value": 2048
+      },
+      "class_type": "easy int",
+      "_meta": {
+        "title": "크기"
+      }
+    },
+    "761": {
+      "inputs": {
+        "filename_prefix": "ComfyUI",
+        "images": [
+          "589",
+          0
+        ]
+      },
+      "class_type": "SaveImage",
+      "_meta": {
+        "title": "이미지 저장"
+      }
+    },
+    "762": {
+      "inputs": {
+        "text": "8K고화질，\n두 항목 모두 원래 플러그인 동작으로 되돌립니다，\n# 낮은 채도，\n피부톤은 깨끗하고 투명하며, 붉은색이나 분색이 없고, 피부톤을 붉은색으로 제거하고 균일하고 섬세하며 결점 없이, 크림 피부 질감, 전문 사진관 보정, 부드러운 스튜디오 조명, 색온도가 5500K의 저색도 따뜻한 톤, 매트한 질감이지만 광택이 있습니다.，\n고화질 디테일, 정교하고 3D 노장，\n머리카락 질감 텍스처 강화，\n# 전체적으로 피부톤이 매우 좋고, 아시아인，\n명확하게 보이는 속상, 초고화질 의상，",
+        "separator": " "
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "bsk_프롬프트 편집기,ctrl+/ 주석/해제,"
+      }
+    },
+    "763": {
+      "inputs": {
+        "seed_str": "17517250301269677799",
+        "auto_generate": true
+      },
+      "class_type": "RandomSeedNode",
+      "_meta": {
+        "title": "bsk_Random Seed"
+      }
+    },
+    "764": {
+      "inputs": {
+        "images": [
+          "596",
+          0
+        ]
+      },
+      "class_type": "PreviewImage",
+      "_meta": {
+        "title": "이미지 미리 보기"
+      }
+    }
+  },
+  "tabs": [
+    {
+      "id": "main",
+      "name": "일반",
+      "nodeIds": [
+        "642",
+        "754",
+        "737"
+      ]
+    },
+    {
+      "id": "prompt",
+      "name": "프롬프트",
+      "nodeIds": [
+        "762"
+      ]
+    },
+    {
+      "id": "other",
+      "name": "기타",
+      "nodeIds": [
+        "585",
+        "586",
+        "587",
+        "589",
+        "590",
+        "591",
+        "592",
+        "593",
+        "594",
+        "595",
+        "596",
+        "597",
+        "599",
+        "605",
+        "607",
+        "608",
+        "643",
+        "644",
+        "645",
+        "646",
+        "647",
+        "648",
+        "652",
+        "734",
+        "735",
+        "737",
+        "743",
+        "744",
+        "745",
+        "746",
+        "747",
+        "748",
+        "751",
+        "754",
+        "755",
+        "761",
+        "763",
+        "764"
+      ]
+    }
+  ],
+  "currentTab": "main",
+  "tabNodes": {
+    "main": [
+      "642",
+      "754",
+      "737"
+    ],
+    "prompt": [
+      "762"
+    ],
+    "other": [
+      "585",
+      "586",
+      "587",
+      "589",
+      "590",
+      "591",
+      "592",
+      "593",
+      "594",
+      "595",
+      "596",
+      "597",
+      "599",
+      "605",
+      "607",
+      "608",
+      "643",
+      "644",
+      "645",
+      "646",
+      "647",
+      "648",
+      "652",
+      "734",
+      "735",
+      "737",
+      "743",
+      "744",
+      "745",
+      "746",
+      "747",
+      "748",
+      "751",
+      "754",
+      "755",
+      "761",
+      "763",
+      "764"
+    ]
+  },
+  "cardValues": {
+    "585.vae_name": "flux2-vae.safetensors",
+    "586.text": "8K고화질",
+    "587.text": "",
+    "590.lora_name": "z_image/Kook_Zimage_현실적인 환상_Turbo.safetensors",
+    "591.shift": 3,
+    "592.unet_name": "flux2-klein/flux-2-klein-9b-fp8.safetensors",
+    "592.weight_dtype": "default",
+    "593.vae_name": "ae.safetensors",
+    "594.unet_name": "z_image_turbo_bf16.safetensors",
+    "594.weight_dtype": "default",
+    "595.clip_name": "flux2-klein/qwen_3_8b_fp8mixed.safetensors",
+    "595.type": "flux2",
+    "595.device": "default",
+    "599.add_noise": "enable",
+    "599.steps": 8,
+    "599.cfg": 1,
+    "599.sampler_name": "euler",
+    "599.scheduler": "beta57",
+    "599.start_at_step": 6,
+    "599.end_at_step": 10000,
+    "599.return_with_leftover_noise": "disable",
+    "605.steps": 4,
+    "605.cfg": 1,
+    "605.sampler_name": "euler_ancestral",
+    "605.scheduler": "simple",
+    "605.denoise": 1,
+    "608.clip_name": "z_image/qwen_3_4b.safetensors",
+    "608.type": "lumina2",
+    "608.device": "default",
+    "642.image": "bsk_crop_642.png",
+    "643.speak_and_recognation": true,
+    "645.to_ref": true,
+    "645.ref_main_image": true,
+    "645.ref_crop": "pad",
+    "645.ref_upscale": "lanczos",
+    "646.text": "",
+    "648.lora_name": "flux.2-klein/일관성-f2k_consis.safetensors",
+    "648.strength_model": 0.5,
+    "652.너비": 512,
+    "652.높이": 512,
+    "652.확대 방법": "긴 변에 따라 동일 비율",
+    "652.확대 보간": "근접-정확",
+    "652.확대 모드": "자르기",
+    "652.고정 방향": "중앙",
+    "652.실행 조건": "항상",
+    "652.채우기 색상": "#364254",
+    "652.나누는 수": 16,
+    "734.method": "wavelet",
+    "734.image_output": "Hide",
+    "734.save_prefix": "ComfyUI",
+    "737.value": false,
+    "743.separator": "",
+    "744.색상": "#85848b",
+    "744.모드": "HEX",
+    "745.string": "배경을 단색으로 변경하고 배경색을 설정합니다：",
+    "746.separator": "，",
+    "748.value": false,
+    "751.temperature": 0,
+    "751.hue": 4,
+    "751.brightness": 0,
+    "751.contrast": 0,
+    "751.saturation": -8,
+    "751.gamma": 1,
+    "754.값": 0.19357090343416636,
+    "755.value": 2048,
+    "761.filename_prefix": "ComfyUI",
+    "762.text": "8K고화질，\n두 항목 모두 원래 플러그인 동작으로 되돌립니다，\n# 낮은 채도，\n피부톤은 깨끗하고 투명하며, 붉은색이나 분색이 없고, 피부톤을 붉은색으로 제거하고 균일하고 섬세하며 결점 없이, 크림 피부 질감, 전문 사진관 보정, 부드러운 스튜디오 조명, 색온도가 5500K의 저색도 따뜻한 톤, 매트한 질감이지만 광택이 있습니다.，\n고화질 디테일, 정교하고 3D 노장，\n머리카락 질감 텍스처 강화，\n# 전체적으로 피부톤이 매우 좋고, 아시아인，\n명확하게 보이는 속상, 초고화질 의상，\n# 목걸이에 투명한 보석이 유령 같은 푸른 빛을 발산,",
+    "762.separator": " ",
+    "763.seed_str": "3191553167622713",
+    "763.auto_generate": true,
+    "586.speak_and_recognation": true,
+    "587.speak_and_recognation": true,
+    "646.speak_and_recognation": true,
+    "762.speak_and_recognation": true,
+    "642.image_source": "bsk_source_642.png",
+    "642.image_cropX": 368.15999999999997,
+    "642.image_cropY": 1014.57824,
+    "642.image_cropW": 334.88,
+    "642.image_cropH": 595.3417599999999
+  },
+  "globalCropSize": {
+    "width": 864,
+    "height": 1536
+  },
+  "linkCropSize": true,
+  "cropSizeLocked": false,
+  "textareaHeights": {
+    "57.text": "",
+    "59.text": "",
+    "69.rules": "",
+    "79.rules": "",
+    "67.strings_to_remove": "",
+    "70.rules": "",
+    "73.text": "398px",
+    "75.rules": "",
+    "76.text": "",
+    "78.text_b": "",
+    "78.text_c": "",
+    "86.text": "",
+    "87.text": "",
+    "88.rules": "",
+    "15.text": "452px",
+    "20.text": "",
+    "21.rules": "",
+    "17.rules": "356px",
+    "16.text": "",
+    "29.text": "",
+    "31.text": "",
+    "44.text": "",
+    "24.strings_to_remove": "",
+    "30.rules": "",
+    "17.text": "",
+    "18.text": "",
+    "36.text": "",
+    "37.text": "",
+    "38.strings_to_remove": "",
+    "39.rules": "",
+    "40.rules": "287px",
+    "35.text": "",
+    "10.text": "305px",
+    "11.text": "271px",
+    "5.text": "380px",
+    "762.text": "",
+    "586.text": "",
+    "587.text": "",
+    "646.text": "",
+    "1.param_0": "",
+    "4.value": ""
+  },
+  "theme": {
+    "primaryGradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "backgroundColor": "linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)",
+    "cardBackground": "rgba(255, 255, 255, 0.04)",
+    "borderStyle": "rgba(255, 255, 255, 0.08)",
+    "accentColor": "#667eea",
+    "textColor": "white",
+    "placeholderColor": "rgba(255, 255, 255, 0.6)"
+  },
+  "promptLibraryDarkMode": true,
+  "highlightColorA": "#6496c8",
+  "highlightColorB": "#c89664",
+  "editorBgColorDark": "#2a2a2f",
+  "editorBgColorLight": "#ffffff",
+  "inputLinkSettings": {},
+  "cardLinkToggleState": {},
+  "inputDefaultConfig": {},
+  "inputDisabledValues": {},
+  "localOutputConfigs": {},
+  "workflowInfo": {
+    "title": "",
+    "subtitle": "너의 여정에 변할래중의일점미세한 빛",
+    "subtitles": [
+      "너의 여정에 변할래중의일점미세한 빛",
+      "매번 생성할 때마다 혼돈에 대한 심문。"
+    ],
+    "author": "",
+    "authorAvatar": "",
+    "description": "워크플로우는 B상 업로드에서 다운로드한 것으로, 나중에 찾아서 추가하겠습니다.",
+    "usage": "워크플로우는 B상 업로드에서 다운로드한 것으로, 나중에 찾아서 추가하겠습니다.",
+    "links": [],
+    "background": {
+      "image": "https://picsum.photos/seed/moody-forest-fog/1920/1080.jpg",
+      "opacity": 0.3
+    },
+    "styles": {
+      "titleColor": "#f2ece5",
+      "titleSize": "22px",
+      "textColor": "#908278",
+      "textSize": "14px",
+      "panelBgColor": "#0a0807",
+      "panelOpacity": 0.95,
+      "blurStrength": 10,
+      "bgOverlayOpacity": 0
+    }
+  }
+}

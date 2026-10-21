@@ -1,0 +1,1280 @@
+{
+  "workflow": {
+    "3": {
+      "inputs": {
+        "images": [
+          "4",
+          0
+        ],
+        "filename_prefix": "Qwen_image_2.1",
+        "format": "png"
+      },
+      "class_type": "SaveImageAdvanced",
+      "_meta": {
+        "title": "이미지 저장 (고급)）"
+      }
+    },
+    "4": {
+      "inputs": {
+        "samples": [
+          "25",
+          0
+        ],
+        "vae": [
+          "13",
+          0
+        ]
+      },
+      "class_type": "VAEDecode",
+      "_meta": {
+        "title": "VAE디코딩"
+      }
+    },
+    "5": {
+      "inputs": {
+        "switch": [
+          "30",
+          0
+        ],
+        "on_false": [
+          "8",
+          0
+        ],
+        "on_true": [
+          "10",
+          2
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "전환"
+      }
+    },
+    "8": {
+      "inputs": {
+        "width": [
+          "30",
+          5
+        ],
+        "height": [
+          "30",
+          6
+        ],
+        "batch_size": 1
+      },
+      "class_type": "EmptyLatentImage",
+      "_meta": {
+        "title": "공 Latent 이미지"
+      }
+    },
+    "9": {
+      "inputs": {
+        "model": [
+          "12",
+          0
+        ],
+        "device": "auto",
+        "dtype": "default"
+      },
+      "class_type": "QwenImage21Cache",
+      "_meta": {
+        "title": "Qwen Image 2.1 Cache"
+      }
+    },
+    "10": {
+      "inputs": {
+        "clip": [
+          "14",
+          0
+        ],
+        "prompt": [
+          "21",
+          0
+        ],
+        "negative_prompt": [
+          "32",
+          0
+        ],
+        "resolution": [
+          "30",
+          2
+        ],
+        "vae": [
+          "13",
+          0
+        ],
+        "images.image_2": [
+          "44",
+          1
+        ],
+        "images.image_1": [
+          "44",
+          0
+        ]
+      },
+      "class_type": "TextEncodeQwenImage21",
+      "_meta": {
+        "title": "Text Encode Qwen Image 2.1"
+      }
+    },
+    "11": {
+      "inputs": {
+        "text": "{\n  \"rewritten_prompt\": \"이<image2>캔버스에 유지<image2>의 전체적인 구도, 배경, 조명, 색조와 미변동 영역은 완전히 변하지 않습니다. 다음<image1>중의 역할 배치<image2>오른쪽에, 대체<image2>화면 오른쪽 기존 캐릭터 유지<image2>오른쪽 기존 캐릭터의 동작, 자세 및 방향. 새로 추가된 캐릭터는 동일하게 적용<image1>정체성 특징과 외관 디자인, 자연스럽게 통합<image2>투영, 비율, 조명 방향 및 그림자 관계, 가장자리 연결 및 피사계 심도 일치, 화면의 다른 내용 변경 안 함。\",\n  \"wh_ratio\": \"\",\n  \"ratio_follow\": \"<image2>\"\n}\n# 아래에 이미지 편집 프롬프트 입력\n# 그림 1: 캐릭터 대체, 그림 2: 장면 내 오른쪽 캐릭터를 대체하고 그림 2의 오른쪽 캐릭터 동작 포즈(땅에 엎드려 왼쪽 캐릭터 머리를 만지는)를 사용합니다. 그림 2의 왼쪽 캐릭터는 그림 1의 스타일을 사용합니다.，\n# 그림 2의 오른쪽 남성 캐릭터를 그림 1의 캐릭터로 바꾸고, 캐릭터를 그림 2의 자세로 유지.\n\n# 분경 생성된 입력 인물 3D 뷰,\n# 그림 1의 캐릭터를 기준으로 해당 캐릭터의 설정 세부 3D 뷰 정보 카드를 생성합니다. 화면 왼쪽에는 해당 캐릭터의 얼굴의 대형 초근접 이미지를 배치하여 눈, 머리 스타일, 표정을 명확하게 보여줍니다. 화면 오른쪽에는 위에서 아래로 수직으로 세 개의 전체 뷰를 배열합니다. 첫 번째 뷰는 전면, 두 번째 뷰는 측면, 세 번째 뷰는 후면입니다. 세 뷰의 캐릭터 체형, 머리 스타일, 의상 및 왼쪽 얼굴 초근접 이미지는 동일 인물이며 높이가 일치합니다. 캐릭터 스타일을 유지합니다., # 전체적으로 깔끔한 2D 일러스트 스타일, 밝은 회색 중성 배경, 복잡한 장식 없음, 캐릭터는 표준 서서 자세, 비율 조화, # 각 뷰에 대한 간단한 중국어 레이블을 추가합니다.\\\"얼굴 클로즈업\\\"、\\\"전면\\\"、\\\"옆면\\\"、\\\"뒷면\\\", 이미지 속 캐릭터의 원래 색상, 눈 색, 피부색, 얼굴 특징을 완전히 변경하지 않고, 표시 방식을 설정 스케치 일러스트로 변경。\n# {\n  # \"rewritten_prompt\": \"이미지 속 캐릭터를 기준으로 해당 캐릭터 설정 3뷰 정보 카드 생성: 화면 왼쪽에는 해당 캐릭터의 얼굴 초고화질 클로즈업 이미지, 눈, 머리 스타일, 표정을 명확하게 보여줍니다. 화면 오른쪽에는 위에서 아래로 수직으로 세 가지 전체 뷰가 배열되어 있으며, 순서는 전면, 측면, 후면입니다. 세 뷰의 캐릭터 체형, 머리 스타일, 의상 및 왼쪽 얼굴 클로즈업은 동일 인물이며 높이가 일치합니다. 전체적으로 깨끗한 2D 이세계 일러스트 스타일, 밝은 회색 중성 배경, 복잡한 장식 없이 캐릭터는 표준 서 있는 자세로 비율이 조화롭게 표현됩니다.문 레이블, 순서대로\\\"얼굴 클로즈업\\\"、\\\"전면\\\"、\\\"옆면\\\"、\\\"뒷면\\\"。이미지 속 캐릭터의 원래 색상, 눈 색, 피부색, 얼굴 특징을 완전히 변경하지 않고, 표시 방식을 설정 스케치 일러스트로 변경。\",\n  # \"wh_ratio\": \"3:1\",\n  # \"ratio_follow\": \"\"\n# }\n\n# 아래 프롬프트 활성화 후 투명 배경 이미지 출력\n# RGBA이미지, 알파 투명 채널 포함, 배경 완전 투명, [주체 설명], 깨끗한 주체, 정교한 가장자리, 그림자 없음, 배경 없음, PNG 자산, 스티커, 고화질, 디테일 풍부,",
+        "separator": " ",
+        "strip_newlines": false
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "이미지 편집"
+      }
+    },
+    "12": {
+      "inputs": {
+        "unet_name": "qwen_image_2.1_bf16.safetensors",
+        "weight_dtype": "default"
+      },
+      "class_type": "UNETLoader",
+      "_meta": {
+        "title": "UNetロード기기"
+      }
+    },
+    "13": {
+      "inputs": {
+        "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+      },
+      "class_type": "VAELoader",
+      "_meta": {
+        "title": "ロードVAE"
+      }
+    },
+    "14": {
+      "inputs": {
+        "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      },
+      "class_type": "CLIPLoader",
+      "_meta": {
+        "title": "ロードCLIP"
+      }
+    },
+    "21": {
+      "inputs": {
+        "input1": [
+          "11",
+          0
+        ],
+        "switch1": [
+          "30",
+          0
+        ],
+        "input2": [
+          "22",
+          0
+        ],
+        "switch2": [
+          "35",
+          0
+        ],
+        "input3": [
+          "43",
+          0
+        ],
+        "switch3": true,
+        "input4": "",
+        "switch4": true,
+        "merge_order": "1,2,3,4",
+        "preserve_newlines": false,
+        "input5": "",
+        "switch5": true,
+        "input6": "",
+        "switch6": true,
+        "input7": "",
+        "switch7": true,
+        "input8": "",
+        "switch8": true,
+        "input9": "",
+        "switch9": true,
+        "input10": "",
+        "switch10": true
+      },
+      "class_type": "bsk_StringMergeWithSwitch",
+      "_meta": {
+        "title": "bsk_String Merge (Switch)"
+      }
+    },
+    "22": {
+      "inputs": {
+        "text": "이것은 아름다운 애니메이션 스타일 일러스트, 화면에는 귀여운 멜리모드(악마) 소녀가 있습니다：\n인물 특징：\n한쪽으로 찰랑거리는 긴 초록색 곱슬머리, 머리카락이 폭포수처럼 옆으로 흘러내림\n머리 위에 검은색 둥근 귀를 가지고 있으며, 귀는 뾰족한 엘프 귀입니다\n눈은 따뜻한 옥색/금색이며, 부드럽고 평온한 미소를 짓습니다.\n검은 박쥐 날개와 심장 모양의 악마 꼬리가 뒤에 있습니다\n의상 변환：\n옅은 파란색 실 드레스를 입고, 어깨는 투명한 얇은 망사 부풀려진 소매이며, 가슴에는 파란색 리본이 장식됨\n다리 위로 흰색 과각 장미 스타킹 착용, 우아한 자세\n장면 분위기：\n파일 이름이 없으면 경고 출력하지만 오류는 발생하지 않음 (load 메서드에서 처리)\n흰색 침대 시트를 깔고 앉아있는 푹신한 낮잠\n배경은 밝은 플라워 창으로, 창밖의 빛은 부드럽고, 커튼은 피오이합니다.\n방에 장미가 꽂힌 화병과 늘어진 식물이 놓여 있음\n전체 화면 색조는 신선하고 밝으며, 악마의 어두운 요소(뿔, 날개, 꼬리)와 따뜻한 정원 스타일의 장면이 재미있는 대비를 이뤄 평화롭고 치유적인 분위기를 조성한다.。\n# 생성할 투명 이미지를 위해 아래 프롬프트를 활성화하세요\n# RGBA이미지, 알파 투명 채널 포함, 배경 완전 투명, [주체 설명], 깨끗한 주체, 정교한 가장자리, 그림자 없음, 배경 없음, PNG 자산, 스티커, 고화질, 디테일 풍부",
+        "separator": " ",
+        "strip_newlines": false
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "이미지 생성"
+      }
+    },
+    "25": {
+      "inputs": {
+        "model": [
+          "9",
+          0
+        ],
+        "add_noise": "enable",
+        "noise_seed": [
+          "31",
+          0
+        ],
+        "steps": [
+          "30",
+          1
+        ],
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "positive": [
+          "10",
+          0
+        ],
+        "negative": [
+          "10",
+          1
+        ],
+        "latent_image": [
+          "5",
+          0
+        ],
+        "start_at_step": 0,
+        "end_at_step": 10000,
+        "return_with_leftover_noise": "disable"
+      },
+      "class_type": "KSamplerAdvanced",
+      "_meta": {
+        "title": "K샘플러 (고급)）"
+      }
+    },
+    "28": {
+      "inputs": {
+        "panel_config": "{\"tabs\":[{\"id\":\"main\",\"name\":\"일반\",\"nodeIds\":[\"21\",\"30\",\"31\",\"44\"]},{\"id\":\"prompt\",\"name\":\"프롬프트\",\"nodeIds\":[\"11\",\"22\",\"32\",\"41\"]},{\"id\":\"model\",\"name\":\"모델\",\"nodeIds\":[\"12\",\"13\",\"14\",\"37\"]},{\"id\":\"sampler\",\"name\":\"샘플러\",\"nodeIds\":[\"25\"]},{\"id\":\"other\",\"name\":\"기타\",\"nodeIds\":[\"3\",\"4\",\"5\",\"8\",\"9\",\"10\",\"30\",\"31\",\"33\",\"34\",\"35\",\"37\",\"39\",\"40\",\"42\",\"43\",\"44\"]}],\"currentTab\":\"main\",\"tabNodes\":{\"main\":[\"21\",\"30\",\"31\",\"44\"],\"prompt\":[\"11\",\"22\",\"32\",\"41\"],\"model\":[\"12\",\"13\",\"14\",\"37\"],\"sampler\":[\"25\"],\"other\":[\"3\",\"4\",\"5\",\"8\",\"9\",\"10\",\"30\",\"31\",\"33\",\"34\",\"35\",\"37\",\"39\",\"40\",\"42\",\"43\",\"44\"]},\"cardValues\":{\"3.filename_prefix\":\"Qwen_image_2.1\",\"3.format\":\"png\",\"8.batch_size\":1,\"9.device\":\"auto\",\"9.dtype\":\"default\",\"11.text\":\"{\\n  \\\"rewritten_prompt\\\": \\\"이<image2>캔버스에 유지<image2>의 전체적인 구도, 배경, 조명, 색조와 미변동 영역은 완전히 변하지 않습니다. 다음<image1>중의 역할 배치<image2>오른쪽에, 대체<image2>화면 오른쪽 기존 캐릭터 유지<image2>오른쪽 기존 캐릭터의 동작, 자세 및 방향. 새로 추가된 캐릭터는 동일하게 적용<image1>정체성 특징과 외관 디자인, 자연스럽게 통합<image2>투영, 비율, 조명 방향 및 그림자 관계, 가장자리 연결 및 피사계 심도 일치, 화면의 다른 내용 변경 안 함。\\\",\\n  \\\"wh_ratio\\\": \\\"\\\",\\n  \\\"ratio_follow\\\": \\\"<image2>\\\"\\n}\\n# 아래에 이미지 편집 프롬프트 입력\\n# 그림 1: 캐릭터 대체, 그림 2: 장면 내 오른쪽 캐릭터를 대체하고 그림 2의 오른쪽 캐릭터 동작 포즈(땅에 엎드려 왼쪽 캐릭터 머리를 만지는)를 사용합니다. 그림 2의 왼쪽 캐릭터는 그림 1의 스타일을 사용합니다.，\\n# 그림 2의 오른쪽 남성 캐릭터를 그림 1의 캐릭터로 바꾸고, 캐릭터를 그림 2의 자세로 유지.\\n\\n# 분경 생성된 입력 인물 3D 뷰,\\n# 그림 1의 캐릭터를 기준으로 해당 캐릭터의 설정 세부 3D 뷰 정보 카드를 생성합니다. 화면 왼쪽에는 해당 캐릭터의 얼굴의 대형 초근접 이미지를 배치하여 눈, 머리 스타일, 표정을 명확하게 보여줍니다. 화면 오른쪽에는 위에서 아래로 수직으로 세 개의 전체 뷰를 배열합니다. 첫 번째 뷰는 전면, 두 번째 뷰는 측면, 세 번째 뷰는 후면입니다. 세 뷰의 캐릭터 체형, 머리 스타일, 의상 및 왼쪽 얼굴 초근접 이미지는 동일 인물이며 높이가 일치합니다. 캐릭터 스타일을 유지합니다., # 전체적으로 깔끔한 2D 일러스트 스타일, 밝은 회색 중성 배경, 복잡한 장식 없음, 캐릭터는 표준 서서 자세, 비율 조화, # 각 뷰에 대한 간단한 중국어 레이블을 추가합니다.\\\\\\\"얼굴 클로즈업\\\\\\\"、\\\\\\\"전면\\\\\\\"、\\\\\\\"옆면\\\\\\\"、\\\\\\\"뒷면\\\\\\\", 이미지 속 캐릭터의 원래 색상, 눈 색, 피부색, 얼굴 특징을 완전히 변경하지 않고, 표시 방식을 설정 스케치 일러스트로 변경。\\n# {\\n  # \\\"rewritten_prompt\\\": \\\"이미지 속 캐릭터를 기준으로 해당 캐릭터 설정 3뷰 정보 카드 생성: 화면 왼쪽에는 해당 캐릭터의 얼굴 초고화질 클로즈업 이미지, 눈, 머리 스타일, 표정을 명확하게 보여줍니다. 화면 오른쪽에는 위에서 아래로 수직으로 세 가지 전체 뷰가 배열되어 있으며, 순서는 전면, 측면, 후면입니다. 세 뷰의 캐릭터 체형, 머리 스타일, 의상 및 왼쪽 얼굴 클로즈업은 동일 인물이며 높이가 일치합니다. 전체적으로 깨끗한 2D 이세계 일러스트 스타일, 밝은 회색 중성 배경, 복잡한 장식 없이 캐릭터는 표준 서 있는 자세로 비율이 조화롭게 표현됩니다.문 레이블, 순서대로\\\\\\\"얼굴 클로즈업\\\\\\\"、\\\\\\\"전면\\\\\\\"、\\\\\\\"옆면\\\\\\\"、\\\\\\\"뒷면\\\\\\\"。이미지 속 캐릭터의 원래 색상, 눈 색, 피부색, 얼굴 특징을 완전히 변경하지 않고, 표시 방식을 설정 스케치 일러스트로 변경。\\\",\\n  # \\\"wh_ratio\\\": \\\"3:1\\\",\\n  # \\\"ratio_follow\\\": \\\"\\\"\\n# }\\n\\n# 아래 프롬프트 활성화 후 투명 배경 이미지 출력\\n# RGBA이미지, 알파 투명 채널 포함, 배경 완전 투명, [주체 설명], 깨끗한 주체, 정교한 가장자리, 그림자 없음, 배경 없음, PNG 자산, 스티커, 고화질, 디테일 풍부,\",\"11.separator\":\" \",\"11.strip_newlines\":false,\"12.unet_name\":\"qwen_image_2.1_bf16.safetensors\",\"12.weight_dtype\":\"default\",\"13.vae_name\":\"qwen_image_2.1_vae_bf16.safetensors\",\"14.clip_name\":\"qwen3vl_8b_int8_convrot.safetensors\",\"14.type\":\"qwen_image\",\"14.device\":\"default\",\"21.switch3\":true,\"21.input4\":\"\",\"21.switch4\":true,\"21.merge_order\":\"1,2,3,4\",\"21.preserve_newlines\":false,\"21.input5\":\"\",\"21.switch5\":true,\"21.input6\":\"\",\"21.switch6\":true,\"21.input7\":\"\",\"21.switch7\":true,\"21.input8\":\"\",\"21.switch8\":true,\"21.input9\":\"\",\"21.switch9\":true,\"21.input10\":\"\",\"21.switch10\":true,\"22.text\":\"이것은 아름다운 애니메이션 스타일 일러스트, 화면에는 귀여운 멜리모드(악마) 소녀가 있습니다：\\n인물 특징：\\n한쪽으로 찰랑거리는 긴 초록색 곱슬머리, 머리카락이 폭포수처럼 옆으로 흘러내림\\n머리 위에 검은색 둥근 귀를 가지고 있으며, 귀는 뾰족한 엘프 귀입니다\\n눈은 따뜻한 옥색/금색이며, 부드럽고 평온한 미소를 짓습니다.\\n검은 박쥐 날개와 심장 모양의 악마 꼬리가 뒤에 있습니다\\n의상 변환：\\n옅은 파란색 실 드레스를 입고, 어깨는 투명한 얇은 망사 부풀려진 소매이며, 가슴에는 파란색 리본이 장식됨\\n다리 위로 흰색 과각 장미 스타킹 착용, 우아한 자세\\n장면 분위기：\\n파일 이름이 없으면 경고 출력하지만 오류는 발생하지 않음 (load 메서드에서 처리)\\n흰색 침대 시트를 깔고 앉아있는 푹신한 낮잠\\n배경은 밝은 플라워 창으로, 창밖의 빛은 부드럽고, 커튼은 피오이합니다.\\n방에 장미가 꽂힌 화병과 늘어진 식물이 놓여 있음\\n전체 화면 색조는 신선하고 밝으며, 악마의 어두운 요소(뿔, 날개, 꼬리)와 따뜻한 정원 스타일의 장면이 재미있는 대비를 이뤄 평화롭고 치유적인 분위기를 조성한다.。\\n# 생성할 투명 이미지를 위해 아래 프롬프트를 활성화하세요\\n# RGBA이미지, 알파 투명 채널 포함, 배경 완전 투명, [주체 설명], 깨끗한 주체, 정교한 가장자리, 그림자 없음, 배경 없음, PNG 자산, 스티커, 고화질, 디테일 풍부\",\"22.separator\":\" \",\"22.strip_newlines\":false,\"25.add_noise\":\"enable\",\"25.cfg\":1,\"25.sampler_name\":\"euler\",\"25.scheduler\":\"simple\",\"25.start_at_step\":0,\"25.end_at_step\":10000,\"25.return_with_leftover_noise\":\"disable\",\"30.title1\":\"이미지 생성↔이미지 편집\",\"30.value1\":\"true\",\"30.type1\":\"BOOLEAN\",\"30.title2\":\"단계\",\"30.value2\":\"20\",\"30.type2\":\"INT\",\"30.title3\":\"총 픽셀(제곱, 32의 배수))\",\"30.value3\":\"1024\",\"30.type3\":\"INT\",\"30.title4\":\"AI프롬프트 쓰기\",\"30.value4\":\"true\",\"30.type4\":\"BOOLEAN\",\"30.title5\":\"수정하지 마세요\",\"30.value5\":\"\",\"30.type5\":\"STRING\",\"30.title6\":\"넓이(출력 폭))\",\"30.value6\":\"896\",\"30.type6\":\"INT\",\"30.title7\":\"높이(출력 너비))\",\"30.value7\":\"1536\",\"30.type7\":\"INT\",\"30.title8\":\"\",\"30.value8\":\"\",\"30.type8\":\"INT\",\"30.title9\":\"\",\"30.value9\":\"\",\"30.type9\":\"INT\",\"30.title10\":\"\",\"30.value10\":\"\",\"30.type10\":\"INT\",\"31.seed_str\":\"1335184496090708340\",\"31.trigger\":7,\"31.auto_generate\":true,\"32.text\":\"# 부정적인 프롬프트 텍스트를 입력하세요, \\n\",\"32.separator\":\" \",\"32.strip_newlines\":false,\"33.filename_prefix\":\"BSK\",\"33.save_as_jpg\":false,\"33.jpg_quality\":95,\"33.embed_workflow_in_png\":true,\"33.save_workflow\":false,\"33.save_txt\":false,\"33.other_text\":\"\",\"33.denoise_bilateral\":false,\"33.denoise_diameter\":9,\"33.denoise_sigma_color\":75,\"33.denoise_sigma_space\":75,\"37.clip_name\":\"qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors\",\"37.type\":\"qwen_image\",\"37.device\":\"default\",\"39.string_a\":\"# Image Prompt Rewriting Expert\\n\\nYou turn a user's image request into one long English paragraph that describes the\\nfinished image as if you were looking at it, plus the aspect ratio it should be\\nrendered at. You are not talking to the user and not talking to a renderer: you are\\nan observer reporting what is in the frame.\\n\\nWork through the eight steps below in order. Each step commits one decision; later\\nsteps never revise an earlier one.\\n\\n## Step 1 — Read the brief and split it in two\\n\\nList what the user has fixed and what they have left open.\\n\\nFixed, and it must survive into your description unchanged: every string of text\\nthey want shown, every named object, every count, every stated colour, every stated\\nposition, and the aspect ratio if they gave one. Copy their text strings character\\nfor character, in their own script, including punctuation and spacing.\\n\\nA third thing they may give you is an instruction about the job rather than about the\\npicture — \\\"use double quotes\\\", \\\"no hard-edged blocks\\\", \\\"4K, no noise\\\", \\\"make sure the\\ntext is sharp\\\". That is not content. Obey it silently where it applies and never echo\\nit: the description states what is in the frame, never what must be done.\\n\\nOpen, and you must decide it: everything they did not mention. A three-word request\\nand a three-hundred-word request both become a description of the same size, so a\\nshort brief means you are inventing most of the frame, not writing less.\\n\\n## Step 2 — Fix the frame\\n\\nDecide the orientation from the subject, then pick the ratio.\\n\\nIf the user states a ratio, use it. Otherwise: `3:2` for anything horizontal and\\n`2:3` for anything vertical — these are the two defaults and cover most images.\\nUse `1:1` for a square badge, icon, album cover or single centred emblem, `16:9`\\nfor a wide cinematic or presentation frame, `1:2` or `9:16` for a phone screen or a\\ntall standing banner. `3:4`, `2:1`, `21:9`, `4:3`, `9:21`, `4:5`, `3:1`, `5:4`,\\n`1:3` exist but only when the subject or the user really calls for them.\\n\\nThe ratio lives only in the `wh_ratio` field. Never write a ratio, a resolution, or\\na pixel count into the description itself.\\n\\n## Step 3 — Write the opening sentence\\n\\nOne sentence, around twenty words. Name the medium, the style, the subject, and the\\nbackground or palette; usually name the orientation too:\\n\\n`The image is a ⟨vertical / wide / square / tall⟩ ⟨style⟩ ⟨photograph · poster · illustration · scene · portrait · infographic · close-up · graphic · page · card · sheet · logo⟩ of ⟨subject⟩, ⟨the background and its palette⟩.`\\n\\n`This is a …` or a bare `A vertical realistic photograph of …` work equally well. The\\nmedium noun is the one part that is never omitted.\\n\\nThe style word goes here — realistic, photorealistic, minimalist, flat-vector,\\ncinematic, watercolour, isometric, editorial, hand-drawn, 3D-rendered, retro. Name\\nit once here; you may echo it in the closing sentence.\\n\\n## Step 4 — Inventory before you write\\n\\nBefore any more prose, settle two lists.\\n\\nEvery element that will appear, each with a place in the frame: upper-left,\\nacross the top, on the far right, in the lower-third, in the centre, in front of,\\nbehind, tucked into the corner. You will need eight to fourteen such positional\\nphrases, about ten typically, and they must reach the corners, the edges and the\\ncentre — not cluster in the middle.\\n\\nEvery piece of text that will be legible in the image, in reading order.\\n\\n## Step 5 — Walk the frame\\n\\nNow describe it in order. Which order depends on how the frame is filled.\\n\\n**If the frame is divided into regions** — a poster, a page, an interface, a layout, a\\nwide scene with several things in it — walk the regions:\\n\\n1. The background and the surface it sits on — this comes immediately after the\\n   opening sentence, not at the end.\\n2. The top band: headline, header bar, sky, ceiling, whatever occupies the top edge.\\n3. Down and across the body of the frame: left side, then centre, then right side.\\n   Give each region one or two sentences.\\n4. The bottom band: footer, foreground, ground plane, base row.\\n\\n**If one subject fills the frame** — a portrait, a close-up, a single object — walk\\nthe subject instead: the background and how far it falls off, then the subject's pose\\nand where it is placed in the frame, then head and face, then body and each garment or\\nsurface, then what is held or touching it, then whatever little is left at the edges.\\nKeep using positional phrases inside the subject — in the upper-left of the frame,\\nbehind the left shoulder, along the lower edge — so the frame stays locatable.\\n\\nRoughly a third of your sentences should open on the positional phrase itself —\\n\\\"On the right side of the frame, …\\\", \\\"In the upper-left corner, …\\\", \\\"Across the\\nlower third, …\\\" — so the reader always knows where they are looking.\\n\\nKeep it to one paragraph. Break to a new paragraph only when the image is genuinely\\nbuilt from stacked regions — panels, cards, sections, slides — and then one\\nparagraph per region, each opening on where that region sits.\\n\\n## Step 6 — Set every piece of text\\n\\nSkip this step if nothing in the image is meant to be read — a third of images have\\nno legible text at all, and inventing signage for them is a mistake.\\n\\nOtherwise, for each string from your Step 4 list, in reading order, name where it sits,\\nwhat it looks like, and what it says: `a bold black headline across the top reads \\\"…\\\"`.\\n\\nPut the string in straight double quotes, in its own script — Chinese, Russian,\\nKorean, Japanese and Arabic text stays in Chinese, Russian, Korean, Japanese and\\nArabic. Give its weight, colour, case and relative size. Describe a line break as a\\nsecond line rather than putting a real newline inside the string. If a mark is not meant\\nto be read — distant signage, a label behind glass, dense body copy — call it\\nblurred, indistinct, or too small to read rather than inventing letters. If the image contains a chart\\nor a table, its axes, tick labels, legend entries, series and cell values are text\\ntoo: write them out.\\n\\n## Step 7 — Give the lighting its own sentence\\n\\nEvery image has light in it, and the description always accounts for it: the source,\\nits direction, its quality, and the shadows and highlights it leaves. Soft diffused\\ndaylight from a window on the left, hard overhead studio light, warm low sun, flat\\neven ambient light for a diagram.\\n\\nOnce the contents are placed, give it a sentence of its own — `The lighting is …` —\\nor, if the light is what makes a particular surface look the way it does, fold it into\\nthat surface's sentence. Either way it is stated explicitly, not left implied.\\n\\n## Step 8 — Close with the whole frame\\n\\nEnd on a single sentence that steps back:\\n\\n`The overall composition ⟨is / uses / feels⟩ …`\\n\\n`The composition is …`, `The overall design …`, `The overall mood …`, `The overall\\npalette …` and `The image has …` are the same move. Cover balance and symmetry, the\\npalette, the style, and the mood in that one sentence. Write exactly one such\\nsentence — do not follow it with a second summary.\\n\\n## Throughout\\n\\n**Size.** The description runs about twenty sentences and four to five hundred words,\\nroughly twenty-five words a sentence. That is the same size whether the brief was three\\nwords or three hundred: a dense frame with many regions and a lot of text runs longer, a\\nsingle quiet subject runs shorter, but a thin brief never buys a thin description.\\n\\n**Observe, don't instruct.** Present tense, third person, declarative. No \\\"you\\\", no\\n\\\"create\\\", no \\\"make sure\\\", no \\\"the AI should\\\". No quality boosters — no \\\"masterpiece\\\",\\n\\\"8K\\\", \\\"highly detailed\\\", \\\"award-winning\\\".\\n\\n**Hedge what you cannot be certain of.** An observer describing a picture says\\n\\\"appears to be\\\", \\\"likely\\\", \\\"suggesting\\\", and offers a pair — \\\"a notebook\\nor a tablet\\\", \\\"wood or dark laminate\\\" — when the thing is genuinely ambiguous. Do\\nthis often; it is the natural register here. Be flatly definite only about what the\\nuser fixed.\\n\\n**Name colours with a modifier, almost never bare.** Deep navy, muted olive, pale\\ncream, warm terracotta, soft dusty rose, blue-grey, off-white, charcoal, brownish-\\ngreen. Hex codes only if the user gave them.\\n\\n**Give the material, not just the noun.** Brushed metal, matte plastic, glossy\\nceramic, coarse linen, weathered wood, frosted glass, grain, scuffs, condensation,\\nvisible brush strokes, paper fibre.\\n\\n**Enumerate; never summarise.** \\\"Several items\\\" and \\\"various decorations\\\" are not\\ndescriptions. Say what each thing is. Write small counts as words — three, five,\\ntwelve — and if something is partly hidden, say so and describe the visible part.\\n\\n**People get their observable surface.** Build, posture, where they are looking,\\nexpression, hair, skin tone, and each garment with its colour and material. Age is a\\nlife stage or a decade — a child, a teenager, a young adult, middle-aged, elderly,\\nin her thirties — never a number of years. If a face is turned away or cropped, say\\nthat instead of describing it.\\n\\n**Objects by class, not by brand.** A silver laptop, a mirrorless camera, a compact\\nhatchback — unless the user named the brand. Photographic and design vocabulary is\\nwelcome: shallow depth of field, bokeh, backlit, close-up, negative space,\\ngrid, drop shadow.\\n\\n**Everything holds together physically.** Shadows fall away from the light, reflections\\nmatch what is in front of the surface, scale is consistent between neighbouring\\nobjects, and a surface reacts to what sits on it. If the user asked for something\\nimpossible, describe it as the image shows it and let the rest of the scene stay\\ncoherent around it.\\n\\n## Language\\n\\nThe description is always in English, whatever language the request arrives in. The\\nonly exception is text shown inside the image, which stays in its own script.\\n\\n## Output format\\n\\nReturn one strictly valid JSON object on a single line, nothing before or after:\\n\\n{\\\"rewritten_prompt\\\": \\\"<the description>\\\", \\\"wh_ratio\\\": \\\"<e.g. 3:2>\\\"}\\n\",\"39.delimiter\":\"\",\"40.regex_pattern\":\"^.*?</think>\\\\s*\",\"40.replace\":\"\",\"40.case_insensitive\":true,\"40.multiline\":false,\"40.dotall\":true,\"40.count\":1,\"41.text\":\"본체 설명 (중문）：\\n영화 포스터, 1972년 미국 갱 영화 장면, 어두운 나무 소재 서재, 책상 위에 여러 개의 앰버색 테이블 램프, 검은색 스트라이프 수트 차림의 중년 이탈리아계 교주가 가죽 안락의자에 앉아 태엽이 달린 시계 체인을 착용하고, 손으로 고양이의 털을 쓰다듬고, 눈은 그림자에 잠겨 있으며, 배경은 책장과 두꺼운 커튼의 어두운 부분\\n\\n스타일 설명 (중국어）：\\n1970새로운 할리우드 어두운 톤, 낮은 부광, 琥珀색 금색 톤, 토플광 눈가 깊은 그림자, 넓은 영역의 어두운 부분, 연기 효과의 공기, 거친 입자 필름 질감, 과다 노출 분위기, 갱스터 서사시 감성, 테이블 램프의 따뜻한 금색 미세 빛, 윌리스 스타일의 조명\",\"41.separator\":\" \",\"41.strip_newlines\":false,\"42.max_length\":512,\"42.sampling_mode\":\"on\",\"42.thinking\":false,\"42.use_default_template\":true,\"42.temperature\":0.7,\"42.top_k\":64,\"42.top_p\":0.95,\"42.min_p\":0.05,\"42.repetition_penalty\":1.05,\"42.seed\":0,\"42.presence_penalty\":0,\"44.image_list\":\"\",\"44.resize_enabled\":false,\"44.long_edge\":1536,\"44.divisible_by_32\":true,\"21.__input_order\":[1,2,3,4],\"21.input3\":\"\",\"21.switch2\":\"\",\"10.resolution\":\"\",\"10.negative_prompt\":\"\",\"3.format.bit_depth\":\"8-bit\",\"3.format.input_color_space\":\"sRGB\",\"5.switch\":\"\",\"21.switch1\":\"\",\"25.noise_seed\":\"\",\"25.steps\":\"\",\"21.title\":\"프롬프트 병합\",\"cardOrder\":[\"21\",\"30\",\"31\",\"44\"],\"10.title\":\"Text Encode Qwen Image 2.1\",\"44.title\":\"BSK Qwen참고 갤러리\"},\"globalCropSize\":{\"width\":864,\"height\":1536},\"linkCropSize\":false,\"cropSizeLocked\":false,\"autoDetectOrientation\":true,\"autoAdaptResolution\":true,\"noCropMode\":false,\"textareaHeights\":{\"57.text\":\"\",\"59.text\":\"\",\"69.rules\":\"\",\"79.rules\":\"\",\"67.strings_to_remove\":\"\",\"70.rules\":\"\",\"73.text\":\"398px\",\"75.rules\":\"\",\"76.text\":\"\",\"78.text_b\":\"\",\"78.text_c\":\"\",\"86.text\":\"\",\"87.text\":\"\",\"88.rules\":\"\",\"15.text\":\"452px\",\"20.text\":\"\",\"21.rules\":\"\",\"17.rules\":\"356px\",\"16.text\":\"\",\"29.text\":\"\",\"31.text\":\"\",\"44.text\":\"\",\"24.strings_to_remove\":\"\",\"30.rules\":\"\",\"17.text\":\"\",\"18.text\":\"\",\"36.text\":\"\",\"37.text\":\"\",\"38.strings_to_remove\":\"\",\"39.rules\":\"\",\"40.rules\":\"287px\",\"35.text\":\"\",\"10.text\":\"305px\",\"11.text\":\"271px\",\"5.text\":\"380px\",\"762.text\":\"\",\"586.text\":\"\",\"587.text\":\"\",\"646.text\":\"\",\"1.param_0\":\"\",\"4.value\":\"\",\"1.text\":\"\",\"198.prompt\":\"\",\"476.text_a\":\"\",\"476.text_c\":\"\",\"478.text\":\"\",\"53.text\":\"\",\"55.text\":\"\",\"56.text\":\"\",\"48.rules\":\"\",\"61.text\":\"\",\"65.text\":\"\",\"78.text\":\"\",\"6.text\":\"\",\"7.text\":\"\",\"12.text\":\"\",\"85.save_prompt_txt\":\"\",\"85.custom_prompt\":\"\",\"86.dedup_prompt\":\"\",\"87.dedup_prompt\":\"\",\"95.dedup_prompt\":\"\",\"96.dedup_prompt\":\"\",\"85.other_text\":\"\",\"3.text\":\"\",\"4.text\":\"\",\"506.text\":\"\",\"507.text\":\"\",\"8.text\":\"\",\"9.text\":\"\",\"12.rules\":\"\",\"72.text\":\"\",\"21.text\":\"\",\"21.strings_to_remove\":\"\",\"132.text\":\"\",\"147.text\":\"\",\"153.text\":\"\",\"155.text\":\"\",\"156.text\":\"\",\"163.text\":\"\",\"165.text\":\"\",\"172.text\":\"\",\"226.text\":\"\",\"228.text\":\"\",\"227.text\":\"\",\"229.text\":\"\",\"230.text\":\"\",\"248.rules\":\"\",\"249.rules\":\"\",\"250.strings_to_remove\":\"\",\"251.text\":\"\",\"252.rules\":\"\",\"254.text\":\"\",\"14.text\":\"\",\"37.other_text\":\"\",\"66.text\":\"\",\"98.text\":\"\",\"168.value\":\"\",\"121.text\":\"\",\"136.prompt\":\"\",\"146.text\":\"\",\"117.text\":\"\",\"119.param_0\":\"\",\"143.param_0\":\"\",\"144.param_0\":\"\",\"139.LanPaint_PromptMode\":\"\",\"145.LanPaint_PromptMode\":\"\",\"209.text\":\"\",\"295.text\":\"\",\"20.other_text\":\"\",\"26.prompt\":\"\",\"27.prompt\":\"\",\"160.text\":\"\",\"131.local_prompts\":\"\",\"131.global_prompt\":\"\",\"152.text\":\"\",\"133.prompt\":\"\",\"164.text\":\"\",\"133.global_prompt\":\"\",\"142.local_prompts\":\"\",\"142.global_prompt\":\"\",\"13.text\":\"\",\"151.text\":\"\",\"157.text\":\"\",\"158.text\":\"\",\"159.text\":\"\",\"161.text\":\"\",\"162.text\":\"\",\"166.text\":\"\",\"168.text\":\"\",\"10.negative_prompt\":\"\",\"22.text\":\"\",\"32.text\":\"\",\"33.other_text\":\"\",\"39.string_a\":\"\",\"41.text\":\"\"},\"theme\":{\"primaryGradient\":\"linear-gradient(135deg, #667eea 0%, #764ba2 100%)\",\"backgroundColor\":\"linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)\",\"cardBackground\":\"rgba(255, 255, 255, 0.04)\",\"borderStyle\":\"rgba(255, 255, 255, 0.08)\",\"accentColor\":\"#667eea\",\"textColor\":\"white\",\"placeholderColor\":\"rgba(255, 255, 255, 0.6)\"},\"promptLibraryDarkMode\":true,\"highlightColorA\":\"#6496c8\",\"highlightColorB\":\"#c89664\",\"editorBgColorDark\":\"#2a2a2f\",\"editorBgColorLight\":\"#ffffff\",\"inputLinkSettings\":{\"10.images.image_1\":{\"enabled\":true,\"linkNodeId\":\"44\",\"linkOutputIndex\":0},\"10.images.image_2\":{\"enabled\":true,\"linkNodeId\":\"44\",\"linkOutputIndex\":1},\"3.images\":{\"enabled\":true,\"linkNodeId\":\"4\",\"linkOutputIndex\":0},\"4.samples\":{\"enabled\":true,\"linkNodeId\":\"25\",\"linkOutputIndex\":0},\"4.vae\":{\"enabled\":true,\"linkNodeId\":\"13\",\"linkOutputIndex\":0},\"5.switch\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":0},\"5.on_false\":{\"enabled\":true,\"linkNodeId\":\"8\",\"linkOutputIndex\":0},\"5.on_true\":{\"enabled\":true,\"linkNodeId\":\"10\",\"linkOutputIndex\":2},\"8.width\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":5},\"8.height\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":6},\"9.model\":{\"enabled\":true,\"linkNodeId\":\"12\",\"linkOutputIndex\":0},\"10.clip\":{\"enabled\":true,\"linkNodeId\":\"14\",\"linkOutputIndex\":0},\"10.prompt\":{\"enabled\":true,\"linkNodeId\":\"21\",\"linkOutputIndex\":0},\"10.vae\":{\"enabled\":true,\"linkNodeId\":\"13\",\"linkOutputIndex\":0},\"21.input1\":{\"enabled\":true,\"linkNodeId\":\"11\",\"linkOutputIndex\":0},\"21.switch1\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":0},\"21.input2\":{\"enabled\":true,\"linkNodeId\":\"22\",\"linkOutputIndex\":0},\"25.model\":{\"enabled\":true,\"linkNodeId\":\"9\",\"linkOutputIndex\":0},\"25.noise_seed\":{\"enabled\":true,\"linkNodeId\":\"31\",\"linkOutputIndex\":0},\"25.steps\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":1},\"25.positive\":{\"enabled\":true,\"linkNodeId\":\"10\",\"linkOutputIndex\":0},\"25.negative\":{\"enabled\":true,\"linkNodeId\":\"10\",\"linkOutputIndex\":1},\"25.latent_image\":{\"enabled\":true,\"linkNodeId\":\"5\",\"linkOutputIndex\":0},\"10.negative_prompt\":{\"enabled\":true,\"linkNodeId\":\"32\",\"linkOutputIndex\":0},\"33.images\":{\"enabled\":true,\"linkNodeId\":\"3\",\"linkOutputIndex\":0},\"34.source\":{\"enabled\":true,\"linkNodeId\":\"21\",\"linkOutputIndex\":0},\"10.resolution\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":2},\"21.switch2\":{\"enabled\":true,\"linkNodeId\":\"35\",\"linkOutputIndex\":0},\"35.value\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":0},\"21.input3\":{\"enabled\":true,\"linkNodeId\":\"43\",\"linkOutputIndex\":0},\"39.string_b\":{\"enabled\":true,\"linkNodeId\":\"41\",\"linkOutputIndex\":0},\"40.string\":{\"enabled\":true,\"linkNodeId\":\"42\",\"linkOutputIndex\":0},\"42.clip\":{\"enabled\":true,\"linkNodeId\":\"37\",\"linkOutputIndex\":0},\"42.prompt\":{\"enabled\":true,\"linkNodeId\":\"39\",\"linkOutputIndex\":0},\"43.switch\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":3},\"43.on_false\":{\"enabled\":true,\"linkNodeId\":\"30\",\"linkOutputIndex\":4},\"43.on_true\":{\"enabled\":true,\"linkNodeId\":\"40\",\"linkOutputIndex\":0}},\"cardLinkToggleState\":{},\"cardAutoCollapse\":{},\"cardGridMode\":false,\"allAutoCollapse\":false,\"inputDefaultConfig\":{},\"inputDisabledValues\":{},\"localOutputConfigs\":{},\"workflowInfo\":{\"title\":\"Qwen-Image-2.1_이미지 편집 및 텍스트에서 이미지\",\"subtitle\":\"너의 여정에 변할래중의일점미세한 빛\",\"subtitles\":[\"너의 여정에 변할래중의일점미세한 빛\",\"매번 생성할 때마다 혼돈에 대한 심문。\"],\"author\":\"\",\"authorAvatar\":\"\",\"authors\":[{\"name\":\"灰暗x\",\"avatar\":\"https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif\",\"links\":[{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"}]}],\"description\":\"<h2>먼저 모델 다운로드 [모델 다운로드]\\n메모리 용량이 작은 경우 int8 모델 다운로드 선택,\\n다운로드 후 모델 태그 아래에서 모델 정보 업데이트,\\n실행 후 q를 눌러 오른쪽 상단 저장 버튼을 클릭하여 워크플로우를 다시 저장.\\n기본 int8 CLIP 및bf16 UNET, \\n\\n빠른 시작:\\n모델 다운로드하고, 모델 태그 아래 노드에서 모델 선택\\n자주 사용하는 태그, 파라미터 세트, 설정 (생성형 이미지 또는 이미지 편집 모드)\\nb를 눌러 프롬프트 편집기 엽니다, \\n오른쪽 상단에서 해당 노드 입력에 대한 프롬프트 텍스트 입력,\\nEsc 키를 눌러 프롬프트 편집기를 종료합니다,\\ng 키를 눌러 생성, 첫 번째 생성 시 모델 로딩이 약간 느릴 수 있습니다.,\\n기타 일반적인 단축키:\\ns 중단, e 큐리 삭제, r 라이브러리, f 다운로드/생성, w 워크플로우 편집기.\\n\\n기본 이미지 편집 모드,\\n파라미터 세트 안의 첫 번째 스위치가 끄면 텍스트-투-이미지 모드가 됩니다.,\\n파라미터 세트의 총 픽셀(기본1024²) 배수는32,\\n이미지 생성 필요 시 BSK Qwen 참조 이미지 앨범에서 참조 이미지를 삭제해야 함,\\n\\n참조 이미지를 추가하려면 w 키를 눌러 워크플로우 편집기를 엽니다. \\n이미지 그룹 내 이미지 로더 노드를 alt로 드래그하여 복사하고, Text Encode Qwen Image 2.1 노드의 이미지 입력에 연결합니다. 최대 10장까지 참조 이미지를 지원합니다.. \\n</h2>\",\"usage\":\"<h2>먼저 모델 다운로드 [모델 다운로드]\\n메모리 용량이 작은 경우 int8 모델 다운로드 선택,\\n다운로드 후 모델 태그 아래에서 모델 정보 업데이트,\\n실행 후 q를 눌러 오른쪽 상단 저장 버튼을 클릭하여 워크플로우를 다시 저장.\\n기본 int8 CLIP 및bf16 UNET, \\n\\n빠른 시작:\\n모델 다운로드하고, 모델 태그 아래 노드에서 모델 선택\\n자주 사용하는 태그, 파라미터 세트, 설정 (생성형 이미지 또는 이미지 편집 모드)\\nb를 눌러 프롬프트 편집기 엽니다, \\n오른쪽 상단에서 해당 노드 입력에 대한 프롬프트 텍스트 입력,\\nEsc 키를 눌러 프롬프트 편집기를 종료합니다,\\ng 키를 눌러 생성, 첫 번째 생성 시 모델 로딩이 약간 느릴 수 있습니다.,\\n기타 일반적인 단축키:\\ns 중단, e 큐리 삭제, r 라이브러리, f 다운로드/생성, w 워크플로우 편집기.\\n\\n기본 이미지 편집 모드,\\n파라미터 세트 안의 첫 번째 스위치가 끄면 텍스트-투-이미지 모드가 됩니다.,\\n파라미터 세트의 총 픽셀(기본1024²) 배수는32,\\n이미지 생성 필요 시 BSK Qwen 참조 이미지 앨범에서 참조 이미지를 삭제해야 함,\\n\\n참조 이미지를 추가하려면 w 키를 눌러 워크플로우 편집기를 엽니다. \\n이미지 그룹 내 이미지 로더 노드를 alt로 드래그하여 복사하고, Text Encode Qwen Image 2.1 노드의 이미지 입력에 연결합니다. 최대 10장까지 참조 이미지를 지원합니다.. \\n</h2>\",\"links\":[{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"},{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"},{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"},{\"name\":\"Bilibili\",\"url\":\"https://space.bilibili.com/26779709\"}],\"background\":{\"image\":\"https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\",\"opacity\":0.62,\"useEmbeddedImage\":false},\"styles\":{\"titleColor\":\"#57ddff\",\"titleSize\":\"22px\",\"textColor\":\"#ffe7bd\",\"textSize\":\"14px\",\"panelBgColor\":\"#0a0807\",\"panelOpacity\":1,\"blurStrength\":0,\"bgOverlayOpacity\":0.15}},\"pluginDeps\":{\"ComfyUI-bsk_UI\":{\"nodes\":[\"MultiLineStringEditor\",\"bsk_StringMergeWithSwitch\",\"bsk_PanelConfigSaver\",\"BSK_ParamSet\",\"RandomSeedNode\",\"BSK_SaveImage\",\"BSK_TextGenerate\",\"BSKQwenImageRefSet\"],\"source\":\"\",\"source_type\":\"github\",\"locked\":false}},\"modelDownloads\":[{\"model_type\":\"text_encoders\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/text_encoders/qwen3vl_8b_int8_convrot.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"qwen3vl_8b_int8_convrot.safetensors\",\"actual_model_type\":\"text_encoders\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"Qwen\",\"authorLinks\":[],\"authorDesc\":\"https://qwen.ai/blog?id=qwen-image-2.1\"},{\"model_type\":\"diffusion_models\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/diffusion_models/qwen_image_2.1_int8_convrot.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"qwen_image_2.1_int8_convrot.safetensors\",\"actual_model_type\":\"diffusion_models\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"Qwen\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"vae\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/vae/qwen_image_2.1_vae_bf16.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"qwen_image_2.1_vae_bf16.safetensors\",\"actual_model_type\":\"vae\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"Qwen\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"diffusion_models\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/diffusion_models/qwen_image_2.1_bf16.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"qwen_image_2.1_bf16.safetensors\",\"actual_model_type\":\"diffusion_models\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"Qwen\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"text_encoders\",\"subdir\":\"\",\"url\":\"https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/text_encoders/qwen3vl_8b_bf16.safetensors?view=false\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"Qwen\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"text_encoders\",\"subdir\":\"\",\"url\":\"https://hf-mirror.com/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors?download=true\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"\",\"authorLinks\":[],\"authorDesc\":\"\"},{\"model_type\":\"text_encoders\",\"subdir\":\"\",\"url\":\"https://hf-mirror.com/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors?download=true\",\"releasePageUrl\":\"\",\"filename\":\"\",\"actual_filename\":\"\",\"actual_model_type\":\"\",\"actual_subdir\":\"\",\"status\":\"idle\",\"authorAvatar\":\"\",\"authorAvatarData\":\"\",\"authorName\":\"\",\"authorLinks\":[],\"authorDesc\":\"\"}],\"samplerPreviewMethod\":\"latent2rgb\",\"nodeTrackingEnabled\":false,\"autoSwitchTab\":false,\"workflowEditorGroups\":{\"version\":2,\"nextGroupId\":6,\"groups\":{\"g1\":{\"id\":\"g1\",\"title\":\"모델 로드\",\"x\":60,\"y\":60,\"w\":551.4661218507422,\"h\":359.97986094635087,\"colorIdx\":0,\"collapsed\":false},\"g2\":{\"id\":\"g2\",\"title\":\"프롬프트\",\"x\":639.8073480466811,\"y\":57.396326637246176,\"w\":558.0213376262117,\"h\":917.0172944218863,\"colorIdx\":1,\"collapsed\":false},\"g3\":{\"id\":\"g3\",\"title\":\"참조 이미지,\",\"x\":60,\"y\":444.97986094635087,\"w\":558.7085624713206,\"h\":464.5485729214465,\"colorIdx\":2,\"collapsed\":false},\"g4\":{\"id\":\"g4\",\"title\":\"그룹화 4\",\"x\":1813.3381450415275,\"y\":50.88714323036163,\"w\":558.68230153997,\"h\":664.0425981552931,\"colorIdx\":3,\"collapsed\":false},\"g5\":{\"id\":\"g5\",\"title\":\"그룹화 5\",\"x\":1230.8412013917975,\"y\":53.24525693162175,\"w\":559.3630641792984,\"h\":1111.70003927054,\"colorIdx\":4,\"collapsed\":false}},\"membership\":{\"3\":\"g4\",\"4\":\"g4\",\"5\":\"g5\",\"8\":\"g5\",\"9\":\"g4\",\"10\":\"g5\",\"11\":\"g2\",\"12\":\"g1\",\"13\":\"g1\",\"14\":\"g1\",\"21\":\"g2\",\"22\":\"g2\",\"25\":\"g4\",\"28\":\"g5\",\"30\":\"g5\",\"31\":\"g5\",\"32\":\"g2\",\"33\":\"g4\",\"34\":\"g2\",\"35\":\"g5\",\"37\":\"g1\",\"39\":\"g2\",\"40\":\"g2\",\"41\":\"g2\",\"42\":\"g2\",\"43\":\"g2\",\"44\":\"g3\"},\"nodePositions\":{\"3\":{\"x\":2112.5,\"y\":234.922},\"4\":{\"x\":2108.73,\"y\":118.309},\"5\":{\"x\":1520.79,\"y\":790.665},\"8\":{\"x\":1513.07,\"y\":106.037},\"9\":{\"x\":1837.34,\"y\":108.886},\"10\":{\"x\":1520.94,\"y\":246.165},\"11\":{\"x\":659.633,\"y\":101.825},\"12\":{\"x\":339.375,\"y\":117.349},\"13\":{\"x\":338.539,\"y\":259.573},\"14\":{\"x\":74.4299,\"y\":114.026},\"21\":{\"x\":663.644,\"y\":709.93},\"22\":{\"x\":658.59,\"y\":214.485},\"25\":{\"x\":1842.29,\"y\":265.547},\"28\":{\"x\":1251.45,\"y\":860.674},\"30\":{\"x\":1245.98,\"y\":115.052},\"31\":{\"x\":1518.49,\"y\":933.865},\"32\":{\"x\":658.772,\"y\":332.835},\"33\":{\"x\":2110.18,\"y\":378.155},\"34\":{\"x\":940.579,\"y\":753.308},\"35\":{\"x\":1258.96,\"y\":966.377},\"37\":{\"x\":72.68,\"y\":253.065},\"39\":{\"x\":665.708,\"y\":564.08},\"40\":{\"x\":943.935,\"y\":531.494},\"41\":{\"x\":665.688,\"y\":441.845},\"42\":{\"x\":940.152,\"y\":103.479},\"43\":{\"x\":944.562,\"y\":836.2},\"44\":{\"x\":327.61,\"y\":545.05}}}}"
+      },
+      "class_type": "bsk_PanelConfigSaver",
+      "_meta": {
+        "title": "패널 설정 정보"
+      }
+    },
+    "30": {
+      "inputs": {
+        "title1": "이미지 생성↔이미지 편집",
+        "value1": "true",
+        "type1": "BOOLEAN",
+        "title2": "단계",
+        "value2": "20",
+        "type2": "INT",
+        "title3": "총 픽셀(제곱, 32의 배수))",
+        "value3": "1024",
+        "type3": "INT",
+        "title4": "AI프롬프트 쓰기",
+        "value4": "true",
+        "type4": "BOOLEAN",
+        "title5": "수정하지 마세요",
+        "value5": "",
+        "type5": "STRING",
+        "title6": "넓이(출력 폭))",
+        "value6": "896",
+        "type6": "INT",
+        "title7": "높이(출력 너비))",
+        "value7": "1536",
+        "type7": "INT",
+        "title8": "",
+        "value8": "",
+        "type8": "INT",
+        "title9": "",
+        "value9": "",
+        "type9": "INT",
+        "title10": "",
+        "value10": "",
+        "type10": "INT"
+      },
+      "class_type": "BSK_ParamSet",
+      "_meta": {
+        "title": "BSK 파라미터 세트"
+      }
+    },
+    "31": {
+      "inputs": {
+        "seed_str": "1335184496090708340",
+        "trigger": 7,
+        "auto_generate": true
+      },
+      "class_type": "RandomSeedNode",
+      "_meta": {
+        "title": "랜덤 숫자"
+      }
+    },
+    "32": {
+      "inputs": {
+        "text": "# 부정적인 프롬프트 텍스트를 입력하세요, \n",
+        "separator": " ",
+        "strip_newlines": false
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "부정적"
+      }
+    },
+    "33": {
+      "inputs": {
+        "images": [
+          "3",
+          0
+        ],
+        "filename_prefix": "BSK",
+        "save_as_jpg": false,
+        "jpg_quality": 95,
+        "embed_workflow_in_png": true,
+        "save_workflow": false,
+        "save_txt": false,
+        "other_text": "",
+        "denoise_bilateral": false,
+        "denoise_diameter": 9,
+        "denoise_sigma_color": 75,
+        "denoise_sigma_space": 75
+      },
+      "class_type": "BSK_SaveImage",
+      "_meta": {
+        "title": "BSK 이미지 저장"
+      }
+    },
+    "34": {
+      "inputs": {
+        "source": [
+          "21",
+          0
+        ]
+      },
+      "class_type": "PreviewAny",
+      "_meta": {
+        "title": "최종 프롬프트 미리보기"
+      }
+    },
+    "35": {
+      "inputs": {
+        "value": [
+          "30",
+          0
+        ]
+      },
+      "class_type": "ComfyNotNode",
+      "_meta": {
+        "title": "Not"
+      }
+    },
+    "37": {
+      "inputs": {
+        "clip_name": "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      },
+      "class_type": "CLIPLoader",
+      "_meta": {
+        "title": "CLIP/프롬프트 강화 로드"
+      }
+    },
+    "39": {
+      "inputs": {
+        "string_a": "# Image Prompt Rewriting Expert\n\nYou turn a user's image request into one long English paragraph that describes the\nfinished image as if you were looking at it, plus the aspect ratio it should be\nrendered at. You are not talking to the user and not talking to a renderer: you are\nan observer reporting what is in the frame.\n\nWork through the eight steps below in order. Each step commits one decision; later\nsteps never revise an earlier one.\n\n## Step 1 — Read the brief and split it in two\n\nList what the user has fixed and what they have left open.\n\nFixed, and it must survive into your description unchanged: every string of text\nthey want shown, every named object, every count, every stated colour, every stated\nposition, and the aspect ratio if they gave one. Copy their text strings character\nfor character, in their own script, including punctuation and spacing.\n\nA third thing they may give you is an instruction about the job rather than about the\npicture — \"use double quotes\", \"no hard-edged blocks\", \"4K, no noise\", \"make sure the\ntext is sharp\". That is not content. Obey it silently where it applies and never echo\nit: the description states what is in the frame, never what must be done.\n\nOpen, and you must decide it: everything they did not mention. A three-word request\nand a three-hundred-word request both become a description of the same size, so a\nshort brief means you are inventing most of the frame, not writing less.\n\n## Step 2 — Fix the frame\n\nDecide the orientation from the subject, then pick the ratio.\n\nIf the user states a ratio, use it. Otherwise: `3:2` for anything horizontal and\n`2:3` for anything vertical — these are the two defaults and cover most images.\nUse `1:1` for a square badge, icon, album cover or single centred emblem, `16:9`\nfor a wide cinematic or presentation frame, `1:2` or `9:16` for a phone screen or a\ntall standing banner. `3:4`, `2:1`, `21:9`, `4:3`, `9:21`, `4:5`, `3:1`, `5:4`,\n`1:3` exist but only when the subject or the user really calls for them.\n\nThe ratio lives only in the `wh_ratio` field. Never write a ratio, a resolution, or\na pixel count into the description itself.\n\n## Step 3 — Write the opening sentence\n\nOne sentence, around twenty words. Name the medium, the style, the subject, and the\nbackground or palette; usually name the orientation too:\n\n`The image is a ⟨vertical / wide / square / tall⟩ ⟨style⟩ ⟨photograph · poster · illustration · scene · portrait · infographic · close-up · graphic · page · card · sheet · logo⟩ of ⟨subject⟩, ⟨the background and its palette⟩.`\n\n`This is a …` or a bare `A vertical realistic photograph of …` work equally well. The\nmedium noun is the one part that is never omitted.\n\nThe style word goes here — realistic, photorealistic, minimalist, flat-vector,\ncinematic, watercolour, isometric, editorial, hand-drawn, 3D-rendered, retro. Name\nit once here; you may echo it in the closing sentence.\n\n## Step 4 — Inventory before you write\n\nBefore any more prose, settle two lists.\n\nEvery element that will appear, each with a place in the frame: upper-left,\nacross the top, on the far right, in the lower-third, in the centre, in front of,\nbehind, tucked into the corner. You will need eight to fourteen such positional\nphrases, about ten typically, and they must reach the corners, the edges and the\ncentre — not cluster in the middle.\n\nEvery piece of text that will be legible in the image, in reading order.\n\n## Step 5 — Walk the frame\n\nNow describe it in order. Which order depends on how the frame is filled.\n\n**If the frame is divided into regions** — a poster, a page, an interface, a layout, a\nwide scene with several things in it — walk the regions:\n\n1. The background and the surface it sits on — this comes immediately after the\n   opening sentence, not at the end.\n2. The top band: headline, header bar, sky, ceiling, whatever occupies the top edge.\n3. Down and across the body of the frame: left side, then centre, then right side.\n   Give each region one or two sentences.\n4. The bottom band: footer, foreground, ground plane, base row.\n\n**If one subject fills the frame** — a portrait, a close-up, a single object — walk\nthe subject instead: the background and how far it falls off, then the subject's pose\nand where it is placed in the frame, then head and face, then body and each garment or\nsurface, then what is held or touching it, then whatever little is left at the edges.\nKeep using positional phrases inside the subject — in the upper-left of the frame,\nbehind the left shoulder, along the lower edge — so the frame stays locatable.\n\nRoughly a third of your sentences should open on the positional phrase itself —\n\"On the right side of the frame, …\", \"In the upper-left corner, …\", \"Across the\nlower third, …\" — so the reader always knows where they are looking.\n\nKeep it to one paragraph. Break to a new paragraph only when the image is genuinely\nbuilt from stacked regions — panels, cards, sections, slides — and then one\nparagraph per region, each opening on where that region sits.\n\n## Step 6 — Set every piece of text\n\nSkip this step if nothing in the image is meant to be read — a third of images have\nno legible text at all, and inventing signage for them is a mistake.\n\nOtherwise, for each string from your Step 4 list, in reading order, name where it sits,\nwhat it looks like, and what it says: `a bold black headline across the top reads \"…\"`.\n\nPut the string in straight double quotes, in its own script — Chinese, Russian,\nKorean, Japanese and Arabic text stays in Chinese, Russian, Korean, Japanese and\nArabic. Give its weight, colour, case and relative size. Describe a line break as a\nsecond line rather than putting a real newline inside the string. If a mark is not meant\nto be read — distant signage, a label behind glass, dense body copy — call it\nblurred, indistinct, or too small to read rather than inventing letters. If the image contains a chart\nor a table, its axes, tick labels, legend entries, series and cell values are text\ntoo: write them out.\n\n## Step 7 — Give the lighting its own sentence\n\nEvery image has light in it, and the description always accounts for it: the source,\nits direction, its quality, and the shadows and highlights it leaves. Soft diffused\ndaylight from a window on the left, hard overhead studio light, warm low sun, flat\neven ambient light for a diagram.\n\nOnce the contents are placed, give it a sentence of its own — `The lighting is …` —\nor, if the light is what makes a particular surface look the way it does, fold it into\nthat surface's sentence. Either way it is stated explicitly, not left implied.\n\n## Step 8 — Close with the whole frame\n\nEnd on a single sentence that steps back:\n\n`The overall composition ⟨is / uses / feels⟩ …`\n\n`The composition is …`, `The overall design …`, `The overall mood …`, `The overall\npalette …` and `The image has …` are the same move. Cover balance and symmetry, the\npalette, the style, and the mood in that one sentence. Write exactly one such\nsentence — do not follow it with a second summary.\n\n## Throughout\n\n**Size.** The description runs about twenty sentences and four to five hundred words,\nroughly twenty-five words a sentence. That is the same size whether the brief was three\nwords or three hundred: a dense frame with many regions and a lot of text runs longer, a\nsingle quiet subject runs shorter, but a thin brief never buys a thin description.\n\n**Observe, don't instruct.** Present tense, third person, declarative. No \"you\", no\n\"create\", no \"make sure\", no \"the AI should\". No quality boosters — no \"masterpiece\",\n\"8K\", \"highly detailed\", \"award-winning\".\n\n**Hedge what you cannot be certain of.** An observer describing a picture says\n\"appears to be\", \"likely\", \"suggesting\", and offers a pair — \"a notebook\nor a tablet\", \"wood or dark laminate\" — when the thing is genuinely ambiguous. Do\nthis often; it is the natural register here. Be flatly definite only about what the\nuser fixed.\n\n**Name colours with a modifier, almost never bare.** Deep navy, muted olive, pale\ncream, warm terracotta, soft dusty rose, blue-grey, off-white, charcoal, brownish-\ngreen. Hex codes only if the user gave them.\n\n**Give the material, not just the noun.** Brushed metal, matte plastic, glossy\nceramic, coarse linen, weathered wood, frosted glass, grain, scuffs, condensation,\nvisible brush strokes, paper fibre.\n\n**Enumerate; never summarise.** \"Several items\" and \"various decorations\" are not\ndescriptions. Say what each thing is. Write small counts as words — three, five,\ntwelve — and if something is partly hidden, say so and describe the visible part.\n\n**People get their observable surface.** Build, posture, where they are looking,\nexpression, hair, skin tone, and each garment with its colour and material. Age is a\nlife stage or a decade — a child, a teenager, a young adult, middle-aged, elderly,\nin her thirties — never a number of years. If a face is turned away or cropped, say\nthat instead of describing it.\n\n**Objects by class, not by brand.** A silver laptop, a mirrorless camera, a compact\nhatchback — unless the user named the brand. Photographic and design vocabulary is\nwelcome: shallow depth of field, bokeh, backlit, close-up, negative space,\ngrid, drop shadow.\n\n**Everything holds together physically.** Shadows fall away from the light, reflections\nmatch what is in front of the surface, scale is consistent between neighbouring\nobjects, and a surface reacts to what sits on it. If the user asked for something\nimpossible, describe it as the image shows it and let the rest of the scene stay\ncoherent around it.\n\n## Language\n\nThe description is always in English, whatever language the request arrives in. The\nonly exception is text shown inside the image, which stays in its own script.\n\n## Output format\n\nReturn one strictly valid JSON object on a single line, nothing before or after:\n\n{\"rewritten_prompt\": \"<the description>\", \"wh_ratio\": \"<e.g. 3:2>\"}\n",
+        "string_b": [
+          "41",
+          0
+        ],
+        "delimiter": ""
+      },
+      "class_type": "StringConcatenate",
+      "_meta": {
+        "title": "Concatenate Text"
+      }
+    },
+    "40": {
+      "inputs": {
+        "string": [
+          "42",
+          0
+        ],
+        "regex_pattern": "^.*?</think>\\s*",
+        "replace": "",
+        "case_insensitive": true,
+        "multiline": false,
+        "dotall": true,
+        "count": 1
+      },
+      "class_type": "RegexReplace",
+      "_meta": {
+        "title": "Replace Text (Regex)"
+      }
+    },
+    "41": {
+      "inputs": {
+        "text": "본체 설명 (중문）：\n영화 포스터, 1972년 미국 갱 영화 장면, 어두운 나무 소재 서재, 책상 위에 여러 개의 앰버색 테이블 램프, 검은색 스트라이프 수트 차림의 중년 이탈리아계 교주가 가죽 안락의자에 앉아 태엽이 달린 시계 체인을 착용하고, 손으로 고양이의 털을 쓰다듬고, 눈은 그림자에 잠겨 있으며, 배경은 책장과 두꺼운 커튼의 어두운 부분\n\n스타일 설명 (중국어）：\n1970새로운 할리우드 어두운 톤, 낮은 부광, 琥珀색 금색 톤, 토플광 눈가 깊은 그림자, 넓은 영역의 어두운 부분, 연기 효과의 공기, 거친 입자 필름 질감, 과다 노출 분위기, 갱스터 서사시 감성, 테이블 램프의 따뜻한 금색 미세 빛, 윌리스 스타일의 조명",
+        "separator": " ",
+        "strip_newlines": false
+      },
+      "class_type": "MultiLineStringEditor",
+      "_meta": {
+        "title": "AI프롬프트 쓰기"
+      }
+    },
+    "42": {
+      "inputs": {
+        "clip": [
+          "37",
+          0
+        ],
+        "prompt": [
+          "39",
+          0
+        ],
+        "max_length": 512,
+        "sampling_mode": "on",
+        "thinking": false,
+        "use_default_template": true,
+        "temperature": 0.7,
+        "top_k": 64,
+        "top_p": 0.95,
+        "min_p": 0.05,
+        "repetition_penalty": 1.05,
+        "seed": 0,
+        "presence_penalty": 0
+      },
+      "class_type": "BSK_TextGenerate",
+      "_meta": {
+        "title": "BSK 역방향 프롬프트(TextGenerate)"
+      }
+    },
+    "43": {
+      "inputs": {
+        "switch": [
+          "30",
+          3
+        ],
+        "on_false": [
+          "30",
+          4
+        ],
+        "on_true": [
+          "40",
+          0
+        ]
+      },
+      "class_type": "ComfySwitchNode",
+      "_meta": {
+        "title": "If/Else Switch"
+      }
+    },
+    "44": {
+      "inputs": {
+        "image_list": "",
+        "resize_enabled": false,
+        "long_edge": 1536,
+        "divisible_by_32": true
+      },
+      "class_type": "BSKQwenImageRefSet",
+      "_meta": {
+        "title": "BSK Qwen참고 갤러리"
+      }
+    }
+  },
+  "tabs": [
+    {
+      "id": "main",
+      "name": "일반",
+      "nodeIds": [
+        "21",
+        "30",
+        "31",
+        "44"
+      ]
+    },
+    {
+      "id": "prompt",
+      "name": "프롬프트",
+      "nodeIds": [
+        "11",
+        "22",
+        "32",
+        "41"
+      ]
+    },
+    {
+      "id": "model",
+      "name": "모델",
+      "nodeIds": [
+        "12",
+        "13",
+        "14",
+        "37"
+      ]
+    },
+    {
+      "id": "sampler",
+      "name": "샘플러",
+      "nodeIds": [
+        "25"
+      ]
+    },
+    {
+      "id": "other",
+      "name": "기타",
+      "nodeIds": [
+        "3",
+        "4",
+        "5",
+        "8",
+        "9",
+        "10",
+        "30",
+        "31",
+        "33",
+        "34",
+        "35",
+        "37",
+        "39",
+        "40",
+        "42",
+        "43",
+        "44"
+      ]
+    }
+  ],
+  "currentTab": "main",
+  "tabNodes": {
+    "main": [
+      "21",
+      "30",
+      "31",
+      "44"
+    ],
+    "prompt": [
+      "11",
+      "22",
+      "32",
+      "41"
+    ],
+    "model": [
+      "12",
+      "13",
+      "14",
+      "37"
+    ],
+    "sampler": [
+      "25"
+    ],
+    "other": [
+      "3",
+      "4",
+      "5",
+      "8",
+      "9",
+      "10",
+      "30",
+      "31",
+      "33",
+      "34",
+      "35",
+      "37",
+      "39",
+      "40",
+      "42",
+      "43",
+      "44"
+    ]
+  },
+  "cardValues": {
+    "3.filename_prefix": "Qwen_image_2.1",
+    "3.format": "png",
+    "8.batch_size": 1,
+    "9.device": "auto",
+    "9.dtype": "default",
+    "11.text": "{\n  \"rewritten_prompt\": \"이<image2>캔버스에 유지<image2>의 전체적인 구도, 배경, 조명, 색조와 미변동 영역은 완전히 변하지 않습니다. 다음<image1>중의 역할 배치<image2>오른쪽에, 대체<image2>화면 오른쪽 기존 캐릭터 유지<image2>오른쪽 기존 캐릭터의 동작, 자세 및 방향. 새로 추가된 캐릭터는 동일하게 적용<image1>정체성 특징과 외관 디자인, 자연스럽게 통합<image2>투영, 비율, 조명 방향 및 그림자 관계, 가장자리 연결 및 피사계 심도 일치, 화면의 다른 내용 변경 안 함。\",\n  \"wh_ratio\": \"\",\n  \"ratio_follow\": \"<image2>\"\n}\n# 아래에 이미지 편집 프롬프트 입력\n# 그림 1: 캐릭터 대체, 그림 2: 장면 내 오른쪽 캐릭터를 대체하고 그림 2의 오른쪽 캐릭터 동작 포즈(땅에 엎드려 왼쪽 캐릭터 머리를 만지는)를 사용합니다. 그림 2의 왼쪽 캐릭터는 그림 1의 스타일을 사용합니다.，\n# 그림 2의 오른쪽 남성 캐릭터를 그림 1의 캐릭터로 바꾸고, 캐릭터를 그림 2의 자세로 유지.\n\n# 분경 생성된 입력 인물 3D 뷰,\n# 그림 1의 캐릭터를 기준으로 해당 캐릭터의 설정 세부 3D 뷰 정보 카드를 생성합니다. 화면 왼쪽에는 해당 캐릭터의 얼굴의 대형 초근접 이미지를 배치하여 눈, 머리 스타일, 표정을 명확하게 보여줍니다. 화면 오른쪽에는 위에서 아래로 수직으로 세 개의 전체 뷰를 배열합니다. 첫 번째 뷰는 전면, 두 번째 뷰는 측면, 세 번째 뷰는 후면입니다. 세 뷰의 캐릭터 체형, 머리 스타일, 의상 및 왼쪽 얼굴 초근접 이미지는 동일 인물이며 높이가 일치합니다. 캐릭터 스타일을 유지합니다., # 전체적으로 깔끔한 2D 일러스트 스타일, 밝은 회색 중성 배경, 복잡한 장식 없음, 캐릭터는 표준 서서 자세, 비율 조화, # 각 뷰에 대한 간단한 중국어 레이블을 추가합니다.\\\"얼굴 클로즈업\\\"、\\\"전면\\\"、\\\"옆면\\\"、\\\"뒷면\\\", 이미지 속 캐릭터의 원래 색상, 눈 색, 피부색, 얼굴 특징을 완전히 변경하지 않고, 표시 방식을 설정 스케치 일러스트로 변경。\n# {\n  # \"rewritten_prompt\": \"이미지 속 캐릭터를 기준으로 해당 캐릭터 설정 3뷰 정보 카드 생성: 화면 왼쪽에는 해당 캐릭터의 얼굴 초고화질 클로즈업 이미지, 눈, 머리 스타일, 표정을 명확하게 보여줍니다. 화면 오른쪽에는 위에서 아래로 수직으로 세 가지 전체 뷰가 배열되어 있으며, 순서는 전면, 측면, 후면입니다. 세 뷰의 캐릭터 체형, 머리 스타일, 의상 및 왼쪽 얼굴 클로즈업은 동일 인물이며 높이가 일치합니다. 전체적으로 깨끗한 2D 이세계 일러스트 스타일, 밝은 회색 중성 배경, 복잡한 장식 없이 캐릭터는 표준 서 있는 자세로 비율이 조화롭게 표현됩니다.문 레이블, 순서대로\\\"얼굴 클로즈업\\\"、\\\"전면\\\"、\\\"옆면\\\"、\\\"뒷면\\\"。이미지 속 캐릭터의 원래 색상, 눈 색, 피부색, 얼굴 특징을 완전히 변경하지 않고, 표시 방식을 설정 스케치 일러스트로 변경。\",\n  # \"wh_ratio\": \"3:1\",\n  # \"ratio_follow\": \"\"\n# }\n\n# 아래 프롬프트 활성화 후 투명 배경 이미지 출력\n# RGBA이미지, 알파 투명 채널 포함, 배경 완전 투명, [주체 설명], 깨끗한 주체, 정교한 가장자리, 그림자 없음, 배경 없음, PNG 자산, 스티커, 고화질, 디테일 풍부,",
+    "11.separator": " ",
+    "11.strip_newlines": false,
+    "12.unet_name": "qwen_image_2.1_bf16.safetensors",
+    "12.weight_dtype": "default",
+    "13.vae_name": "qwen_image_2.1_vae_bf16.safetensors",
+    "14.clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+    "14.type": "qwen_image",
+    "14.device": "default",
+    "21.switch3": true,
+    "21.input4": "",
+    "21.switch4": true,
+    "21.merge_order": "1,2,3,4",
+    "21.preserve_newlines": false,
+    "21.input5": "",
+    "21.switch5": true,
+    "21.input6": "",
+    "21.switch6": true,
+    "21.input7": "",
+    "21.switch7": true,
+    "21.input8": "",
+    "21.switch8": true,
+    "21.input9": "",
+    "21.switch9": true,
+    "21.input10": "",
+    "21.switch10": true,
+    "22.text": "이것은 아름다운 애니메이션 스타일 일러스트, 화면에는 귀여운 멜리모드(악마) 소녀가 있습니다：\n인물 특징：\n한쪽으로 찰랑거리는 긴 초록색 곱슬머리, 머리카락이 폭포수처럼 옆으로 흘러내림\n머리 위에 검은색 둥근 귀를 가지고 있으며, 귀는 뾰족한 엘프 귀입니다\n눈은 따뜻한 옥색/금색이며, 부드럽고 평온한 미소를 짓습니다.\n검은 박쥐 날개와 심장 모양의 악마 꼬리가 뒤에 있습니다\n의상 변환：\n옅은 파란색 실 드레스를 입고, 어깨는 투명한 얇은 망사 부풀려진 소매이며, 가슴에는 파란색 리본이 장식됨\n다리 위로 흰색 과각 장미 스타킹 착용, 우아한 자세\n장면 분위기：\n파일 이름이 없으면 경고 출력하지만 오류는 발생하지 않음 (load 메서드에서 처리)\n흰색 침대 시트를 깔고 앉아있는 푹신한 낮잠\n배경은 밝은 플라워 창으로, 창밖의 빛은 부드럽고, 커튼은 피오이합니다.\n방에 장미가 꽂힌 화병과 늘어진 식물이 놓여 있음\n전체 화면 색조는 신선하고 밝으며, 악마의 어두운 요소(뿔, 날개, 꼬리)와 따뜻한 정원 스타일의 장면이 재미있는 대비를 이뤄 평화롭고 치유적인 분위기를 조성한다.。\n# 생성할 투명 이미지를 위해 아래 프롬프트를 활성화하세요\n# RGBA이미지, 알파 투명 채널 포함, 배경 완전 투명, [주체 설명], 깨끗한 주체, 정교한 가장자리, 그림자 없음, 배경 없음, PNG 자산, 스티커, 고화질, 디테일 풍부",
+    "22.separator": " ",
+    "22.strip_newlines": false,
+    "25.add_noise": "enable",
+    "25.cfg": 1,
+    "25.sampler_name": "euler",
+    "25.scheduler": "simple",
+    "25.start_at_step": 0,
+    "25.end_at_step": 10000,
+    "25.return_with_leftover_noise": "disable",
+    "30.title1": "이미지 생성↔이미지 편집",
+    "30.value1": "true",
+    "30.type1": "BOOLEAN",
+    "30.title2": "단계",
+    "30.value2": "20",
+    "30.type2": "INT",
+    "30.title3": "총 픽셀(제곱, 32의 배수))",
+    "30.value3": "1024",
+    "30.type3": "INT",
+    "30.title4": "AI프롬프트 쓰기",
+    "30.value4": "true",
+    "30.type4": "BOOLEAN",
+    "30.title5": "수정하지 마세요",
+    "30.value5": "",
+    "30.type5": "STRING",
+    "30.title6": "넓이(출력 폭))",
+    "30.value6": "896",
+    "30.type6": "INT",
+    "30.title7": "높이(출력 너비))",
+    "30.value7": "1536",
+    "30.type7": "INT",
+    "30.title8": "",
+    "30.value8": "",
+    "30.type8": "INT",
+    "30.title9": "",
+    "30.value9": "",
+    "30.type9": "INT",
+    "30.title10": "",
+    "30.value10": "",
+    "30.type10": "INT",
+    "31.seed_str": "1335184496090708340",
+    "31.trigger": 7,
+    "31.auto_generate": true,
+    "32.text": "# 부정적인 프롬프트 텍스트를 입력하세요, \n",
+    "32.separator": " ",
+    "32.strip_newlines": false,
+    "33.filename_prefix": "BSK",
+    "33.save_as_jpg": false,
+    "33.jpg_quality": 95,
+    "33.embed_workflow_in_png": true,
+    "33.save_workflow": false,
+    "33.save_txt": false,
+    "33.other_text": "",
+    "33.denoise_bilateral": false,
+    "33.denoise_diameter": 9,
+    "33.denoise_sigma_color": 75,
+    "33.denoise_sigma_space": 75,
+    "37.clip_name": "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+    "37.type": "qwen_image",
+    "37.device": "default",
+    "39.string_a": "# Image Prompt Rewriting Expert\n\nYou turn a user's image request into one long English paragraph that describes the\nfinished image as if you were looking at it, plus the aspect ratio it should be\nrendered at. You are not talking to the user and not talking to a renderer: you are\nan observer reporting what is in the frame.\n\nWork through the eight steps below in order. Each step commits one decision; later\nsteps never revise an earlier one.\n\n## Step 1 — Read the brief and split it in two\n\nList what the user has fixed and what they have left open.\n\nFixed, and it must survive into your description unchanged: every string of text\nthey want shown, every named object, every count, every stated colour, every stated\nposition, and the aspect ratio if they gave one. Copy their text strings character\nfor character, in their own script, including punctuation and spacing.\n\nA third thing they may give you is an instruction about the job rather than about the\npicture — \"use double quotes\", \"no hard-edged blocks\", \"4K, no noise\", \"make sure the\ntext is sharp\". That is not content. Obey it silently where it applies and never echo\nit: the description states what is in the frame, never what must be done.\n\nOpen, and you must decide it: everything they did not mention. A three-word request\nand a three-hundred-word request both become a description of the same size, so a\nshort brief means you are inventing most of the frame, not writing less.\n\n## Step 2 — Fix the frame\n\nDecide the orientation from the subject, then pick the ratio.\n\nIf the user states a ratio, use it. Otherwise: `3:2` for anything horizontal and\n`2:3` for anything vertical — these are the two defaults and cover most images.\nUse `1:1` for a square badge, icon, album cover or single centred emblem, `16:9`\nfor a wide cinematic or presentation frame, `1:2` or `9:16` for a phone screen or a\ntall standing banner. `3:4`, `2:1`, `21:9`, `4:3`, `9:21`, `4:5`, `3:1`, `5:4`,\n`1:3` exist but only when the subject or the user really calls for them.\n\nThe ratio lives only in the `wh_ratio` field. Never write a ratio, a resolution, or\na pixel count into the description itself.\n\n## Step 3 — Write the opening sentence\n\nOne sentence, around twenty words. Name the medium, the style, the subject, and the\nbackground or palette; usually name the orientation too:\n\n`The image is a ⟨vertical / wide / square / tall⟩ ⟨style⟩ ⟨photograph · poster · illustration · scene · portrait · infographic · close-up · graphic · page · card · sheet · logo⟩ of ⟨subject⟩, ⟨the background and its palette⟩.`\n\n`This is a …` or a bare `A vertical realistic photograph of …` work equally well. The\nmedium noun is the one part that is never omitted.\n\nThe style word goes here — realistic, photorealistic, minimalist, flat-vector,\ncinematic, watercolour, isometric, editorial, hand-drawn, 3D-rendered, retro. Name\nit once here; you may echo it in the closing sentence.\n\n## Step 4 — Inventory before you write\n\nBefore any more prose, settle two lists.\n\nEvery element that will appear, each with a place in the frame: upper-left,\nacross the top, on the far right, in the lower-third, in the centre, in front of,\nbehind, tucked into the corner. You will need eight to fourteen such positional\nphrases, about ten typically, and they must reach the corners, the edges and the\ncentre — not cluster in the middle.\n\nEvery piece of text that will be legible in the image, in reading order.\n\n## Step 5 — Walk the frame\n\nNow describe it in order. Which order depends on how the frame is filled.\n\n**If the frame is divided into regions** — a poster, a page, an interface, a layout, a\nwide scene with several things in it — walk the regions:\n\n1. The background and the surface it sits on — this comes immediately after the\n   opening sentence, not at the end.\n2. The top band: headline, header bar, sky, ceiling, whatever occupies the top edge.\n3. Down and across the body of the frame: left side, then centre, then right side.\n   Give each region one or two sentences.\n4. The bottom band: footer, foreground, ground plane, base row.\n\n**If one subject fills the frame** — a portrait, a close-up, a single object — walk\nthe subject instead: the background and how far it falls off, then the subject's pose\nand where it is placed in the frame, then head and face, then body and each garment or\nsurface, then what is held or touching it, then whatever little is left at the edges.\nKeep using positional phrases inside the subject — in the upper-left of the frame,\nbehind the left shoulder, along the lower edge — so the frame stays locatable.\n\nRoughly a third of your sentences should open on the positional phrase itself —\n\"On the right side of the frame, …\", \"In the upper-left corner, …\", \"Across the\nlower third, …\" — so the reader always knows where they are looking.\n\nKeep it to one paragraph. Break to a new paragraph only when the image is genuinely\nbuilt from stacked regions — panels, cards, sections, slides — and then one\nparagraph per region, each opening on where that region sits.\n\n## Step 6 — Set every piece of text\n\nSkip this step if nothing in the image is meant to be read — a third of images have\nno legible text at all, and inventing signage for them is a mistake.\n\nOtherwise, for each string from your Step 4 list, in reading order, name where it sits,\nwhat it looks like, and what it says: `a bold black headline across the top reads \"…\"`.\n\nPut the string in straight double quotes, in its own script — Chinese, Russian,\nKorean, Japanese and Arabic text stays in Chinese, Russian, Korean, Japanese and\nArabic. Give its weight, colour, case and relative size. Describe a line break as a\nsecond line rather than putting a real newline inside the string. If a mark is not meant\nto be read — distant signage, a label behind glass, dense body copy — call it\nblurred, indistinct, or too small to read rather than inventing letters. If the image contains a chart\nor a table, its axes, tick labels, legend entries, series and cell values are text\ntoo: write them out.\n\n## Step 7 — Give the lighting its own sentence\n\nEvery image has light in it, and the description always accounts for it: the source,\nits direction, its quality, and the shadows and highlights it leaves. Soft diffused\ndaylight from a window on the left, hard overhead studio light, warm low sun, flat\neven ambient light for a diagram.\n\nOnce the contents are placed, give it a sentence of its own — `The lighting is …` —\nor, if the light is what makes a particular surface look the way it does, fold it into\nthat surface's sentence. Either way it is stated explicitly, not left implied.\n\n## Step 8 — Close with the whole frame\n\nEnd on a single sentence that steps back:\n\n`The overall composition ⟨is / uses / feels⟩ …`\n\n`The composition is …`, `The overall design …`, `The overall mood …`, `The overall\npalette …` and `The image has …` are the same move. Cover balance and symmetry, the\npalette, the style, and the mood in that one sentence. Write exactly one such\nsentence — do not follow it with a second summary.\n\n## Throughout\n\n**Size.** The description runs about twenty sentences and four to five hundred words,\nroughly twenty-five words a sentence. That is the same size whether the brief was three\nwords or three hundred: a dense frame with many regions and a lot of text runs longer, a\nsingle quiet subject runs shorter, but a thin brief never buys a thin description.\n\n**Observe, don't instruct.** Present tense, third person, declarative. No \"you\", no\n\"create\", no \"make sure\", no \"the AI should\". No quality boosters — no \"masterpiece\",\n\"8K\", \"highly detailed\", \"award-winning\".\n\n**Hedge what you cannot be certain of.** An observer describing a picture says\n\"appears to be\", \"likely\", \"suggesting\", and offers a pair — \"a notebook\nor a tablet\", \"wood or dark laminate\" — when the thing is genuinely ambiguous. Do\nthis often; it is the natural register here. Be flatly definite only about what the\nuser fixed.\n\n**Name colours with a modifier, almost never bare.** Deep navy, muted olive, pale\ncream, warm terracotta, soft dusty rose, blue-grey, off-white, charcoal, brownish-\ngreen. Hex codes only if the user gave them.\n\n**Give the material, not just the noun.** Brushed metal, matte plastic, glossy\nceramic, coarse linen, weathered wood, frosted glass, grain, scuffs, condensation,\nvisible brush strokes, paper fibre.\n\n**Enumerate; never summarise.** \"Several items\" and \"various decorations\" are not\ndescriptions. Say what each thing is. Write small counts as words — three, five,\ntwelve — and if something is partly hidden, say so and describe the visible part.\n\n**People get their observable surface.** Build, posture, where they are looking,\nexpression, hair, skin tone, and each garment with its colour and material. Age is a\nlife stage or a decade — a child, a teenager, a young adult, middle-aged, elderly,\nin her thirties — never a number of years. If a face is turned away or cropped, say\nthat instead of describing it.\n\n**Objects by class, not by brand.** A silver laptop, a mirrorless camera, a compact\nhatchback — unless the user named the brand. Photographic and design vocabulary is\nwelcome: shallow depth of field, bokeh, backlit, close-up, negative space,\ngrid, drop shadow.\n\n**Everything holds together physically.** Shadows fall away from the light, reflections\nmatch what is in front of the surface, scale is consistent between neighbouring\nobjects, and a surface reacts to what sits on it. If the user asked for something\nimpossible, describe it as the image shows it and let the rest of the scene stay\ncoherent around it.\n\n## Language\n\nThe description is always in English, whatever language the request arrives in. The\nonly exception is text shown inside the image, which stays in its own script.\n\n## Output format\n\nReturn one strictly valid JSON object on a single line, nothing before or after:\n\n{\"rewritten_prompt\": \"<the description>\", \"wh_ratio\": \"<e.g. 3:2>\"}\n",
+    "39.delimiter": "",
+    "40.regex_pattern": "^.*?</think>\\s*",
+    "40.replace": "",
+    "40.case_insensitive": true,
+    "40.multiline": false,
+    "40.dotall": true,
+    "40.count": 1,
+    "41.text": "본체 설명 (중문）：\n영화 포스터, 1972년 미국 갱 영화 장면, 어두운 나무 소재 서재, 책상 위에 여러 개의 앰버색 테이블 램프, 검은색 스트라이프 수트 차림의 중년 이탈리아계 교주가 가죽 안락의자에 앉아 태엽이 달린 시계 체인을 착용하고, 손으로 고양이의 털을 쓰다듬고, 눈은 그림자에 잠겨 있으며, 배경은 책장과 두꺼운 커튼의 어두운 부분\n\n스타일 설명 (중국어）：\n1970새로운 할리우드 어두운 톤, 낮은 부광, 琥珀색 금색 톤, 토플광 눈가 깊은 그림자, 넓은 영역의 어두운 부분, 연기 효과의 공기, 거친 입자 필름 질감, 과다 노출 분위기, 갱스터 서사시 감성, 테이블 램프의 따뜻한 금색 미세 빛, 윌리스 스타일의 조명",
+    "41.separator": " ",
+    "41.strip_newlines": false,
+    "42.max_length": 512,
+    "42.sampling_mode": "on",
+    "42.thinking": false,
+    "42.use_default_template": true,
+    "42.temperature": 0.7,
+    "42.top_k": 64,
+    "42.top_p": 0.95,
+    "42.min_p": 0.05,
+    "42.repetition_penalty": 1.05,
+    "42.seed": 0,
+    "42.presence_penalty": 0,
+    "44.image_list": "",
+    "44.resize_enabled": false,
+    "44.long_edge": 1536,
+    "44.divisible_by_32": true,
+    "21.__input_order": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "21.input3": "",
+    "21.switch2": "",
+    "10.resolution": "",
+    "10.negative_prompt": "",
+    "3.format.bit_depth": "8-bit",
+    "3.format.input_color_space": "sRGB",
+    "5.switch": "",
+    "21.switch1": "",
+    "25.noise_seed": "",
+    "25.steps": "",
+    "21.title": "프롬프트 병합",
+    "cardOrder": [
+      "21",
+      "30",
+      "31",
+      "44"
+    ],
+    "10.title": "Text Encode Qwen Image 2.1",
+    "44.title": "BSK Qwen참고 갤러리"
+  },
+  "globalCropSize": {
+    "width": 864,
+    "height": 1536
+  },
+  "linkCropSize": false,
+  "cropSizeLocked": false,
+  "autoDetectOrientation": true,
+  "autoAdaptResolution": true,
+  "noCropMode": false,
+  "textareaHeights": {
+    "57.text": "",
+    "59.text": "",
+    "69.rules": "",
+    "79.rules": "",
+    "67.strings_to_remove": "",
+    "70.rules": "",
+    "73.text": "398px",
+    "75.rules": "",
+    "76.text": "",
+    "78.text_b": "",
+    "78.text_c": "",
+    "86.text": "",
+    "87.text": "",
+    "88.rules": "",
+    "15.text": "452px",
+    "20.text": "",
+    "21.rules": "",
+    "17.rules": "356px",
+    "16.text": "",
+    "29.text": "",
+    "31.text": "",
+    "44.text": "",
+    "24.strings_to_remove": "",
+    "30.rules": "",
+    "17.text": "",
+    "18.text": "",
+    "36.text": "",
+    "37.text": "",
+    "38.strings_to_remove": "",
+    "39.rules": "",
+    "40.rules": "287px",
+    "35.text": "",
+    "10.text": "305px",
+    "11.text": "271px",
+    "5.text": "380px",
+    "762.text": "",
+    "586.text": "",
+    "587.text": "",
+    "646.text": "",
+    "1.param_0": "",
+    "4.value": "",
+    "1.text": "",
+    "198.prompt": "",
+    "476.text_a": "",
+    "476.text_c": "",
+    "478.text": "",
+    "53.text": "",
+    "55.text": "",
+    "56.text": "",
+    "48.rules": "",
+    "61.text": "",
+    "65.text": "",
+    "78.text": "",
+    "6.text": "",
+    "7.text": "",
+    "12.text": "",
+    "85.save_prompt_txt": "",
+    "85.custom_prompt": "",
+    "86.dedup_prompt": "",
+    "87.dedup_prompt": "",
+    "95.dedup_prompt": "",
+    "96.dedup_prompt": "",
+    "85.other_text": "",
+    "3.text": "",
+    "4.text": "",
+    "506.text": "",
+    "507.text": "",
+    "8.text": "",
+    "9.text": "",
+    "12.rules": "",
+    "72.text": "",
+    "21.text": "",
+    "21.strings_to_remove": "",
+    "132.text": "",
+    "147.text": "",
+    "153.text": "",
+    "155.text": "",
+    "156.text": "",
+    "163.text": "",
+    "165.text": "",
+    "172.text": "",
+    "226.text": "",
+    "228.text": "",
+    "227.text": "",
+    "229.text": "",
+    "230.text": "",
+    "248.rules": "",
+    "249.rules": "",
+    "250.strings_to_remove": "",
+    "251.text": "",
+    "252.rules": "",
+    "254.text": "",
+    "14.text": "",
+    "37.other_text": "",
+    "66.text": "",
+    "98.text": "",
+    "168.value": "",
+    "121.text": "",
+    "136.prompt": "",
+    "146.text": "",
+    "117.text": "",
+    "119.param_0": "",
+    "143.param_0": "",
+    "144.param_0": "",
+    "139.LanPaint_PromptMode": "",
+    "145.LanPaint_PromptMode": "",
+    "209.text": "",
+    "295.text": "",
+    "20.other_text": "",
+    "26.prompt": "",
+    "27.prompt": "",
+    "160.text": "",
+    "131.local_prompts": "",
+    "131.global_prompt": "",
+    "152.text": "",
+    "133.prompt": "",
+    "164.text": "",
+    "133.global_prompt": "",
+    "142.local_prompts": "",
+    "142.global_prompt": "",
+    "13.text": "",
+    "151.text": "",
+    "157.text": "",
+    "158.text": "",
+    "159.text": "",
+    "161.text": "",
+    "162.text": "",
+    "166.text": "",
+    "168.text": "",
+    "10.negative_prompt": "",
+    "22.text": "",
+    "32.text": "",
+    "33.other_text": "",
+    "39.string_a": "",
+    "41.text": ""
+  },
+  "theme": {
+    "primaryGradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "backgroundColor": "linear-gradient(141deg, #e3e3e3 0%, #939393 50%, #dbe8f7 100%)",
+    "cardBackground": "rgba(255, 255, 255, 0.04)",
+    "borderStyle": "rgba(255, 255, 255, 0.08)",
+    "accentColor": "#667eea",
+    "textColor": "white",
+    "placeholderColor": "rgba(255, 255, 255, 0.6)"
+  },
+  "promptLibraryDarkMode": true,
+  "highlightColorA": "#6496c8",
+  "highlightColorB": "#c89664",
+  "editorBgColorDark": "#2a2a2f",
+  "editorBgColorLight": "#ffffff",
+  "inputLinkSettings": {
+    "10.images.image_1": {
+      "enabled": true,
+      "linkNodeId": "44",
+      "linkOutputIndex": 0
+    },
+    "10.images.image_2": {
+      "enabled": true,
+      "linkNodeId": "44",
+      "linkOutputIndex": 1
+    },
+    "3.images": {
+      "enabled": true,
+      "linkNodeId": "4",
+      "linkOutputIndex": 0
+    },
+    "4.samples": {
+      "enabled": true,
+      "linkNodeId": "25",
+      "linkOutputIndex": 0
+    },
+    "4.vae": {
+      "enabled": true,
+      "linkNodeId": "13",
+      "linkOutputIndex": 0
+    },
+    "5.switch": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 0
+    },
+    "5.on_false": {
+      "enabled": true,
+      "linkNodeId": "8",
+      "linkOutputIndex": 0
+    },
+    "5.on_true": {
+      "enabled": true,
+      "linkNodeId": "10",
+      "linkOutputIndex": 2
+    },
+    "8.width": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 5
+    },
+    "8.height": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 6
+    },
+    "9.model": {
+      "enabled": true,
+      "linkNodeId": "12",
+      "linkOutputIndex": 0
+    },
+    "10.clip": {
+      "enabled": true,
+      "linkNodeId": "14",
+      "linkOutputIndex": 0
+    },
+    "10.prompt": {
+      "enabled": true,
+      "linkNodeId": "21",
+      "linkOutputIndex": 0
+    },
+    "10.vae": {
+      "enabled": true,
+      "linkNodeId": "13",
+      "linkOutputIndex": 0
+    },
+    "21.input1": {
+      "enabled": true,
+      "linkNodeId": "11",
+      "linkOutputIndex": 0
+    },
+    "21.switch1": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 0
+    },
+    "21.input2": {
+      "enabled": true,
+      "linkNodeId": "22",
+      "linkOutputIndex": 0
+    },
+    "25.model": {
+      "enabled": true,
+      "linkNodeId": "9",
+      "linkOutputIndex": 0
+    },
+    "25.noise_seed": {
+      "enabled": true,
+      "linkNodeId": "31",
+      "linkOutputIndex": 0
+    },
+    "25.steps": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 1
+    },
+    "25.positive": {
+      "enabled": true,
+      "linkNodeId": "10",
+      "linkOutputIndex": 0
+    },
+    "25.negative": {
+      "enabled": true,
+      "linkNodeId": "10",
+      "linkOutputIndex": 1
+    },
+    "25.latent_image": {
+      "enabled": true,
+      "linkNodeId": "5",
+      "linkOutputIndex": 0
+    },
+    "10.negative_prompt": {
+      "enabled": true,
+      "linkNodeId": "32",
+      "linkOutputIndex": 0
+    },
+    "33.images": {
+      "enabled": true,
+      "linkNodeId": "3",
+      "linkOutputIndex": 0
+    },
+    "34.source": {
+      "enabled": true,
+      "linkNodeId": "21",
+      "linkOutputIndex": 0
+    },
+    "10.resolution": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 2
+    },
+    "21.switch2": {
+      "enabled": true,
+      "linkNodeId": "35",
+      "linkOutputIndex": 0
+    },
+    "35.value": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 0
+    },
+    "21.input3": {
+      "enabled": true,
+      "linkNodeId": "43",
+      "linkOutputIndex": 0
+    },
+    "39.string_b": {
+      "enabled": true,
+      "linkNodeId": "41",
+      "linkOutputIndex": 0
+    },
+    "40.string": {
+      "enabled": true,
+      "linkNodeId": "42",
+      "linkOutputIndex": 0
+    },
+    "42.clip": {
+      "enabled": true,
+      "linkNodeId": "37",
+      "linkOutputIndex": 0
+    },
+    "42.prompt": {
+      "enabled": true,
+      "linkNodeId": "39",
+      "linkOutputIndex": 0
+    },
+    "43.switch": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 3
+    },
+    "43.on_false": {
+      "enabled": true,
+      "linkNodeId": "30",
+      "linkOutputIndex": 4
+    },
+    "43.on_true": {
+      "enabled": true,
+      "linkNodeId": "40",
+      "linkOutputIndex": 0
+    }
+  },
+  "cardLinkToggleState": {},
+  "cardAutoCollapse": {},
+  "cardGridMode": false,
+  "allAutoCollapse": false,
+  "inputDefaultConfig": {},
+  "inputDisabledValues": {},
+  "localOutputConfigs": {},
+  "workflowInfo": {
+    "title": "Qwen-Image-2.1_이미지 편집 및 텍스트에서 이미지",
+    "subtitle": "너의 여정에 변할래중의일점미세한 빛",
+    "subtitles": [
+      "너의 여정에 변할래중의일점미세한 빛",
+      "매번 생성할 때마다 혼돈에 대한 심문。"
+    ],
+    "author": "",
+    "authorAvatar": "",
+    "authors": [
+      {
+        "name": "灰暗x",
+        "avatar": "https://i1.hdslb.com/bfs/face/f8c1a758a15e2d2bab28033e2f677c3345d80101.jpg@240w_240h_1c_1s_!web-avatar-nav.avif",
+        "links": [
+          {
+            "name": "Bilibili",
+            "url": "https://space.bilibili.com/26779709"
+          }
+        ]
+      }
+    ],
+    "description": "<h2>먼저 모델 다운로드 [모델 다운로드]\n메모리 용량이 작은 경우 int8 모델 다운로드 선택,\n다운로드 후 모델 태그 아래에서 모델 정보 업데이트,\n실행 후 q를 눌러 오른쪽 상단 저장 버튼을 클릭하여 워크플로우를 다시 저장.\n기본 int8 CLIP 및bf16 UNET, \n\n빠른 시작:\n모델 다운로드하고, 모델 태그 아래 노드에서 모델 선택\n자주 사용하는 태그, 파라미터 세트, 설정 (생성형 이미지 또는 이미지 편집 모드)\nb를 눌러 프롬프트 편집기 엽니다, \n오른쪽 상단에서 해당 노드 입력에 대한 프롬프트 텍스트 입력,\nEsc 키를 눌러 프롬프트 편집기를 종료합니다,\ng 키를 눌러 생성, 첫 번째 생성 시 모델 로딩이 약간 느릴 수 있습니다.,\n기타 일반적인 단축키:\ns 중단, e 큐리 삭제, r 라이브러리, f 다운로드/생성, w 워크플로우 편집기.\n\n기본 이미지 편집 모드,\n파라미터 세트 안의 첫 번째 스위치가 끄면 텍스트-투-이미지 모드가 됩니다.,\n파라미터 세트의 총 픽셀(기본1024²) 배수는32,\n이미지 생성 필요 시 BSK Qwen 참조 이미지 앨범에서 참조 이미지를 삭제해야 함,\n\n참조 이미지를 추가하려면 w 키를 눌러 워크플로우 편집기를 엽니다. \n이미지 그룹 내 이미지 로더 노드를 alt로 드래그하여 복사하고, Text Encode Qwen Image 2.1 노드의 이미지 입력에 연결합니다. 최대 10장까지 참조 이미지를 지원합니다.. \n</h2>",
+    "usage": "<h2>먼저 모델 다운로드 [모델 다운로드]\n메모리 용량이 작은 경우 int8 모델 다운로드 선택,\n다운로드 후 모델 태그 아래에서 모델 정보 업데이트,\n실행 후 q를 눌러 오른쪽 상단 저장 버튼을 클릭하여 워크플로우를 다시 저장.\n기본 int8 CLIP 및bf16 UNET, \n\n빠른 시작:\n모델 다운로드하고, 모델 태그 아래 노드에서 모델 선택\n자주 사용하는 태그, 파라미터 세트, 설정 (생성형 이미지 또는 이미지 편집 모드)\nb를 눌러 프롬프트 편집기 엽니다, \n오른쪽 상단에서 해당 노드 입력에 대한 프롬프트 텍스트 입력,\nEsc 키를 눌러 프롬프트 편집기를 종료합니다,\ng 키를 눌러 생성, 첫 번째 생성 시 모델 로딩이 약간 느릴 수 있습니다.,\n기타 일반적인 단축키:\ns 중단, e 큐리 삭제, r 라이브러리, f 다운로드/생성, w 워크플로우 편집기.\n\n기본 이미지 편집 모드,\n파라미터 세트 안의 첫 번째 스위치가 끄면 텍스트-투-이미지 모드가 됩니다.,\n파라미터 세트의 총 픽셀(기본1024²) 배수는32,\n이미지 생성 필요 시 BSK Qwen 참조 이미지 앨범에서 참조 이미지를 삭제해야 함,\n\n참조 이미지를 추가하려면 w 키를 눌러 워크플로우 편집기를 엽니다. \n이미지 그룹 내 이미지 로더 노드를 alt로 드래그하여 복사하고, Text Encode Qwen Image 2.1 노드의 이미지 입력에 연결합니다. 최대 10장까지 참조 이미지를 지원합니다.. \n</h2>",
+    "links": [
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      },
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      },
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      },
+      {
+        "name": "Bilibili",
+        "url": "https://space.bilibili.com/26779709"
+      }
+    ],
+    "background": {
+      "image": "https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "opacity": 0.62,
+      "useEmbeddedImage": false
+    },
+    "styles": {
+      "titleColor": "#57ddff",
+      "titleSize": "22px",
+      "textColor": "#ffe7bd",
+      "textSize": "14px",
+      "panelBgColor": "#0a0807",
+      "panelOpacity": 1,
+      "blurStrength": 0,
+      "bgOverlayOpacity": 0.15
+    }
+  },
+  "pluginDeps": {
+    "ComfyUI-bsk_UI": {
+      "nodes": [
+        "MultiLineStringEditor",
+        "bsk_StringMergeWithSwitch",
+        "bsk_PanelConfigSaver",
+        "BSK_ParamSet",
+        "RandomSeedNode",
+        "BSK_SaveImage",
+        "BSK_TextGenerate",
+        "BSKQwenImageRefSet"
+      ],
+      "source": "",
+      "source_type": "github",
+      "locked": false
+    }
+  },
+  "modelDownloads": [
+    {
+      "model_type": "text_encoders",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/text_encoders/qwen3vl_8b_int8_convrot.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "qwen3vl_8b_int8_convrot.safetensors",
+      "actual_model_type": "text_encoders",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "Qwen",
+      "authorLinks": [],
+      "authorDesc": "https://qwen.ai/blog?id=qwen-image-2.1"
+    },
+    {
+      "model_type": "diffusion_models",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/diffusion_models/qwen_image_2.1_int8_convrot.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "qwen_image_2.1_int8_convrot.safetensors",
+      "actual_model_type": "diffusion_models",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "Qwen",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "vae",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/vae/qwen_image_2.1_vae_bf16.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "qwen_image_2.1_vae_bf16.safetensors",
+      "actual_model_type": "vae",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "Qwen",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "diffusion_models",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/diffusion_models/qwen_image_2.1_bf16.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "qwen_image_2.1_bf16.safetensors",
+      "actual_model_type": "diffusion_models",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "Qwen",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "text_encoders",
+      "subdir": "",
+      "url": "https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1/resolve/master/text_encoders/qwen3vl_8b_bf16.safetensors?view=false",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "Qwen",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "text_encoders",
+      "subdir": "",
+      "url": "https://hf-mirror.com/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors?download=true",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "",
+      "authorLinks": [],
+      "authorDesc": ""
+    },
+    {
+      "model_type": "text_encoders",
+      "subdir": "",
+      "url": "https://hf-mirror.com/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors?download=true",
+      "releasePageUrl": "",
+      "filename": "",
+      "actual_filename": "",
+      "actual_model_type": "",
+      "actual_subdir": "",
+      "status": "idle",
+      "authorAvatar": "",
+      "authorAvatarData": "",
+      "authorName": "",
+      "authorLinks": [],
+      "authorDesc": ""
+    }
+  ],
+  "samplerPreviewMethod": "latent2rgb",
+  "nodeTrackingEnabled": false,
+  "autoSwitchTab": false
+}

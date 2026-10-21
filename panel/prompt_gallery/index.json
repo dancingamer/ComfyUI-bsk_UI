@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "categories": [
+    "AnimaDex"
+  ],
+  "subcategories": {
+    "AnimaDex": [
+      "Blue Archive",
+      "Kantai Collection",
+      "Genshin Impact",
+      "Re:zero Kara Hajimeru Isekai Seikatsu"
+    ]
+  },
+  "meta": {
+    "aris_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "aris_(blue_archive)",
+      "mtime": 1788972958,
+      "source": "animadex"
+    },
+    "arona_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "arona_(blue_archive)",
+      "mtime": 1788972970,
+      "source": "animadex"
+    },
+    "midori_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "midori_(blue_archive)",
+      "mtime": 1788972976,
+      "source": "animadex"
+    },
+    "mutsuki_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "mutsuki_(blue_archive)",
+      "mtime": 1788972980,
+      "source": "animadex"
+    },
+    "mika_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "mika_(blue_archive)",
+      "mtime": 1788972994,
+      "source": "animadex"
+    },
+    "hoshino_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "hoshino_(blue_archive)",
+      "mtime": 1788972997,
+      "source": "animadex"
+    },
+    "hina_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "hina_(blue_archive)",
+      "mtime": 1788972999,
+      "source": "animadex"
+    },
+    "miyako_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "miyako_(blue_archive)",
+      "mtime": 1788973016,
+      "source": "animadex"
+    },
+    "neru_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "neru_(blue_archive)",
+      "mtime": 1788973024,
+      "source": "animadex"
+    },
+    "hibiki_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "hibiki_(blue_archive)",
+      "mtime": 1788973032,
+      "source": "animadex"
+    },
+    "seia_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "seia_(blue_archive)",
+      "mtime": 1788973038,
+      "source": "animadex"
+    },
+    "hoshino_(swimsuit)_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "hoshino_(swimsuit)_(blue_archive)",
+      "mtime": 1788973041,
+      "source": "animadex"
+    },
+    "kokona_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "kokona_(blue_archive)",
+      "mtime": 1788973043,
+      "source": "animadex"
+    },
+    "hikari_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "hikari_(blue_archive)",
+      "mtime": 1788973045,
+      "source": "animadex"
+    },
+    "nozomi_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "nozomi_(blue_archive)",
+      "mtime": 1788973047,
+      "source": "animadex"
+    },
+    "hina_(swimsuit)_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "hina_(swimsuit)_(blue_archive)",
+      "mtime": 1788973055,
+      "source": "animadex"
+    },
+    "koharu_(swimsuit)_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "koharu_(swimsuit)_(blue_archive)",
+      "mtime": 1788973068,
+      "source": "animadex"
+    },
+    "aris_(maid)_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "aris_(maid)_(blue_archive)",
+      "mtime": 1788973076,
+      "source": "animadex"
+    },
+    "reisa_(magical)_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "reisa_(magical)_(blue_archive)",
+      "mtime": 1788973096,
+      "source": "animadex"
+    },
+    "professor_niyaniya_(blue_archive)": {
+      "category": "AnimaDex",
+      "subcategory": "Blue Archive",
+      "trigger": "professor_niyaniya_(blue_archive)",
+      "mtime": 1788973106,
+      "source": "animadex"
+    },
+    "shimakaze_(kancolle)": {
+      "category": "AnimaDex",
+      "subcategory": "Kantai Collection",
+      "trigger": "shimakaze_(kancolle)",
+      "mtime": 1788973126,
+      "source": "animadex"
+    },
+    "ganyu_(genshin_impact)": {
+      "category": "AnimaDex",
+      "subcategory": "Genshin Impact",
+      "trigger": "ganyu_(genshin_impact)",
+      "mtime": 1788973128,
+      "source": "animadex"
+    },
+    "hibiki_(kancolle)": {
+      "category": "AnimaDex",
+      "subcategory": "Kantai Collection",
+      "trigger": "hibiki_(kancolle)",
+      "mtime": 1788973140,
+      "source": "animadex"
+    },
+    "lumine_(genshin_impact)": {
+      "category": "AnimaDex",
+      "subcategory": "Genshin Impact",
+      "trigger": "lumine_(genshin_impact)",
+      "mtime": 1788973145,
+      "source": "animadex"
+    },
+    "akatsuki_(kancolle)": {
+      "category": "AnimaDex",
+      "subcategory": "Kantai Collection",
+      "trigger": "akatsuki_(kancolle)",
+      "mtime": 1788973163,
+      "source": "animadex"
+    },
+    "rem_(re_zero)": {
+      "category": "AnimaDex",
+      "subcategory": "Re:zero Kara Hajimeru Isekai Seikatsu",
+      "trigger": "rem_(re_zero)",
+      "mtime": 1788973181,
+      "source": "animadex"
+    }
+  }
+}

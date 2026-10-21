@@ -1,0 +1,127 @@
+# =============================================================================
+# ComfyUI-bsk_UI 훈련 도구 의존 (전체 버전）
+# -----------------------------------------------------------------------------
+# 본 파일은 ComfyUI와 sd-scripts (kohya-ss) 훈련에 필요한 모든 의존성을 포함합니다，
+# 훈련 도구가 임의의 Python 환경(가상 환경/휴대용 Python인 Autumn Leaf Launcher 등)에서 작동하도록 합니다. /
+# 시스템 Python)에서 한 번에 모두 설치하여 훈련 시 라이브러리 부족을 방지。
+#
+# 버전 전략：
+#   - sd-scripts 중확정 버전(==) 의 라이브러리, 여기에서 동일한 버전을 명시적으로 지정합니다(훈련 기본값)）。
+#   - 나머지 라이브러리는 ComfyUI 버전 제약을 따릅니다(>=) 잠금 해제 또는。
+#   - 중요: ComfyUI가 업데이트된 라이브러리를 사용하고 정상적으로 실행 중인 경우 강제 다운그레이드를 수행할 필요가 없습니다.，
+#     아래 주석에는 개발 환경에서 테스트한 사용 가능한 버전이 나와 있으며 필요에 따라 참조할 수 있음。
+#
+# 모델에 의존적인 설치는 ComfyUI가 설치된 Python을 사용해야 합니다.：
+#   "/path/to/ComfyUI/python_embeded/python.exe" -m pip install -r bsk-training-deps.txt
+#   또는  /path/to/venv/bin/python -m pip install -r bsk-training-deps.txt
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 지원 버전 (개발 환경 venv312 실측 사용 가능, 참고용일 뿐)）
+#   Python          3.12.3
+#   torch           2.7.1+cu128
+#   torchvision     0.22.1+cu128
+#   torchaudio      2.7.1+cu128
+#   accelerate      1.10.1
+#   transformers    4.57.1
+#   tokenizers      0.22.1
+#   diffusers       0.35.1
+#   numpy           2.2.6
+#   safetensors     0.6.2
+#   voluptuous      0.16.0
+#   toml            0.10.2
+#   ftfy            6.3.1
+#   bitsandbytes    0.47.0
+#   tensorboard     2.20.0
+#   rich            14.1.0
+#   imagesize       2.0.0
+#   schedulefree    1.4.1
+#   sentencepiece   0.2.0
+#   huggingface-hub 0.34.5
+#   Pillow          12.0.0
+#   opencv-python   4.11.0.84
+#   scipy           1.16.2
+#   einops          0.8.1
+#   av              15.1.0
+#   aiohttp         3.12.15
+#   yarl            1.20.1
+#   psutil          7.2.2
+# -----------------------------------------------------------------------------
+
+# ===== PyTorch 실행 중 (ComfyUI에서 가져옴, 버전 잠금 없음, CUDA/드라이버 선택에 따라)）=====
+# 추천：torch 2.7.1+cu128 / torchvision 0.22.1+cu128 / torchaudio 2.7.1+cu128
+torch
+torchsde
+torchvision
+torchaudio
+
+# ===== 훈련 핵심 라이브러리 (sd-scripts 버전과 일치)）=====
+# sd-scripts 기선 -> 개발 환경 실제 버전
+accelerate==1.6.0          # -> 1.10.1
+transformers==4.54.1       # -> 4.57.1（ComfyUI가 업데이트된 버전이고 정상적으로 작동하는 경우 유지합니다）
+tokenizers==0.21.0         # -> 0.22.1（transformers 버전과 호환되며, 4.54.1 버전이 필요합니다. <0.22）
+diffusers[torch]==0.32.1   # -> 0.35.1
+safetensors==0.4.5         # -> 0.6.2
+huggingface-hub==0.34.3    # -> 0.34.5
+sentencepiece==0.2.1       # -> 0.2.0
+einops==0.7.0              # -> 0.8.1
+ftfy==6.3.1
+toml==0.10.2
+voluptuous==0.15.2         # -> 0.16.0
+opencv-python==4.10.0.84   # -> 4.11.0.84
+bitsandbytes==0.47.0        # -> 0.47.0（실측 사용 가능, 잠금됨）
+# numpy：ComfyUI 요구 >=1.25.0；sd-scripts 초기 권고 <=2.0，새 버전이 호환됩니다 2.x
+# 개발 환경에서 numpy 2.2.6을 정상적으로 훈련
+numpy==2.2.6                # ComfyUI 요구 >=1.25.0；실측 2.2.6 (잠김)）
+
+# ===== 훈련 최적화기 (sd-scripts 버전과 일치)）=====
+lion-pytorch==0.2.3
+schedulefree==1.4
+pytorch-optimizer==3.10.0
+prodigyopt==1.1.2
+prodigy-plus-schedule-free==1.9.2
+# LoRA 훈련 라이브러리 (sd-scripts를 라이브러리 호출을 통해 사용)）
+# lycoris-lora              # 잠금 버전 없음, 자동 관리 안 함 (사용자 직접 설치)）
+
+# ===== 훈련 보조 / 로그 / 모니터링 =====
+tensorboard==2.20.0        # -> 2.20.0
+rich==14.1.0
+imagesize==1.4.1           # -> 2.0.0
+# 중지 훈련 / 하드웨어 모니터링 사용
+psutil==7.2.2              # -> 7.2.2
+
+# ===== LTX Director（오디오 합성 / 이미지 압축 사용 PyAV）=====
+# ComfyUI 요구 >=14.2.0；개발 환경 실제 테스트 15.1.0
+av==15.1.0                  # ComfyUI 요구 >=14.2.0；실측 15.1.0 (잠금됨)）
+
+# ===== WD14 라벨링 (ONNX Runtime, 하드웨어 선택 3가지)）=====
+# GPU 판 (기본)）：
+onnxruntime-gpu
+# 신화 NPU 버전：onnxruntime-cann
+# CPU 판：     onnxruntime
+protobuf==3.20.3
+# ===== ComfyUI 실행 시간 종속성(일반적으로 ComfyUI 설치 시 포함, 완전성을 위해 나열)）=====
+# 설명: 실제 테스트 버전 포함 >= 항목이 잠금 해제됨 == 실측 버전; 잠금 없는 버전 / 잠금 없는 버전 항목 주석 처리, 자동 관리 안 함
+aiohttp==3.12.15           # -> 3.12.15（실험 결과, 잠금 상태）
+yarl==1.20.1              # -> 1.20.1（실험 결과, 잠금 상태）
+# pyyaml                   # 잠금 없는 버전, 자동 관리 안함 (ComfyUI 기본)）
+# Pillow                   # -> 12.0.0（잠금 버전이 없으며 자동으로 관리하지 않음）
+# scipy                    # -> 1.16.2（잠금 버전이 없으며 자동으로 관리하지 않음）
+# tqdm                     # 잠금 버전이 없으며 자동으로 관리하지 않음
+# alembic                  # 잠금 버전이 없으며 자동으로 관리하지 않음
+# SQLAlchemy               # 잠금 버전이 없으며 자동으로 관리하지 않음
+# filelock                 # 잠금 버전이 없으며 자동으로 관리하지 않음
+# requests                 # 잠금 버전이 없으며 자동으로 관리하지 않음
+# simpleeval>=1.0.0        # 실제 테스트 버전이 없으며 자동으로 관리하지 않음
+# blake3                   # 잠금 버전이 없으며 자동으로 관리하지 않음
+# kornia>=0.7.1            # 실제 테스트 버전이 없으며 자동으로 관리하지 않음
+# spandrel                 # 잠금 버전이 없으며 자동으로 관리하지 않음
+pydantic~=2.0
+pydantic-settings~=2.0
+# PyOpenGL                 # 잠금 버전이 없으며 자동으로 관리하지 않음
+# glfw                     # 잠금 버전이 없으며 자동으로 관리하지 않음
+# comfy-kitchen>=0.2.8     # 실제 테스트 버전이 없으며 자동으로 관리하지 않음
+# comfy-aimdo>=0.2.12      # 실제 테스트 버전이 없으며 자동으로 관리하지 않음
+
+# 주석：comfyui-frontend-package / comfyui-workflow-templates / comfyui-embedded-docs
+# ComfyUI 자체 메타데이터에 사용, ComfyUI와 함께 설치, 중복 목록은 포함하지 않음。
